@@ -1,0 +1,209 @@
+{Alistar, Celestial Opposition, Boots of Swiftness, Locket of the Iron Solari, Zeke's Convergence, Knight's Vow, Thornmail, Aftershock, Font of Life, Bone Plating, Unflinching, Hextech Flashtraption, Cosmic Insight}
+{Annie, Sorcerer's Shoes, Malignance, Stormsurge, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Electrocute, Cheap Shot, Grisly Mementos, Relentless Hunter, Axiom Arcanist, Absolute Focus}
+{Ashe, Berserker's Greaves, Kraken Slayer, Phantom Dancer, Infinity Edge, Bloodthirster, Runaan's Hurricane, Lethal Tempo, Presence of Mind, Alacrity, Cut Down, Biscuit Delivery, Approach Velocity}
+{Fiddlesticks, Sorcerer's Shoes, Malignance, Liandry's Torment, Zhonya's Hourglass, Shadowflame, Rabadon's Deathcap, Electrocute, Cheap Shot, Grisly Mementos, Ultimate Hunter, Axiom Arcanist, Transcendence}
+{Jax, Plated Steelcaps, Trinity Force, Sundered Sky, Sterak's Gage, Blade of The Ruined King, Frozen Heart, Grasp of the Undying, Demolish, Second Wind, Unflinching, Biscuit Delivery, Cosmic Insight}
+{Kayle, Nashor's Tooth, Boots of Swiftness, Rabadon's Deathcap, Shadowflame, Lich Bane, Void Staff, Press the Attack, Absorb Life, Alacrity, Last Stand, Celerity, Gathering Storm}
+{Master Yi, Berserker's Greaves, Blade of The Ruined King, Guinsoo's Rageblade, Kraken Slayer, Death's Dance, Guardian Angel, Lethal Tempo, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Morgana, Zaz'Zak's Realmspike, Ionian Boots of Lucidity, Liandry's Torment, Zhonya's Hourglass, Rylai's Crystal Scepter, Horizon Focus, Arcane Comet, Manaflow Band, Transcendence, Scorch, Cheap Shot, Ultimate Hunter}
+{Nunu & Willump, Plated Steelcaps, Liandry's Torment, Frozen Heart, Thornmail, Kaenic Rookern, Shadowflame, Phase Rush, Nimbus Cloak, Celerity, Waterwalking, Triumph, Haste}
+{Ryze, Sorcerer's Shoes, Rod of Ages, Seraph's Embrace, Rabadon's Deathcap, Zhonya's Hourglass, Void Staff, Phase Rush, Manaflow Band, Transcendence, Gathering Storm, Bone Plating, Overgrowth}
+{Sion, Plated Steelcaps, Sunfire Aegis, Unending Despair, Thornmail, Overlord's Bloodmail, Jak'Sho, The Protean, Grasp of the Undying, Demolish, Conditioning, Overgrowth, Cash back, Approach Velocity}
+{Sivir, Berserker's Greaves, Essence Reaver, Navori Flickerblade, Infinity Edge, Lord Dominik's Regards, Bloodthirster, Lethal Tempo, Presence of Mind, Alacrity, Cur Down, Magical Footwear, Biscuit Delivery}
+{Soraka, Dream Maker, Ionian Boots of Lucidity, Moonstone Renewer, Redemption, Dawncore, Ardent Censer, Summon Aery, Manaflow Band, Transcendence, Scorch, Bone Plating, Revitalize}
+{Teemo, Sorcerer's Shoes, Nashor's Tooth, Liandry's Torment, Malignance, Rabadon's Deathcap, Void Staff, Press the Attack, Triumph, Alacrity, Last Stand, Bone Plating, Overgrowth}
+{Tristana, Berserker's Greaves, Yun Tal Wildarrows, Infinity Edge, Navori Flickerblade, Lord Dominik's Regards, Bloodthirster, Lethal Tempo, Triumph, Alacrity, Cut Down, Magical Footwear, Biscuit Delivery}
+{Twisted Fate, Boots of Swiftness, Rod of Ages, Lich Bane, Rapid Firecannon, Zhonya's Hourglass, Rabadon's Deathcap, Unsealed Spellbook, Cash Back, Biscuit Delivery, Jack Of All Trades, Bone Plating, Unflinching}
+{Warwick, Plated Steelcaps, Stridebreaker, Blade of The Ruined King, Thornmail, Spirit Visage, Sterak's Gage, Lethal Tempo, Triumph, Alacrity, Last Stand, Celerity, Waterwalking}
+{Singed, Liandry's Torment, Boots of Swiftness, Rylai's Crystal Scepter, Dead Man's Plate, Jak'Sho, The Protean, Riftmaker, Conqueror, Triumph, Alacrity, Last Stand, Nimbus Cloak, Celerity}
+{Zilean, Solstice Sleigh, Ionian Boots of Lucidity, Shurelya's Battlesong, Imperial Mandate, Redemption, Cosmic Drive, Summon Aery, Manaflow Band, Transcendence, Waterwalking, Cheap Shot, Relentless Hunter}
+{Evelynn, Sorcerer's Shoes, Lich Bane, Mejai's Soulstealer, Rabadon's Deathcap, Void Staff, Banshee's Veil, Electrocute, Sudden Impact, Grisly Mementos, Relentless Hunter, Absolute Focus, Gathering Storm}
+{Tryndamere, Berserker's Greaves, Ravenous Hydra, Phantom Dancer, Infinity Edge, Lord Dominik's Regards, Blade of The Ruined King, Grasp of the Undying, Demolish, Second Wind, Revitalize, Alacrity, Last Stand}
+{Twitch, Berserker's Greaves, Yun Tal Wildarrows, Infinity Edge, Runaan's Hurricane, Lord Dominik's Regards, Bloodthirster, Press the Attack, Triumph, Alacrity, Cut Down, Axiom Arcanist, Gathering Storm}
+{Karthus, Sorcerer's Shoes, Blackfire Torch, Shadowflame, Rabadon's Deathcap, Voidstaff, Zhonya's Hourglass, Dark Harvest, Cheap shot, Grisly Mementos, Treasure Hunter, Presence of Mind, Coup de Grace}
+{Amumu, Plated Steelcaps, Liandry's Torment, Sunfire Aegis, Abyssal Mask, Jak'sho, The Protean, Thornmail, Conqueror, Triumph, Haste, Last Stand, Cheap Shot, Ultimate Hunter}
+{Cho'Gath, Plated Steelcaps, Heartsteel, Sunfire Aegis, Unending Despair, Jak'Sho, The Protean, Thornmail, Grasp pf the Undying, Demolish, Conditioning, Overgrowth, Magical Footwear, Approach Velocity}
+{Anivia, Sorcerer's Shoes, Rod of Ages, Seraph's Embrace, Liandry's Torment, Zhonya's Hourglass, Rabadon's Deathcap, Electrocute, Cheap Shot, Grisly Mementos, Relentless Hunter, Presence of Mind, Coup de Grace}
+{Rammus, Plated Steelcaps, Thornmail, Sunfire Aegis, Jak'Sho, The Protean, Randuin's Omen, Unending Despair, Aftershock, Font of Life, Conditioning, Unflinching, Triumph, Alacrity}
+{Veigar, Sorcerer's Shoes, Rod of Ages, Seraph's Embrace, Rabadon's Deathcap, Zhonya's Hourglass, Void Staff, First Strike, Magical Footwear, Biscuit Delivery, Cosmic Insight, Manaflow Band, Transcendence}
+{Kassadin, Sorcerer's Shoes, Rod of Ages, Seraph's Embrace, Malignance, Zhonya's Hourglass, Rabadon's Deathcap, Electrocute, Sudden Impact, Grisly Mementos, Ultimate Hunter, Second Wind, Overgrowth}
+{Gangplank, Plated Steelcaps, Trinity Force, The Collector, Infinity Edge, Lord Dominik's Regards, Immortal Shieldbow, Grasp of the Undying, Demolish, Bone Plating, Overgrowth, Biscuit Delivery, Cosmic Insight}
+{Taric, Celestial Opposition, Plated Steelcaps, Locket of the Iron Solari, Fimbulwinter, Knight's Vow, Spirit Visage, Glacial Augment, Magical Footwear, Biscuit Delivery, Cosmic Insight, Conditioning, Revitalize}
+{Blitzcrank, Celestial Opposition, Boots of Swiftness, Locket of the Iron Solari, Zeke's Convergence, Thornmail, Shurelya's Battlesong, Glacial Augment, Hextech Flashtraption, Biscuit Delivery, Cosmic Insight, Nimbus Cloak, Celerity}
+{Dr. Mundo, Warmog's Armor, Boots of Swiftness, Heartsteel, Titanic Hydra, Overlod's Bloodmail, Spirit Visage, Grasp of the Undying, Demolish, Second Wind, Overgrowth, Magical Footwear, Approach Velocity}
+{Janna, Dream Maker, Boots of Swiftness, Moonstone Renewer, Redemption, Ardent Censer, Dawncore, Summon Aery, Manaflow Band, Celerity, Gathering Storm, Font of Life, Revitalize}
+{Malphite, Plated Steelcaps, Sunfire Aegis, Thornmail, Frozen Heart, Jak'Sho, The Protean, Unending Despair, Arcane Comet, Manaflow Band, Transcendence, Scorch, Second Wind, Overgrowth}
+{Corki, Plated Steelcaps, Trinity Force, Muramana, The Collector, Infinity Edge, Rapid Firecannon, Conqueror, Presence of Mind, Alacrity, Cut Down, Biscuit Delivery, Jack Of All Trades}
+{Katarina, Sorcerer's Shoes, Lich Bane, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Sudden Impact, Grisly Mementos, Relentless Hunter, Triumph, Coup de Grace}
+{Nasus, Ionian Boots of Lucidity, Trinity Force, Frozen Heart, Spirit Visage, Thornmail, Jak'Sho, The Protean, Fleet Footwork, Triumph, Haste, Last Stand, Second Wind, Unflinching}
+{Heimerdinger, Sorcerer's Shoes, Blackfire Torch, Liandry's Torment, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Conqueror, Presence of Mind, Haste, Cut Down, Absolute Focus, Gathering Storm}
+{Shaco, Berserker's Greaves, Youmuu's Ghostblade, The Collector, Infinity Edge, Lord Dominik's Regards, Guardian Angel, Hail of Blades, Sudden Impact, Grisly Mementos, Relentless Hunter, Alacrity, Coup de Grace}
+{Udyr, Liandry's Torment, Boots of Swiftness, Dead Man's Plate, Spirit Visage, Jak'Sho, The Protean, Unending Despair, Conqueror, Triumph, Haste, Last Stand, Magical Footwear, Approach Velocity}
+{Nidalee, Sorcerer's Shoes, Lich Bane, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Dark Harvest, Sudden Impact, Grisly Mementos, Treasure Hunter, Transcendence, Waterwalking}
+{Poppy, Boots of Swiftness, Dead Man's Plate, Locket of the Iron Solari, Thornmail, Force of Nature, Randuin's Omen, Aftershock, Font of Life, Bone Plating, Unflinching, Hextech Flashtraption, Cosmic Insight}
+{Gragas, Ionian Boots of Lucidity, Rod of Ages, Fimbulwinter, Cosmic Drive, Zhonya's Hourglass, Rabadon's Deathcap, Phase Rush, Manaflow Band, Trascendence, Scorch, Biscuit Delivery, Cosmic Drive}
+{Pantheon, Plated Steelcaps, Sundered Sky, Black Cleaver, Sterak's Gage, Spear of Shojin, Guardian Angel, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Mordekaiser, Plated Steelcaps, Rylai's Crystal Scepter, Riftmaker, Liandry's Torment, Spirit Visage, Jak'Sho, The Protean, Conqueror, Triumph, Haste, Last Stand, Bone Plating, Revitalize}
+{Ezreal, Ionian Boots of Lucidity, Trinity Force, Muramana, Spear of Shojin, Serylda's Grudge, Bloodthirster, Press the Attack, Presence of Mind, Bloodline, Coup de Grace, Magical Footwear, Biscuit Delivery}
+{Shen, Plated Steelcaps, Titanic Hydra, Heartsteel, Thornmail, Unending Despair, Kaenic Rookern, Grasp of the Undying, Shield Bash, Second Wind, Overgrowth, Biscuit Delivery, Approach Velocity}
+{Kennen, Sorcerer's Shoes, Hextech Rocketbelt, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Taste of Blood, Grisly Mementos, Ultimate Hunter, Absolute Focus, Scorch}
+{Garen, Berserker's Greaves, Stridebreaker, Phantom Dancer, Spear of Shojin, Sterak's Gage, Dead Man's Plate, Conqueror, Triumph, Haste, Last Stand, Axiom Arcanist, Celerity}
+{Akali, Sorcerer's Shoes, Stormsurge, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Sudden Impact, Grisly Mementos, Ultimate Hunter, Second Wind, Overgrowth}
+{Malzahar, Sorcerer's Shoes, Blackfire Torch, Liandry's Torment, Rylai's Crystal Scepter, Rabadon's Deathcap, Zhonya's Hourglass, Arcane Comet, Manaflow Band, Trascendence, Gathering Storm, Magical Footwear, Cosmic Insight}
+{Olaf, Plated Steelcaps, Stridebreaker, Sundered Sky, Death's Dance, Sterak's GAge, Overlord's Bloodmail, Conqueror, Triumph, Alacrity, Last Stand, Biscuit Delivery, Approach Velocity}
+{Kog'Maw, Berserker's Greaves, Blade of The Ruined King, Guinsoo's Rageblade, Runaan's Hurricane, Terminus, Jak'Sho, The Protean, Lethal Tempo, Triumph, Bloodline, Last Stand, Conditioning, Overgrowth}
+{Xin Zhao, Plated Steelcaps, Sundered Sky, Black Cleaver, Sterak's Gage, Death's Dance, Guardian Angel, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Vladimir, Ionian Boots of Lucidity, Hextech Rocketbelt, Riftmaker, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Phase Rush, Nimbus Cloak, Trascendence, Gathering Storm, Haste, Last Stand}
+{Galio, Mercury's Treads, Hollow Radiance, Riftmaker, Zhonya's Hourglass, Thornmail, Frozen Heart, Phase Rush, Manaflow Band, Trascendence, Scorch, Second Wind, Unflinching}
+{Urgot, Plated Steelcaps, Black Cleaver, Sterak's Gage, Jak'Sho, The Protean, Overlord's Bloodmail, Thornmail, Press the Attack, Triumph, Haste, Last Stand, Bone Plating, Overgrowth}
+{Miss Fortune, Boots of Swiftness, Bloodthirster, Essence Reaver, Infinity Edge, Lord Dominik's Regards, Guardian Angel, Press the Attack, Presence of Mind, Bloodline, Coup de Grace, Magical Footwear, Biscuit Delivery}
+{Sona, Ionian Boots of Lucidity, Dream Maker, Echoes of Helia, Moonstone Renewer, Dawncore, Staff of Flowing Water, Summon Aery, Manaflow Band, Trascendence, Gathering Storm, Conditioning, Revitalize}
+{Swain, Sorcerer's Shoes, Zaz'Zak's Realmspike, Rylai's Crystal Scepter, Liandry's Torment, Zhonya's Hourglass, Unending Despair, Conqueror, Presence of Mind, Haste, Last Stand, Conditioning, Overgrowth}
+{Lux, Sorcerer's Shoes, Zaz'Zak's Realmspike, Luden's Companion, Stormsurge, Shadowflame, Rabadon's Deathcap, Arcane Comet, Manaflow Band, Trascendence, Scorch, Cheap Shot, Ultimate Hunter}
+{LeBlanc, Sorcerer's Shoes, Luden's Companion, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Sudden Impact, Grisly Mementos, Relentless Hunter, Transcendence, Gathering Storm}
+{Irelia, Plated Steelcaps, Blade of The Ruined King, Hullbreaker, Wit's End, Death's Dance, Guardian Angel, Conqueror, Triumph, Alacrity, Last Stand, Biscuit Delivery, Jack Of All Trades}
+{Trundle, Plated Steelcaps, Trinity Force, Dead Man's Plate, Spirit Visage, Thornmail, Randiun's Omen, Press the Attack, Triumph, Alacrity, Coup de Grace, Magical Footwear, Approach Velocity}
+{Cassiopeia, Rod of Ages, Seraph's Embrace, Rylai's Crystal Scepter, Liandry's Torment, Zhonya's Hourglass, Rabadon's Deathcap, Conqueror, Presence of Mind, Haste, Last Stand, Manaflow Band, Trascendence}
+{Caitlyn, Berserker's Greaves, The Collector, Infinity Edge, Rapid Firecannon, Lord Dominik's Regards, Bloodthirster, Lethal Tempo, Presence of Mind, Bloodline, Coup de Grace, Absolute Focus, Gathering Storm}
+{Renekton, Plated Steelcaps, Eclipse, Black Cleaver, Sterak's Gage, Death's Dance, Spirit Visage, Conqueror, Triumph, Alacrity, Last Stand, Bone Plating, Unflinching}
+{Karma, Ionian Boots of Lucidity, Dream Maker, Moonstone Renewer, Redemption, Dawncore, Ardent Censer, Summon Aery, Manaflow Band, Trascendence, Gathering Storm, Font of Life, Revitalize}
+{Maokai, Boots of Switfness, Trailblazer, Locket of the Iron Solari, Thornmail, Spirit Visage, Randuin's Omen, Aftershock, Font of Life, Bone Plating, Unflinching, Biscuit Delivery, Cosmic Insight}
+{Jarvan IV, Plated Steelcaps, Eclipse, Sundered Sky, Frozen Heart, Spirit Visage, Thornmail, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Nocturne, Plated Steelcaps, Stridebreaker, Experimental Hexplate, Black Cleaver, Death's Dance, Guardian Angel, Conqueror, Triumph, Alacrity, Last Stand, Grisly Mementos, Ultimate Hunter}
+{Lee Sin, Plated Steelcaps, Eclipse, Sundered Sky, Black Cleaver, Death's Dance, Guardian Angel, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Brand, Sorcerer's Shoes, Zaz'Zak's Realmspike, Rylai's Crystal Scepter, Liandry's Torment, Morellonomicon, Zhonya's Hourglass, Dark Harvest, Taste of Blood, Grisly Mementos, Treasure Hunter, Manaflow Band, Scorch}
+{Rumble, Sorcerer's Shoes, Liandry's Torment, Bloodletter's Curse, Zhonya's Hourglass, Rabadon's Deathcap, Shadowflame, Arcane Comet, Nimbus Cloak, Absolute Focus, Scorch, Bone Plating, Unflinching}
+{Vayne, Berserker's Greaves, Blade of The Ruined King, Guinsoo's Rageblade, Terminus, Experimental Hexplate, Wit's End, Lethal Tempo, Triumph, Alacrity, Coup de Grace, Conditioning, Overgrowth}
+{Orianna, Sorcerer's Shoes, Luden's Companion, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Phase Rush, Manaflow Band, Transcendence, Scorch, Presence of Mind, Haste}
+{Yorick, Plated Steelcaps, Trinity Force, Spear of Shojin, Serylda's Grudge, Sterak's Gage, Thornmail, Conqueror, Triumph, Bloodline, Last Stand, Demolish, Bone Plating}
+{Leona, Plated Steelcaps, Locket of the Iron Solari, Knight's Vow, Thornmail, Kaenic Rookern, Sunfire Aegis, Aftershock, Font of Life, Bone Plating, Unflinching, Biscuit Delivery, Cosmic Insight}
+{Wukong, Plated Steelcaps, Trinity Force, Sundered Sky, Black Cleaver, Sterak's Gage, Guardian Angel, Conqueror, Triumph, Alacrity, Last Stand, Magical Footwear, Cosmic Insight}
+{Skarner, Plated Steelcaps, Heartsteel, Unending Despair, Thornmail, Jak'Sho, The Protean, Randuin's Omen, Grasp of the Undying, Shield Bash, Conditioning, Overgrowth, Magical Footwear, Approach Velocity}
+{Talon, Ionian Boots of Lucidity, Youmuu's Ghostblade, Opportunity, Edge of Night, Serylda's Grudge, Serpent's Fang, Fleet Footwork, Triumph, Haste, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Riven, Ionian Boots of Lucidity, Eclipse, Sundered Sky, Death's Dance, Serylda's Grudge, Maw of Malmortius, Conqueror, Triumph, Haste, Last Stand, Biscuit Delivery, Jack Of All Trades}
+{Xerath, Sorcerer's Shoes, Luden's Companion, Shadowflame, Rabadon's Deathcap, Void Staff, Horizon Focus, Arcane Comemt, Manaflow Band, Trascendence, Scorch, Presence of Mind, Coup de Grace}
+{Graves, Plated Steelcaps, Youmuu's Ghostblade, The Collector, Lord Dominik's Regards, Immortal Shieldbow, Infinity Edge, Dark Harvest, Sudden Impact, Grisly Mementos, Treasure Hunter, Triumph, Alacrity}
+{Shyvana, Sorcerer's Shoes, Spear of Shojin, Liandry's Torment, Riftmaker, Rabadon's Deathcap, Zhonya's Hourglass, Fleet Footwork, Triumph, Haste, Cut Down, Magical Footwear, Jack Of All Trades}
+{Fizz, Sorcerer's Shoes, Lich Bane, Zhonya's Hourglass, Rabadon's Deathcap, Shadowflame, Void Staff, Electrocute, Sudden Impact, Grisly Mementos, Trasure Hunter, Trascendence, Scorch}
+{Volibear, Mercury's Treads, Cosmic Drive, Navori Flickerblade, Spirit Visage, Thornmail, Unending Despair, Lethal Tempo, Triumph, Haste, Last Stand, Magical Footwear, Jack Of All Trades}
+{Ahri, Sorcerer's Shoes, Malignance, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Taste of Blood, Grisly Mementos, Ultimate Hunter, Manaflow Band, Trascendence}
+{Viktor, Sorcerer's Shoes, Rod of Ages, Liandry's Torment, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Summon Aery, Manaflow Band, Trascendence, Scorch, Shield Bash, Bone Plating}
+{Sejuani, Plated Steelcaps, Heartsteel, Unending Despair, Thornmail, Jak'Sho, The Protean, Kaenic Rookern, Aftershock, Font of Life, Conditioning, Overgrowth, Triumph, Alacrity}
+{Ziggs, Sorcerer's Shoes, Luden's Companion, Shadowflame, Rabadon's Deathcap, Void Staff, Horizon Focus, Arcane Comet, Manaflow Band, Trascendence, Scorch, Presence of Mind, Coup de Grace}
+{Nautilus, Plated Steelcaps, Celestial Opposition, Locket of the Iron Solari, Knight's Vow, Thornmail, Kaenic Rookern, Aftershock, Shield Bash, Bone Plating, Unflinching, Biscuit Delivery, Cosmic Insight}
+{Fiora, Plated Steelcaps, Ravenous Hydra, Trinity Force, Death's Dance, Spear of Shojin, Sterak's Gage, Press the Attack, Triumph, Alacrity, Last Stand, Biscuit Delivery, Jack Of All Trades}
+{Lulu, Ionian Boots of Lucidity, Dream Maker, Ardent Censer, Moonstone Renewer, Redemption, Locket of the Iron Solari, Summon Aery, Manaflow Band, Trascendence, Scorch, Bone Plating, Revitalize}
+{Hecarim, Ionian Boots of Lucidity, Spear of Shojin, Black Cleaver, Death's Dance, Sterak's Gage, Eclipse, Phase Rush, Nimbus Cloak, Celerity, Waterwalking, Triumph, Haste}
+{Varus, Berserker's Greaves, Blade of The Ruined King, Guinsoo's Rageblade, Terminus, Serylda's Grudge, Edge of Night, Letahl Tempo, Absorb Life, Alacrity, Cut Down, Biscuit Delivery, Cosmic Insight}
+{Darius, Plated Steelcaps, Stridebreaker, Sterak's Gage, Dead Man's Plate, Force of Nature, Death's Dance, Conqueror, Triumph, Haste, Last Down, Bone Plating, Unflinching}
+{Draven, Berserker's Greaves, Bloodthirster, The Collector, Infinity Edge, Lord Dominik's Regards, Rapid Firecannon, Lethal Tempo, Presence of Mind, Alacrity, Last Stand, Absolute Focus, Gathering Storm}
+{Jayce, Ionian Boots of Lucidity, Youmuu's Ghostblade, Muramana, Serylda's Grudge, Edge of Night, Serpent's Fang, Phase Rush, Manaflow Band, Absolute Focus, Gathering Storm, Magical Footwear, Biscuit Delivery}
+{Zyra, Sorcerer's Shoes, Zaz'Zak's Realmspike, Liandry's Torment, Rylai's Crystal Scepter, Morellonomicon, Shadowflame, Arcane Comet, Manaflow Band, Trascendence, Scorch, Taste of Blood, Relentless Hunter}
+{Diana, Sorcerer's Shoes, Stormsurge, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Sudden Impact, Grisly Mementos, Treasure Hunter, Manaflow Band, Scorch}
+{Rengar, Ionian Boots of Lucidity, Opportunity, Profane Hydra, Lord Dominik's Regards, Edge of Night, Infinity Edge, Conqueror, Triumph, Alacrity, Coup de Grace, Sudden Impact, Ultimate Hunter}
+{Syndra, Sorcerer's Shoes, Luden's Companion, Shadowflame, Rabadon's Deathcap, Zhonya's Hourglass, Void Staff, First Strike, Magical Footwear, Biscuit Delivery, Cosmic Insight, Manaflow Band, Trascendence}
+{Kha'Zix, Ionian Boots of Lucidity, Youmuu's Ghostblade, Opportunity, Serylda's Grudge, Edge of Night, Guardian Angel, Dark Harvest, Sudden Impact, Grisly Mementos, Treasure Hunter, Absolute Focus, Gathering Storm}
+{Elise, Sorcerer's Shoes, Stormsurge, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Dark Harvest, Cheap Shot, Grisly Mementos, Relentless Hunter, Triumph, Coup de Grace}
+{Zed, Ionian Boots of Lucidity, Eclipse, Voltaic Cyclosword, Serylda's Grudge, Edge of Night, Serpent's Fang, Conqueror, Presence of Mind, Haste, Last Stand, Nimbus Cloak, Trascendence}
+{Nami, Ionian Boots of Lucidity, Dream Maker, Imperial Mandate, Moonstone Renewer, Ardent Censer, Redemption, Summon Aery, Manaflow Band, Trascendence, Scorch, Bone Plating, Revitalize}
+{Vi, Plated Steelcaps, Sundered Sky, Black Cleaver, Sterak's Gage, Death's Dance, Guardian Angel, Conqueror, Triumph, Haste, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Thresh, Boots of Swiftness, Locket of the Iron Solari, Knight's Vow, Zeke's Convergence, Redemption, Thornmail, Aftershock, Font of Life, Bone Plating, Unflinching, Biscuit Delivery, Cosmic Insight}
+{Quinn, Berserker's Greaves, Profane Hydra, Edge of Night, The Collector, Lord Dominik's Regards, Infinity Edge, Electrocute, Sudden Impact, Grisly Mementos, Treasure Hunter, Absolute Focus, Gathering Storm}
+{Zac, Ionian Boots of Lucidity, Hextech Rocketbelt, Sunfire Aegis, Spirit Visage, Thornmail, Unending Despair, Conqueror, Triumph, Haste, Last Stand, Magical Footwear, Cosmic Insight}
+{Lissandra, Sorcerer's Shoes, Malignance, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Cheap Shot, Grisly Mementos, Ultimate Hunter, Manaflow Band, Trascendence}
+{Aatrox, Plated Steelcaps, Spear of Shojin, Voltaic Cyclosword, Serylda's Grudge, Death's Dance, Sterak's Gage, Conqueror, Triumph, Haste, Last Stand, Bone Plating, Revitalize}
+{Lucian, Ionian Boots of Lucidity, Essence Reaver, Navori Flickerblade, Infinity Edge, Lord Dominik's Regards, Bloodthirster, Press the Attack, Presence of Mind, Bloodline, Coup de Grace, Magical Footwear, Biscuit Delivery}
+{Jinx, Berserker's Greaves, Yun Tal Wildarrows, Infinity Edge, Runaan's Hurricane, Lord Dominik's Regards, Bloodthirster, Lethal Tempo, Presence of Mind, Bloodline, Coup de Grace, Absolute Focus, Gathering Storm}
+{Yasuo, Berserker's Greaves, Blade of The Ruined King, Immortal Shieldbow, Infinity Edge, Death's Dance, Guardian Angel, Lethal Tempo, Absorb Life, Alacrity, Last Stand, Second Wind, Overgrowth}
+{Vel'Koz, Sorcerer's Shoes, Luden's Companion, Liandry's Torment, Shadowflame, Rabadon's Deathcap, Horizon Focus, Arcane Comet, Manaflow Band, Trascendence, Scorch, Cheap Shot, Ultimate Hunter}
+{Braum, Plated Steelcaps, Locket of the Iron Solari, Knight's Vow, Thornmail, Frozen Heart, Redemption, Guardian, Font of Life, Bone Plating, Unflinching, Cosmic Insight, Biscuit Delivery}
+{Gnar, Plated Steelcaps, Trinity Force, Black Cleaver, Sterak's Gage, Randuin's Omen, Thornmail, Fleet Footwork, Triumph, Alacrity, Last Stand, Bone Plating, Overgrowth}
+{Azir, Sorcerer's Shoes, Nashor's Tooth, Rylai's Crystal Scepter, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Lethal Tempo, Presence of Mind, Alacrity, Cut Down, Manaflow Band, Gathering Storm}
+{Kalista, Berseker's Greaves, Blade of The Ruined King, Guinsoo's Rageblade, Terminus, Wit's End, Runaan's Hurricane, Lethal Tempo, Triumph, Alacrity, Last Stand, Sudden Impact, Treasure Hunter}
+{Rek'Sai, Plated Steelcaps, Stridebreaker, Spear of Shojin, Sterak's Gage, Death's Dance, Black Cleaver, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Bard, Sorcerer's Shoes, Bloodsong, Dead Man's Plate, Nashor's Tooth, Statikk Shiv, Liandry's Torment, Electrocute, Cheap Shot, Deep Ward, Relentless Hunter, Celerity, Scorch}
+{Ekko, Sorcerer's Shoes, Nashor's Tooth, Lich Bane, Rabadon's Deathcap, Zhonya's Hourglass, Void Staff, Dark Harvest, Sudden Impact, Grisly Mementos, Treasure Hunter, Magical Footwear, Cosmic Insight}
+{Tahm Kench, Plated Steelcaps, Heartsteel, Unending Despair, Thornmail, Spirit Visage, Randuin's Omen, Grasp of the Undying, Shield Bash, Second Wind, Unflinching, Triumph, Alacrity}
+{Kindred, Plated Steelcaps, Kraken Slayer, The Collector, Infinity Edge, Lor Dominik's Regards, Rapid Firecannon, Press the Attack, Triumph, Alacrity, Coup de Grace, Sudden Impact, Treasure Hunter}
+{Illaoi, Plated Steelcaps, Iceborn Gauntlet, Black Cleaver, Sterak's Gage, Spirit Visage, Thornmail, Grasp of the Undying, Demolish, Bone Plating, Overgrowth, Presence of Mind, Last Stand}
+{Jhin, Boots of Swiftness, Youmuu's Ghostblade, Rapid Firecannon, Infinity Edge, Lord Dominik's Regards, The Collector, Fleet Footwork, Presence of Mind, Bloodline, Coup de Grace, Celerity, Gathering Storm}
+{Aurelion Sol, Sorcerer's Shoes, Blackfire Torch, Rylai's Crystal Scepter, Liandry's Torment, Rabadon's Deathcap, Zhonya's Hourglass, Arcane Comet, Manaflow Band, Absolute Focus, Scorch, Bone Plating, Overgrowth}
+{Taliyah, Ionian Boots of Lucidity, Seraph's Embrace, Liandry's Torment, Zhonya's Hourglass, Rabadon's Deathcap, Rylai's Crystal Scepter, Phase Rush, Manaflow Band, Trascendence, Scorch, Presence of Mind, Haste}
+{Kled, Plated Steelcaps, Titanic Hydra, Hullbreaker, Overlord's Bloodmail, Sterak's Gage, Black Cleaver, Conqueror, Triumph, Alacrity, Last Stand, Demolish, Bone Plating}
+{Ivern, Ionian Boots of Lucidity, Redemption, Moonstone Renewer, Ardent Censer, Dawncore, Mejai's Soulstealer, Summon Aery, Nimbus Cloak, Trascendence, Waterwalking, Cash Back, Cosmic Insight}
+{Camille, Plated Steelcaps, Trinity Force, Ravenous Hydra, Spear of Shojin, Death's Dance, Sterak's Gage, Grasp of the Undying, Shield Bash, Bone Plating, Unflinching, Magical Footwear, Biscuit Delivery}
+{Rakan, Celestial Opposition, Locket of the Iron Solari, Zeke's Convergence, Redemption, Thornmail, Knight's Vow, Unsealed Spellbook, Magical Footwear, Biscuit Delivery, Cosmic Insight, Deep Ward, Ultimate Hunter}
+{Xayah, Berserker's Greaves, Essence Reaver, Navori Flickerblade, Infinity Edge, Lord Dominik's Regards, Bloodthirster, Lethal Tempo, Presence of Mind, Bloodline, Coup de Grace, Magical Footwear, Biscuit Delivery}
+{Kayn, Ionian Boots of Lucidity, Eclipse, Black Cleaver, Spear of Shojin, Serylda's Grudge, Guardian Angel, Dark Harvest, Sudden Impact, Grisly Mementos, Treasure Hunter, Magical Footwear, Cosmic Insight}
+{Ornn, Plated Steelcaps, Sunfire Aegis, Thornmail, Jak'Sho, The Protean, Unending Despair, Frozen Heart, Grasp of the Undying, Demolish, Bone Plating, Overgrowth, Magical Footwear, Biscuit Delivery}
+{Zoe, Sorcerer's Shoes, Luden's Companion, Shadowflame, Rabadon's Deathcap, Zhonya's Hourglass, Void Staff, Electrocute, Sudden Impact, Grisly Mementos, Relentless Hunter, Nimbus Cloak, Trascendence}
+{Kai'Sa, Berserker's Greaves, Kraken Slayer, Guinsoo's Rageblade, Nashor's Tooth, Zhonya's Hourglass, Rabadon's Deathcap, Lethal Tempo, Presence of Mind, Bloodline, Coup de Grace, Magical Footwear, Biscuit Delivery}
+{Pyke, Boots of Swiftness, Umbral Glaive, Youmuu's Ghostblade, Celestial Opposition, Edge of Night, Opportunity, Hail of Blades, Cheap Shot, Sixth Sense, Ultimate Hunter, Bone Plating, Unflinching}
+{Neeko, Ionian Boots of Lucidity, Hextech Rocketbelt, Zhonya's Hourglass, Stormsurge, Shadowflame, Malignance, Arcane Comet, Manaflow Band, Trascendence, Scorch, Cosmic Insight, Biscuit Delivery}
+{Sylas, Sorcerer's Shoes, Hextech Rocketbelt, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Dark Harvest, Sudden Impact, Grisly Mementos, Treasure Hunter, Magical Footwear, Cosmic Insight}
+{Yuumi, Ionian Boots of Lucidity, Dream Maker, Moonstone Renewer, Arden Censer, Mikael's Blessing, Dawncore, Summon Aery, Manaflow Band, Trascendence, Scorch, Font of Life, Revitalize}
+{Qiyana, Ionian Boots of Lucidity, Youmuu's Ghostblade, Opportunity, Serylda's Grudge, Edge of Night, Axiom Arc, First Strike, Magical Footwear, Triple Tonic, Cosmic Insight, Sudden Impact, Ultimate Hunter}
+{Senna, Boots of Swiftness, Bloodsong, Black Cleaver, Rapid Firecannon, Infinity Edge, Chempunk Chainsword, Fleet Footwork, Presence of Mind, Alacrity, Cut Down, Bone Plating, Revitalize}
+{Aphelios, Berserker's Greaves, The Collector, Infinity Edge, Lord Dominik's Regards, Immortal Shieldbow, Bloodthirster, Press the Attack, Absorb Life, Bloodline, Cut Down, Absolute Focus, Gathering Storm}
+{Sett, Plated Steelcaps, Stridebreaker, Overlord's Bloodmail, Sterak's Gage, Spear of Shojin, Hullbreaker, Conqueror, Triumph, Alacrity, Last Stand, Second Wind, Unflinching}
+{Lillia, Sorcerer's Shoes, Liandry's Torment, Riftmaker, Zhonya's Hourglass, Rylai's Crystal Scepter, Rabadon's Deathcap, Conqueror, Triumph, Haste, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Yone, Berserker's Greaves, Blade of The Ruined King, Immortal Shieldbow, Infinity Edge, Death's Dance, Guardian Angel, Lethal Tempo, Absorb Life, Alacrity, Last Stand, Second Wind, Overgrowth}
+{Samira, Plated Steelcaps, The Collector, Infinity Edge, Lord Dominik's Regards, Immortal Shiedlbow, Bloodthirster, Conqueror, Triumph, Bloodline, Last Stand, Taste of Blood, Treasure Hunter}
+{Seraphine, Ionian Boots of Lucidity, Dream Maker, Echoes of Helia, Moonstone Renewer, Redemption, Dawncore, Summon Aery, Manaflow Band, Trascendence, Gathering Storm, Font of Life, Revitalize}
+{Rell, Plated Steelcaps, Celestial Opposition, Locket of the Iron Solari, Zeke's Convergence, Knight's Vow, Thornmail, Aftershock, Shield Bash, Bone Plating, Unflinching, Hextech Flashtraption, Cosmic Insight}
+{Viego, Plated Steelcaps, Kraken Slayer, The Collector, Immortal Shieldbow, Lord Dominik's Regards, Guardian Angel, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Gwen, Plated Steelcaps, Riftmaker, Nashor's Tooth, Shadowflame, Rabadon's Deathcap, Zhonya's Hourglass, Conqueror, Presence of Mind, Alacrity, Last Stand, Bone Plating, Unflinching}
+{Akshan, Boots of Swiftness, Statikk Shiv, The Collector, Infinity Edge, Lord Dominik's Regards, Rapid Firecannon, Press the Attack, Presence of Mind, Alacrity, Coup de Grace, Bone Plating, Overgrowth}
+{Vex, Sorcerer's Shoes, Luden's Companion, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Taste of Blood, Grisly Mementos, Ultimate Hunter, Manaflow Band, Trascendence}
+{Zeri, Berserker's Greaves, Yun Tal Wildarrows, Runaan's Hurricane, Infinity Edge, Lord Dominik's Regards, Bloodthirster, Lethal Tempo, Triumph, Alacrity, Last Stand, Conditioning, Overgrowth}
+{Renata Glasc, Ionian Boots of Lucidity, Locket of the Iron Solari, Redemption, Shurelya's Battlesong, Ardent Censer, Knight's Vow, Guardian, Shield Bash, Bone Plating, Unflinching, Sixth Sense, Relentless Hunter}
+{Bel'Veth, Plated Steelcaps, Kraken Slayer, Stridebreaker, Wit's End, Death's Dance, Jak'Sho, The Protean, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Nilah, Plated Steelcaps, The Collector, Infinity Edge, Lord Dominik's Regards, Immortal Shieldbow, Death's Dance, Conqueror, Triumph, Alacrity, Last Stand, Magical Footwear, Cosmic Insight}
+{K'Sante, Plated Steelcaps, Iceborn Gauntlet, Unending Despair, Jak'Sho, The Protean, Thornmail, Randuin's Omen, Grasp of the Undying, Shield Bash, Second Wind, Overgrowth, Biscuit Delivery, Cosmic Insight}
+{Milio, Ionian Boots of Lucidity, Dream Maker, Echoes of Helia, Moonstone Renewer, Ardent Censer, Dawncore, Summon Aery, Manaflow Band, Trascendence, Scorch, Bone Plating, Revitalize}
+{Naafiri, Ionian Boots of Lucidity, Eclipse, Black Cleaver, Spear of Shojin, Death's Dance, Guardian Angel, Conqueror, Triumph, Alacrity, Coup de Grace, Magical Footwear, Cosmic Insight}
+{Briar, Plated Steelcaps, Titanic Hydra, Black Cleaver, Death's Dance, Spirit Visage, Sterak's Gage, Press the Attack, Triumph, Alacrity, Coup de Grace, Sudden Impact, Treasure Hunter}
+{Hwei, Sorcerer's Shoes, Blackfire Torch, Liandry's Torment, Shadowflame, Rabadon's Deathcap, Zhonya's Hourglass, Arcane Comet, Manaflow Band, Trascendence, Scorch, Haste, Cut Down}
+{Smolder, Ionian Boots of Lucidity, Essence Reaver, Spear of Shojin, Rapid Firecannon, Lord Dominik's Regards, Bloodthirster, Fleet Footwork, Presence of Mind, Bloodline, Cut Down, Magical Footwear, Biscuit Delivery}
+{Aurora, Sorcerer's Shoes, Luden's Companion, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Taste of Blood, Grisly Mementos, Ultimate Hunter, Manaflow Band, Trascendence}
+----------------------------------------------------------------------------------
+{champion:"Alistar", item1:"Celestial Opposition", item2:"Boots of Swiftness", item3:"Locket of the Iron Solari", item4:"Zeke's Convergence", item5:"Knight's Vow", item6:"Thornmail", rune1:"Aftershock", rune2:"Font of Life", rune3:"Bone Plating", rune4:"Unflinching", rune5:"Hextech Flashtraption", rune6:"Cosmic Insight"}
+----------------------------------------------------------------------------------
+"Aurora"; "Sorcerer's Shoes"; "Luden's Companion"; "Shadowflame"; "Zhonya's Hourglass"; "Rabadon's Deathcap"; "Void Staff"; "Electrocute"; "Taste of Blood"; "Grisly Mementos"; "Ultimate Hunter"; "Manaflow Band"; "Trascendence"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,794 @@
+// how to erase duplicate entries in mongodb
+
+var ids = db.Characters.aggregate([
+  { $sort: { _id: 1 } },
+  { $group: {
+      _id: "$champion",
+      keep: { $first: "$_id" },
+      remove: { $push: "$_id" }
+    }},
+  { $project: {
+      remove: { $slice: ["$remove", 1, { $size: "$remove" }] }
+    }},
+  { $unwind: "$remove" },
+  { $project: { _id: 0, remove: 1 } }
+]).toArray().map(doc => doc.remove);
+
+db.Characters.deleteMany({ _id: { $in: ids } });
+
+// insert many entries inside a collection
+db.Characters.insertMany([
+  {champion: "Bel'Veth", position: "Jungle", damage_type: "PHYS", role:"Bruiser"},
+  {champion: "Briar", position: "Jungle", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Elise", position: "Jungle", damage_type: "MAGIC", role:"MAGE, Assassin"},
+  {champion: "Evelynn", position: "Jungle", damage_type: "MAGIC", role:"Assassin"},
+  {champion: "Graves", position: "Jungle", damage_type: "PHYS", role:"DPS"},
+  {champion: "Hecarim", position: "Jungle", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Ivern", position: "Jungle", damage_type: "MAGIC", role:"MAGE, Support"},
+  {champion: "Jarvan IV", position: "Jungle", damage_type: "PHYS", role:"TANK,Bruiser"},
+  {champion: "Jax", position: "Jungle, Top", damage_type: "PHYS", role:"Bruiser"},
+  {champion: "Kayn", position: "Jungle", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Kha'Zix", position: "Jungle", damage_type: "PHYS", role:"Assassin"},
+  {champion: "Kindred", position: "Jungle", damage_type: "PHYS", role:"DPS"},
+  {champion: "Lee Sin", position: "Jungle", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Lillia", position: "Jungle", damage_type: "MAGIC", role:"MAGE, Bruiser"},
+  {champion: "Master Yi", position: "Jungle", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Nidalee", position: "Jungle", damage_type: "MAGIC", role:"MAGE, Assassin"},
+  {champion: "Nocturne", position: "Jungle", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Nunu & Willump", position: "Jungle", damage_type: "MAGIC", role:"TANK, MAGE"},
+  {champion: "Poppy", position: "Jungle, Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Rammus", position: "Jungle", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Rek'Sai", position: "Jungle", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Rengar", position: "Jungle, Top", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Sejuani", position: "Jungle", damage_type: "MAGIC", role:"TANK, Bruiser"},
+  {champion: "Shyvana", position: "Jungle", damage_type: "PHYS", role:"MAGE, Bruiser"},
+  {champion: "Skarner", position: "Jungle, Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Trundle", position: "Jungle, Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Udyr", position: "Jungle, Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Vi", position: "Jungle", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Viego", position: "Jungle", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Volibear", position: "Jungle, Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Warwick", position: "Jungle, Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Wukong", position: "Jungle, Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Xin Zhao", position: "Jungle", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Aatrox", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Cho'Gath", position: "Top", damage_type: "MAGIC", role:"TANK, MAGE"},
+  {champion: "Darius", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Dr. Mundo", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Fiora", position: "Top", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Gangplank", position: "Top", damage_type: "PHYS", role:"Bruiser"},
+  {champion: "Garen", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Gnar", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Gwen", position: "Top", damage_type: "MAGIC", role:"Bruiser, Assassin"},
+  {champion: "Illaoi", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "K'Sante", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Kayle", position: "Top", damage_type: "PHYS", role:"MAGE, DPS"},
+  {champion: "Kennen", position: "Top", damage_type: "MAGIC", role:"MAGE, DPS"},
+  {champion: "Kled", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Mordekaiser", position: "Top", damage_type: "MAGIC", role:"MAGE, Bruiser"},
+  {champion: "Nasus", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Olaf", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Ornn", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Quinn", position: "Top", damage_type: "PHYS", role:"DPS, Assassin"},
+  {champion: "Renekton", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Riven", position: "Top", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Sett", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Singed", position: "Top", damage_type: "MAGIC", role:"TANK, MAGE"},
+  {champion: "Sion", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Tryndamere", position: "Top", damage_type: "PHYS", role:"Bruiser, Assassin"},
+  {champion: "Urgot", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},
+  {champion: "Yorick", position: "Top", damage_type: "PHYS", role:"TANK, Bruiser"},])
+
+
+
+//update elements inside a collection
+db.Characters.bulkWrite([
+    {updateOne: {
+      filter:  {champion:"Aatrox"}, 
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Ahri"},
+      update: {$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Akali"},
+      update:   {$set:{resource:"Energy"}}
+    }},
+    {updateOne: {
+      filter:     {champion:"Akshan"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Alistar"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:     {champion:"Amumu"},
+      update: {$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Anivia"}, 
+      update:  {$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:     {champion:"Annie"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:     {champion:"Ashe"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:     {champion:"Aurelion Sol"},
+      update: {$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Aurora"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Azir"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Bard"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Bel'Veth"},
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Blitzcrank"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Brand"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Braum"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Briar"},
+      update:{$set:{resource:"Health"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Caitlyn"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Camille"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Cassiopeia"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Cho'Gath"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Corki"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Darius"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Diana"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Dr. Mundo"},
+      update:{$set:{resource:"Health"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Draven"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Ekko"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Elise"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Evelynn"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Ezreal"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Fiddlesticks"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Fiora"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Fizz"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Galio"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Gangplank"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Garen"},
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Gnar"},
+      update:{$set:{resource:"Rage"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Gragas"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Graves"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Gwen"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Hecarim"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Heimerdinger"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Hwei"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Illaoi"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Irelia"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Ivern"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Janna"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Jarvan IV"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Jax"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Jayce"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Jhin"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Jinx"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"K'Sante"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kai'Sa"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kalista"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Karma"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Karthus"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kassadin"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Katarina"},
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kayle"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kayn"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kennen"}, 
+      update:{$set:{resource:"Energy"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kha'Zix"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kindred"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kled"},
+      update:{$set:{resource:"Courage"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Kog'Maw"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"LeBlanc"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Lee Sin"}, 
+      update:{$set:{resource:"Energy"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Leona"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Lillia"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:  {champion:"Lissandra"},  
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Lucian"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Lulu"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Lux"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Malphite"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Malzahar"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Maokai"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Master Yi"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Milio"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Miss Fortune"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Mordekaiser"}, 
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Morgana"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Naafiri"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Nami"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Nasus"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Nautilus"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:  {champion:"Neeko"},  
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Nidalee"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Nilah"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Nocturne"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Nunu & Willump"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Olaf"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Orianna"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Ornn"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Pantheon"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Poppy"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Pyke"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Qiyana"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Quinn"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Rakan"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Rammus"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Rek'Sai"}, 
+      update:{$set:{resource:"Rage"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Rell"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Renata Glasc"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Renekton"},
+      update:{$set:{resource:"Fury"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Rengar"},
+      update:{$set:{resource:"Ferocity"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Riven"}, 
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Rumble"},
+      update:{$set:{resource:"Heat"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Samira"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Sejuani"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Senna"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Seraphine"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Sett"}, 
+      update:{$set:{resource:"Grit"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Shaco"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Shen"},
+      update:{$set:{resource:"Energy"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Shyvana"},
+      update:{$set:{resource:"Fury"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Singed"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Sion"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Sivir"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Skarner"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:  {champion:"Smolder"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Sona"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Soraka"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Swain"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Sylas"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Syndra"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Tahm Kench"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Taliyah"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Talon"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Taric"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Teemo"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Thresh"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Tristana"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:  {champion:"Trundle"},  
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Tryndamere"},
+      update:{$set:{resource:"Fury"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Twisted Fate"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Twitch"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Udyr"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Urgot"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Varus"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Veigar"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Vel'Koz"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Vex"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Vi"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Viego"},
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Viktor"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Vladimir"},
+      update:{$set:{resource:"Health"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Volibear"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Warwick"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:{champion:"Wukong"},   
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Xayah"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Xerath"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Xin Zhao"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Yasuo"},
+      update:{$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Yone"}, 
+      update: {$set:{resource:"Manaless"}}
+    }},
+    {updateOne: {
+      filter:    {champion:"Yorick"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter: {champion:"Yuumi"},   
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:  {champion:"Zac"},   
+      update:{$set:{resource:"Health"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Zed"},
+      update:{$set:{resource:"Energy"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Zeri"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Ziggs"},
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Zilean"},  
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:  {champion:"Zoe"}, 
+      update:{$set:{resource:"Mana"}}
+    }},
+    {updateOne: {
+      filter:   {champion:"Zyra"}, 
+      update:{$set:{resource:"Mana"}}
+    }}
+  ]   )
+
+// Synchronous connection to MongoDB (example)
+from pymongo import MongoClient
+
+uri = "<connection string URI>"
+client = MongoClient(uri)
+
+try:
+    database = client.get_database("sample_mflix")
+    movies = database.get_collection("movies")
+
+    # Query for a movie that has the title 'Back to the Future'
+    query = { "title": "Back to the Future" }
+    movie = movies.find_one(query)
+
+    print(movie)
+
+    client.close()
+
+except Exception as e:
+    raise Exception("Unable to find the document due to the following error: ", e)
+
+// Asynchronous connection to MongoDB (example)
+import asyncio
+from pymongo import AsyncMongoClient
+
+async def main():
+    uri = "<connection string URI>"
+    client = AsyncMongoClient(uri)
+
+    try:
+        database = client.get_database("sample_mflix")
+        movies = database.get_collection("movies")
+
+        # Query for a movie that has the title 'Back to the Future'
+        query = { "title": "Back to the Future" }
+        movie = await movies.find_one(query)
+
+        print(movie)
+
+        await client.close()
+
+    except Exception as e:
+        raise Exception("Unable to find the document due to the following error: ", e)
+
+# Run the async function
+asyncio.run(main())
+

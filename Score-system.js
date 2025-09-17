@@ -2,13 +2,14 @@
 
 //include (librerias necesarias)
 const fs = require('fs');
+const uc = require("../mongo-connection");
 //Lectura de documento html
 
 // Aqui va el señor que escucha (aka el listener)
 
 //conexion con el señor mongo
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://lorenamartindorta_db_user:wXwuir25H6YXLj14@builder.t1daj30.mongodb.net/?retryWrites=true&w=majority&appName=Builder";
+let uri = uc.uriConnection();
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -403,50 +404,81 @@ function ScoreGiver(champ, items, runes) {
         {
           if (champRoles[l] == roles[k])
           {
-            console.log("5-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is the same as champion role " + champRoles[l]);
+            // console.log("5-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is the same as champion role " + champRoles[l]);
             currentRuneScore += 5;
             break;
             
-            // console.log(runeSection[i] + "|" + dividedPaths[j] + ":" + roles[k] + "==" + champRoles[l]);
           } if (l == champRoles.length -1) 
           {
-            console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is NOT the same as champion role " + champRoles[l]);
+            // console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is NOT the same as champion role " + champRoles[l]);
             currentRuneScore += 1;
           }
         }
       }
-      console.log("==================================");
+      // console.log("==================================");
     }
-    
     let commonRoles = runeSection[i].common_role.split(", ");
-    // console.log("SG: commonRoles length is " + champRoles.length);
     for (let j = 0; j < commonRoles.length; ++j)
     {
         let champRoles = champ.role.split(", ");
         for (let k = 0; k < champRoles.length; ++k)
         {
-          // console.log("SG: see champroles" + champRoles[k]);
           if (champRoles[k] == commonRoles[j])
           {
-            console.log("10-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is in champ role " + champRoles[k]);
+            // console.log("10-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is in champ role " + champRoles[k]);
             currentRuneScore += 10;
             break;
           } if ( k == champRoles.length - 1) 
           {
-            console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is NOT in champ role " + champRoles[k]);
+            // console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is NOT in champ role " + champRoles[k]);
             currentRuneScore += 1;
           }
         }
     }
-    console.log("---------------------------------------------");
+    // console.log("---------------------------------------------");
     runeScore += currentRuneScore;
   }
-
-console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   console.log("RuneSection score is " + runeScore);
 
 //Yet another long ass loop for the fucking items
-
+for(let i = 0; i < itemSection.length; ++i){
+  let currentItemScore = 0;
+  let commonRoles = itemSection[i].common_role.split(", ");
+  for(let j = 0; j < commonRoles.length; ++j){
+    let champRoles = champ.role.split(", ");
+    for(let k = 0; k < champRoles.length; ++k){
+      if(champRoles[k] == commonRoles[j]){
+        console.log("10pts----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is in the champ role " + champRoles[k]);
+        currentItemScore += 10;
+        break;
+      } 
+      if (k == champRoles.length -1){
+        console.log("1pt----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is NOT in the champ role " + champRoles[k]);
+        currentItemScore += 1;
+      }
+    }
+  }
+  console.log("==================================");
+  let abilityType = itemSection[i].ability_type.split(", ");
+  for(let j = 0; j < abilityType.length; ++j){
+    let champRoles = champ.role.split(", ");
+    for(let k = 0; k < champRoles.length; ++k){
+      if (champRoles[k] == abilityType[j]){
+        console.log("5 pts----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is in the champ role " + champRoles[k]);
+        currentItemScore += 5;
+        break;
+      } 
+      if ( k == champRoles.length -1){
+        console.log("1pt----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is NOT in the champ role " + champRoles[k]);
+        currentItemScore += 1;
+      }
+    }
+  }
+  console.log("==================================");
+  
+  itemScore += currentItemScore;
+  console.log("The final item score is " + itemScore);
+}
 
 
   return [itemScore, runeScore]; //👍

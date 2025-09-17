@@ -52,10 +52,6 @@ async function run() {
     let buildScore = ScoreGiver(champ, items, runes);
     // console.log(buildScore);
     // let finalScore = BuildplusScorefinal(data, ScoreGiver(championName, items, runes));
-    //MONGOSHIT BELOW //////////////////////////////////
-    //await findChamps(client, "Aphelios");
-    //  await findItem(client, ["Opportunity", "Sorcerer's Shoes"]);
-    // await findRunes(client, ['Press the Attack', 'Conditioning']);
     // await savePlayerBuilds(client)
 
  } finally {
@@ -136,12 +132,10 @@ async function savePlayerBuilds(client, newPlayerBuild) {
 
 // Aqui va la funcion que le pide a mongo toda la info de los champion, items y runas
 // Estos tienen toda la pesca, nombre, id, etc
-championsList = [{champion: "NaC", _id: -1}, {champion: "Vayne", _id: 0}, {champion: "Ahri", _id: 1}, {champion: "Akali", _id: 2}, {champion: "Alistar", _id: 3}, {champion: "Amumu", _id: 4}, {champion: "Anivia", _id: 5}, {champion: "Annie", _id: 6}, {champion: "Aphelios", _id: 7}, {champion: "Ashe", _id: 8}, {champion: "Aurelion Sol", _id: 9}]; // This is just a sample, the real one has all the champions
-itemList = [{item: "NaI", _id: -1}, {item: "Berserker's Greaves", _id: 0}, {item: "Blade of The Ruined King", _id: 1}, {item: "Guinsoo's Rageblade", _id: 2}, {item: "Terminus", _id: 3}, {item: "Experimental Hexplate", _id: 4}, {item: "Wit's End", _id: 5}]; // This is just a sample, the real one has all the items}
-runesList = [{rune: "NaR", _id: -1}, {rune: "Lethal Tempo", _id: 0}, {rune: "Triumph", _id: 1}, {rune: "Alacrity", _id: 2}, {rune: "Coup de Grace", _id: 3}, {rune: "Conditionig", _id: 4}, {rune: "Overgrowth", _id: 5}]; // This is just a sample, the real one has all the runes:
+// championsList = [{champion: "NaC", _id: -1}, {champion: "Vayne", _id: 0}, {champion: "Ahri", _id: 1}, {champion: "Akali", _id: 2}, {champion: "Alistar", _id: 3}, {champion: "Amumu", _id: 4}, {champion: "Anivia", _id: 5}, {champion: "Annie", _id: 6}, {champion: "Aphelios", _id: 7}, {champion: "Ashe", _id: 8}, {champion: "Aurelion Sol", _id: 9}]; // This is just a sample, the real one has all the champions
+// itemList = [{item: "NaI", _id: -1}, {item: "Berserker's Greaves", _id: 0}, {item: "Blade of The Ruined King", _id: 1}, {item: "Guinsoo's Rageblade", _id: 2}, {item: "Terminus", _id: 3}, {item: "Experimental Hexplate", _id: 4}, {item: "Wit's End", _id: 5}]; // This is just a sample, the real one has all the items}
+// runesList = [{rune: "NaR", _id: -1}, {rune: "Lethal Tempo", _id: 0}, {rune: "Triumph", _id: 1}, {rune: "Alacrity", _id: 2}, {rune: "Coup de Grace", _id: 3}, {rune: "Conditionig", _id: 4}, {rune: "Overgrowth", _id: 5}]; // This is just a sample, the real one has all the runes:
 
-
-//Aquí va la llamada a la base de datos para coger la build de referencia y comparar
 
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
 function PlayerBuildImporter(){
@@ -358,14 +352,9 @@ function ScoreGiver(champ, items, runes) {
   let runeSection = runes;
   let itemSection = items;
 
-  // console.log(championName);
-  console.log(typeof runeSection); 
-
-// console.log(itemSection);
-
   //Here we are going to store the final result of the scores
   let runeScore = 0;
-  let itemScore = [];
+  let itemScore = 0;
 
   const roleRuneRelationship = {
     Resolve:["TANK", "Bruiser", "Support"],
@@ -393,13 +382,8 @@ function ScoreGiver(champ, items, runes) {
     "Sorcerer's Shoes":["Support", "MAGE", "Assassin"],
   };
 
-  // aquí tienes que inicializar los puntos que da esta parte
-  // for rune in runes
-  //  guardar en variable el path del campeón
-  //  comprobar si en alguna de las runas el path.substring(rune) devuelve lo correcto (true, o una copia, depende de substring)
-  //  añadir puntos si si
-
   // console.log("SG: runeSection length is " + runeSection.length);
+  //Incredible long ass loop for the runes
   let champRoles;
   for (let i = 0; i < runeSection.length; ++i)
   {
@@ -455,13 +439,17 @@ function ScoreGiver(champ, items, runes) {
         }
     }
     console.log("---------------------------------------------");
-    console.log("The total amount of Score is " + runeScore);
     runeScore += currentRuneScore;
   }
 
 console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   console.log("RuneSection score is " + runeScore);
-  return runeScore;
+
+//Yet another long ass loop for the fucking items
+
+
+
+  return [itemScore, runeScore]; //👍
 }
 
 //Aqui va todo el codigo para calcular las puntuaciones
@@ -485,43 +473,13 @@ function ScoreCalculator(referenceBuild, playerBuild)
   let playerRunesScore = newBuild.slice(Math.max(newBuild.length - 6, 0));
   let playerItemsScore = newBuild.slice(1,7);
 
-  //QUITAR LA SUMA DE LAS PUNTUACIONES PORQUE LAS SUMAMOS YA ANTES
-  //Sum of the values for the minimumScore
-  let sumMinimumItems = 0;
-  for (let i = 0; i < minimumItemsScore.length; i++) {
-    sumMinimumItems += minimumItemsScore[i];
-  }
-  let sumMinimumRunes = 0;
-  for (let i = 0; i < minimumRunesScore.length; i++) {
-    sumMinimumRunes += minimumRunesScore[i];
-  }
-
-  //Sum of the values for the referenceScore
-  let sumReferenceItems = 0;
-  for (let i = 0; i < referenceItemsScore.length; i++) {
-    sumReferenceItems += referenceItemsScore[i];
-  }
-  let sumReferenceRunes = 0;
-  for (let i = 0; i < referenceRunesScore.length; i++) {
-    sumReferenceRunes += referenceRunesScore[i];
-  }
-
-  //Sum of the values for the playerScore
-  let sumPlayerItems = 0;
-  for (let i = 0; i < playerItemsScore.length; i++) {
-    sumPlayerItems += minimumItemsScore[i];
-  }
-  let sumPlayerRunes = 0;
-  for (let i = 0; i < playerRunesScore.length; i++) {
-    sumPlayerRunes += playerRunesScore[i];
-  }
 
   //Calculate the minimum value possible
-  const minimumScore = 1 + (itemWeight * sumMinimumItems) + (runeWeight * sumMinimumRunes); 
+  const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 
   //Calculate the reference total value
-  let referenceScore = 1 + (itemWeight * sumReferenceItems) + (runeWeight * sumReferenceRunes);
+  let referenceScore = 1 + (itemWeight * referenceItemsScore) + (runeWeight * referenceRunesScore);
   //Calculate the player total value
-  let playerScore = 1 + (itemWeight * sumPlayerItems) + (runeWeight * sumPlayerRunes);
+  let playerScore = 1 + (itemWeight * playerItemsScore) + (runeWeight * playerRunesScore);
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 

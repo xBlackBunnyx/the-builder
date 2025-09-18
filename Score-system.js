@@ -468,33 +468,62 @@ for(let i = 0; i < itemSection.length; ++i){
     }
   }
   console.log("==================================");
-  let champRoles = champ.role.split(", ");
-  for (let j = 0; j < champRoles.length; j++){
-    let role = champRoles[j];
-    console.log("The role is " + role);
-    let stats = roleItemStatRelationship[role]
-    console.log("The stats are " + stats);
-    for (let k = 0; k < itemSection.length; k++){
-      let item = itemSection[k];
-      console.log("The item is " + item);
-      let itemStats = item.stats_given;
-      console.log("The stats of the item are " + itemStats);
-        for(let l = 0; l < stats.length; l++){
-          for(let m = 0; m < itemStats.length; m++){
-            if(stats[l] == itemStats[m]){
-              console.log("5 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
+  console.log("Here starts the problematic loop");
+  console.log("Check if we can see what's inside common_roles " + commonRoles);
+  for (let j = 0; j < commonRoles; j++){
+    console.log("We entered the hell loop");
+    let champRoles = champ.role.split(", ");
+    console.log("The champion role is " + champRoles);
+    for (let k = 0; k < champRoles.length; k++){
+      if(champRoles[k] == commonRoles[j]){
+        let stats = roleItemStatRelationship[champRoles[k]];
+        console.log("The stats are " + stats);
+        for( let l = 0; l < itemSection.length; l++){
+          let item = itemSection[l];
+          console.log("The item is " + item);
+          let itemStats = item.stats_given;
+          console.log("The stats of the item are " + itemStats);
+          for(let m = 0; m < stats.length; m++){
+            if(stats[m] == itemStats[l]){
+              console.log("5 pts--------- The common role of the object is " + commonRoles[j] + " , the champion role is " + champRoles[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
               currentItemScore +=5;
               break;
             }
-            if(m == itemStats.length -1){
-              console.log("1 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are NOT equal to the item stats " + itemStats);
+            if(m == stats.length -1){
+              console.log("1 pts--------- The common role of the object is " + commonRoles[j] + " , the champion role is " + champRoles[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
               currentItemScore +=1;
             }
           }
         }
+      }
     }
-    
   }
+  // let champRoles = champ.role.split(", ");
+  // for (let j = 0; j < champRoles.length; j++){
+  //   let role = champRoles[j];
+  //   console.log("The role is " + role);
+  //   let stats = roleItemStatRelationship[role]
+  //   console.log("The stats are " + stats);
+  //   for (let k = 0; k < itemSection.length; k++){
+  //     let item = itemSection[k];
+  //     console.log("The item is " + item);
+  //     let itemStats = item.stats_given;
+  //     console.log("The stats of the item are " + itemStats);
+  //       for(let l = 0; l < stats.length; l++){
+  //         for(let m = 0; m < itemStats.length; m++){
+  //           if(stats[l] == itemStats[m]){
+  //             console.log("5 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
+  //             currentItemScore +=5;
+  //             break;
+  //           }
+  //           if(m == itemStats.length -1){
+  //             console.log("1 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are NOT equal to the item stats " + itemStats);
+  //             currentItemScore +=1;
+    //         }
+    //       }
+    //     }
+  //   }
+  // }
   itemScore += currentItemScore;
   console.log("The final item score is " + itemScore);
 }

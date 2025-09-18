@@ -79,17 +79,15 @@ async function findChamps(client, nameOfChampion) {
 //Function to return the items
 async function findItem(client, namesOfItems) {
   if (typeof namesOfItems === "string") namesOfItems = [namesOfItems];
-
   let cursor = await client.db("builder").collection("Items").find({item:{$in:namesOfItems}});
-  let results = [];
-  for await (let doc of cursor){
-    results.push(doc);
-  }
+  const results = await cursor.toArray();
+  // let results = [];
+  // for await (let doc of cursor){
+  //   results.push(doc);
+  // }
   // let itemResults = await cursor.toArray();
    // const results = await client.db("builder").collection("Items").find({item: { $elemMatch: { namesOfItems}}});
   if (results.length > 0){
-    // console.log(`Found ${results.length} items for: ${namesOfItems.join(",")}`);
-    // console.log(JSON.stringify(results, null, 2));
     return results;
     // console.log("Result's propert values are " + Object.cursor.values());
     // console.log("Result of the query is " + cursor);
@@ -97,17 +95,14 @@ async function findItem(client, namesOfItems) {
     //   console.log("The data of the document is " + doc);
     //   return doc;
     // });
-
   } else {
     console.log(`No listing found with the name '${[namesOfItems]}'`);
     return [];
   }
 }
 
-
 //Function to return the runes
 async function findRunes(client, namesOfRunes) {
- 
    if (typeof namesOfRunes === "string") namesOfRunes = [namesOfRunes];
   let cursor = await client.db("builder").collection("Runes").find({rune:{$in:namesOfRunes}});
   const results = await cursor.toArray();
@@ -118,7 +113,6 @@ async function findRunes(client, namesOfRunes) {
     // console.log(`Found ${results.length} items for: ${namesOfRunes.join(",")}`);
     // console.log(JSON.stringify(results, null, 2));
     return results;
-
   } else {
     console.log(`No listing found with the name '${[namesOfRunes]}'`);
     return [];
@@ -157,7 +151,6 @@ function PlayerBuildImporter(){
   // console.log(Object.prototype.toString.call(result));
   return result;
 }
-// PlayerBuildImporter()
 
 // Function that search by the id of the champion, item and rune (HAY QUE HACERLO GENERAL PARA QUE FUNCIONE CON TODOS)
 function BinarySearchID(itemID, list) {
@@ -475,7 +468,33 @@ for(let i = 0; i < itemSection.length; ++i){
     }
   }
   console.log("==================================");
-  
+  let champRoles = champ.role.split(", ");
+  for (let j = 0; j < champRoles.length; j++){
+    let role = champRoles[j];
+    console.log("The role is " + role);
+    let stats = roleItemStatRelationship[role]
+    console.log("The stats are " + stats);
+    for (let k = 0; k < itemSection.length; k++){
+      let item = itemSection[k];
+      console.log("The item is " + item);
+      let itemStats = item.stats_given;
+      console.log("The stats of the item are " + itemStats);
+        for(let l = 0; l < stats.length; l++){
+          for(let m = 0; m < itemStats.length; m++){
+            if(stats[l] == itemStats[m]){
+              console.log("5 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
+              currentItemScore +=5;
+              break;
+            }
+            if(m == itemStats.length -1){
+              console.log("1 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are NOT equal to the item stats " + itemStats);
+              currentItemScore +=1;
+            }
+          }
+        }
+    }
+    
+  }
   itemScore += currentItemScore;
   console.log("The final item score is " + itemScore);
 }

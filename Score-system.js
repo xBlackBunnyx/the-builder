@@ -469,8 +469,8 @@ for(let i = 0; i < itemSection.length; ++i){
   }
   console.log("==================================");
   console.log("Here starts the problematic loop");
-  console.log("Check if we can see what's inside common_roles " + commonRoles);
-  for (let j = 0; j < commonRoles; j++){
+  console.log("Inside common_roles are the roles: " + commonRoles);
+  for (let j = 0; j < commonRoles.length; j++){
     console.log("We entered the hell loop");
     let champRoles = champ.role.split(", ");
     console.log("The champion role is " + champRoles);
@@ -478,24 +478,35 @@ for(let i = 0; i < itemSection.length; ++i){
       if(champRoles[k] == commonRoles[j]){
         let stats = roleItemStatRelationship[champRoles[k]];
         console.log("The stats are " + stats);
-        for( let l = 0; l < itemSection.length; l++){
-          let item = itemSection[l];
-          console.log("The item is " + item);
-          let itemStats = item.stats_given;
+        // for( let l = 0; l < itemSection.length; l++){
+          let item = itemSection[i];
+          console.log("The item is " + item.item);
+          let itemStats = item.stats_given.split(", ");
           console.log("The stats of the item are " + itemStats);
+          let addedExtra = false;
+          let someStatMatched = false;
           for(let m = 0; m < stats.length; m++){
-            if(stats[m] == itemStats[l]){
+            // if(stats[m] == itemStats[l]){
+            // }
+            if (itemStats.includes(stats[m])){
               console.log("5 pts--------- The common role of the object is " + commonRoles[j] + " , the champion role is " + champRoles[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
               currentItemScore +=5;
-              break;
+              someStatMatched = true;
+              if (itemStats.length < 3 && !addedExtra) {
+                currentItemScore += 15;
+                console.log("15 pts-------- Item has mental issues so we give it extra");
+                addedExtra = true;
+              } else {
+                console.log("Item " + item.item + " itemStats length is " + itemStats.length + " and addedExtra is " + addedExtra + ", so it in full cognitive function"); 
+              }
             }
-            if(m == stats.length -1){
-              console.log("1 pts--------- The common role of the object is " + commonRoles[j] + " , the champion role is " + champRoles[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
+            if(m == stats.length -1 && !someStatMatched){
+              console.log("1 pts--------- The common role of the object is " + commonRoles[j] + " , the champion role is " + champRoles[k] + " the relationship stats are " + ArrayToString(stats) + " are NOT equal to the item stats " + itemStats);
               currentItemScore +=1;
             }
           }
-        }
-      }
+        // }
+      } 
     }
   }
   // let champRoles = champ.role.split(", ");

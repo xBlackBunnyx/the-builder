@@ -45,9 +45,8 @@ async function run() {
     let runes = await findRunes(client, runesName);
     // console.log(runes);
     // console.log("Checking if something appears inside the function ScoreGiver");
-    let buildScore = ScoreGiver(champ, items, runes);
-
     ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes));
+    CombinedBuildScore(StringsToBuild([champ, items, runes]), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes)));
 
  } finally {
     // Ensures that the client will close when you finish/error
@@ -104,8 +103,18 @@ async function findRunes(client, namesOfRunes) {
   }
 }
 
+//Funcion que combina la build codificada con la puntuación
+function CombinedBuildScore(codedBuild, finalScore){
+  let buildCodified = codedBuild;
+  console.log("The codified build is " + buildCodified);
+  let buildScore = finalScore * 100;
+  console.log("The build score is " + buildScore);
+  let completeBuild = {build: buildCodified, score: buildScore};
+  console.log("The final result is " + completeBuild);
+}
+
 //Funcion para que se suban los resultados a mongo
-async function savePlayerBuilds(client, newPlayerBuild) {
+async function SavePlayerBuilds(client, newPlayerBuild) {
   const scoreBuild = await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
   console.log(`New listing created with the following id: ${scoreBuild.insertedId}`);
 }
@@ -234,20 +243,29 @@ function BuildToStrings(build) {
   return result;
 }
 
+let champList = ["Aphelios", "Ashe", "Caitlyn", "Draven", "Ezreal", "Jhin", "Jinx", "Kai'Sa", "Kalista", "Karthus", "Kog'Maw", "Lucian", "Miss Fortune", "Nilah", "Samira", "Senna", "Seraphine", "Sivir", "Smolder", "Tristana", "Twisted Fate", "Twitch", "Varus", "Vayne", "Xayah", "Yasuo", "Zeri", "Ziggs", "Alistar", "Amumu", "Anivia", "Annie", "Bard", "Blitzcrank", "Brand", "Braum", "Camille", "Fiddlesticks", "Galio", "Heimerdinger", "Ivern", "Janna", "Karma", "Leona", "Lulu", "Lux", "Malphite", "Maokai", "Milio", "Morgana", "Nami", "Nautilus", "Neeko", "Pantheon", "Pyke", "Rakan", "Rell", "Renata Glasc", "Shaco", "Shen", "Sona", "Soraka", "Swain", "Tahm Kench", "Taric", "Teemo", "Thresh", "Veigar", "Vel'Koz", "Xerath", "Yuumi", "Zac", "Zilean", "Zyra", "Ahri", "Akali", "Aurelion Sol", "Aurora", "Azir", "Cassiopeia", "Corki", "Diana", "Ekko", "Fizz", "Gragas", "Hwei", "Irelia", "Jayce", "Kassadin", "Katarina", "LeBlanc", "Lissandra", "Naafiri", "Orianna", "Qiyana", "Rumble", "Ryze", "Sylas", "Syndra", "Taliyah", "Talon", "Vex", "Viktor", "Vladimir", "Yone", "Zed", "Zoe", "Bel'Veth", "Briar", "Elise", "Evelynn", "Graves", "Hecarim", "Ivern", "Jarvan IV", "Jax", "Kayn", "Kha'Zix", "Kindred", "Lee Sin", "Lillia", "Master Yi", "Nidalee", "Nocturne", "Nunu & Willump", "Poppy", "Rammus", "Rek'Sai", "Rengar", "Sejuani", "Shyvana", "Skarner", "Trundle", "Udyr", "Vi", "Viego", "Volibear", "Warwick", "Wukong", "Xin Zhao", "Aatrox", "Cho'Gath", "Darius", "Dr. Mundo", "Fiora", "Gangplank", "Garen", "Gnar", "Gwen", "Illaoi", "K'Sante", "Kayle", "Kennen", "Kled", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Quinn", "Renekton", "Riven", "Sett", "Singed", "Sion", "Tryndamere", "Urgot", "Yorick"];
+let itemList = ["Berserker's Greaves", 'Boots of Swiftness', 'Ionian Boots of Lucidity', "Mercury's Treads", 'Plated Steelcaps',  "Sorcerer's Shoes",  'Abyssal Mask',  "Bloodletter's Curse",  'Cryptbloom', 'Abyssal Mask', 'Terminus', 'Void Staff',  'Black Cleaver', "Lord Dominik's Regards", 'Mortal Reminder', "Serylda's Grudge",  "Banchee's Veil", 'Edge of Night', "Dead Man's Plate", 'Trailblazer', 'Hollow Radiance',  'Sunfire Aegis', 'Iceborn Gauntlet', 'Lich Bane', 'Trinity Force', 'Immortal Shieldbow', 'Maw of Malmortius', "Sterak's Gage",  "Seraph's Embrace", 'Muramana', 'Fimbulwinter', 'Profane Hydra', 'Ravenous Hydra',  'Titanic Hydra',  'Stridebreaker', 'Celestial Opposition', 'Bloodsong', 'Dream Maker', 'Solstice Sleigh', "Zaz'Zak's Realmspike", 'Ardent Censer', 'Axiom Arc', 'Blackfire Torch', 'Blade of the Ruined King', 'Bloodthirster', 'Chempunk Chainsword',  'Cosmic Drive', 'Dawncore', "Death's Dance", 'Echoes of Helia',  'Eclipse', 'Essence Reaver', 'Experimental Hexplate', 'Force of Nature', 'Frozen Heart', 'Guardian Angel', "Guinsoo's Rageblade", 'Heartsteel', 'Hextech Rocketbelt', 'Horizon Focus', 'Hubris', 'Hullbreaker', 'Imperial Mandate', 'Infinity Edge', "Jak'Sho, The Protean", 'Kaenic Rookern', "Knight's Vow", 'Kraken Slayer', "Liandry's Torment", 'Locket of the Iron Solari', "Luden's Companion", 'Malignance', "Mejai's Soulstealer", 'Mercurial Scimitar', "Mikael's Blessing", 'Moonstone Renewer', 'Morellonomicon', "Nashor's Tooth", 'Navori Flickerblade', 'Opportunity', "Overlord's Bloodmail", 'Phantom Dancer', "Rabadon's Deathcap", "Randuin's Omen", 'Rapid Firecannon', 'Redemption', 'Riftmaker', 'Rod of Ages', "Runaan's Hurricane", "Rylai's Crystal Scepter", "Serpent's Fang", 'Shadowflame', "Shurelya's Battlesong", 'Spear of Shojin', 'Spirit Visage', 'Staff of Flowing Water', 'Statikk Shiv', 'Stormsurge', 'Sundered Sky', 'The Collector', 'Thornmail', 'Umbral Glaive', 'Unending Despair', 'Vigilant Wardstone', 'Voltaic Cyclosword', "Warmog's Armor", "Wit's End", "Youmuu's Ghostblade", 'Yun Tal Wildarrows', "Zeke's Convergence", "Zhonya's Hourglass" ];
+let runeList = [ 'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conqueror', 'Absorb Life', 'Triumph', 'Presence of Mind', 'Alacrity', 'Haste', 'Bloodline', 'Coup de Grace', 'Cut Down', 'Last Stand', 'Electrocute', 'Dark Harvest', 'Hail of Blades', 'Cheap shot', 'Taste of Blood', 'Sudden Impact', 'Sixth Sense', 'Grisly Mementos', 'Deep Ward', 'Treasure Hunter', 'Relentless Hunter', 'Ultimate Hunter', 'Summon Aery', 'Arcane Comet', 'Phase Rush', 'Axiom Arcanist', 'Manaflow Band', 'Nimbus cloak', 'Transcendence', 'Celerity', 'Absolute Focus', 'Scorch', 'Waterwalking', 'Gathering Storm', 'Grasp of the Undying', 'Aftershock', 'Guardian', 'Demolish', 'Font of Life', 'Shield Bash', 'Conditioning', 'Second Wind', 'Bone Plating', 'Overgrowth', 'Revitalize', 'Unflinching', 'Glacial Augment', 'Unsealed Speelbook', 'First Strike', 'Hextech Flashtraption', 'Magical Footwear', 'Cash Back', 'Triple Tonic', 'Time Warp Tonic', 'Biscuit Delivery', 'Cosmic Insigh', 'Approach Velocity', 'Jack of All Trades'];
+
 // Function that convert the strings into code
 function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING
-  const champIdx = championsList.findIndex(c => c.champion === strings[0]);
+  // const champIdx = championsList.findIndex(c => c.champion === strings[0]);
+  let champIdx = strings[0]; // no es el index sino el nombre
+  let champName = strings[0];
+  console.log("The champion is " + champIdx);
   if (champIdx === -1) {
     // console.log("S2B: Champion not found: " + strings[0]);
     return "999";
   }
-  let result = String(champIdx).padStart(3, "0");
+  let result = String(champIdx).padStart(3, "0"); // ????
+  console.log("The result has the champion code " + result);
   // console.log("S2B: Champion " + strings[0] + " -> index " + champIdx + " -> padded " + result);
 
   // items
   for (let i = 1; i < 7; i++) {
     const itemName = strings[i];
-    const j = itemList.findIndex(it => it.item === itemName);
+    // const j = itemList.findIndex(it => it.item === itemName);
+    let j = strings[1,2,3,4,5,6]; // ...this is made up, use let result = strings.slice(1,7)
     if (j === -1) {
       // console.log("S2B: Champion not found: " + itemName);
       result += "999";
@@ -264,7 +282,8 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
   
   for (let i = 7; i < 13; i++) {
     const runeName = strings[i];
-    const j = runesList.findIndex(it => it.rune === runeName);
+    // const j = runesList.findIndex(it => it.rune === runeName);
+    let j = strings[7,8,9,10,11,12];
     if (j === -1) {
       console.log("S2B: Champion not found: " + runeName);
       result += "999";
@@ -512,24 +531,10 @@ function ScoreCalculator(referenceBuild, playerBuild)
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 
-  console.log("the normalizedResult is " + normalizedResult);
+  // console.log("the normalizedResult is " + normalizedResult * 100);
   return normalizedResult;
     //Llamada para que devuelva el resultado a la página web (KIWI MALE SABE, KIWI MALE ES MUY LISTO)
 }
-
-// function LargeNumberToString(number)
-// {
-//   result ="";
-//   let number2 = number;
-//   while (number2 > 0)
-//   {
-//     rest = number2 % 10;
-//     result += rest.toString();
-//     number2 = Math.floor(number2 / 10);
-//   }
-//   let returnResult = result.split('').reverse().join('');
-//   return returnResult;
-// }
 
 // Helper function to debug arrays
 function ArrayToString(array)

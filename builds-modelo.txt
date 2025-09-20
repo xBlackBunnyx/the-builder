@@ -1,6 +1,3 @@
-{Alistar, Celestial Opposition, Boots of Swiftness, Locket of the Iron Solari, Zeke's Convergence, Knight's Vow, Thornmail, Aftershock, Font of Life, Bone Plating, Unflinching, Hextech Flashtraption, Cosmic Insight}
-{Annie, Sorcerer's Shoes, Malignance, Stormsurge, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Electrocute, Cheap Shot, Grisly Mementos, Relentless Hunter, Axiom Arcanist, Absolute Focus}
-{Ashe, Berserker's Greaves, Kraken Slayer, Phantom Dancer, Infinity Edge, Bloodthirster, Runaan's Hurricane, Lethal Tempo, Presence of Mind, Alacrity, Cut Down, Biscuit Delivery, Approach Velocity}
 {Fiddlesticks, Sorcerer's Shoes, Malignance, Liandry's Torment, Zhonya's Hourglass, Shadowflame, Rabadon's Deathcap, Electrocute, Cheap Shot, Grisly Mementos, Ultimate Hunter, Axiom Arcanist, Transcendence}
 {Jax, Plated Steelcaps, Trinity Force, Sundered Sky, Sterak's Gage, Blade of The Ruined King, Frozen Heart, Grasp of the Undying, Demolish, Second Wind, Unflinching, Biscuit Delivery, Cosmic Insight}
 {Kayle, Nashor's Tooth, Boots of Swiftness, Rabadon's Deathcap, Shadowflame, Lich Bane, Void Staff, Press the Attack, Absorb Life, Alacrity, Last Stand, Celerity, Gathering Storm}
@@ -8,7 +5,6 @@
 {Morgana, Zaz'Zak's Realmspike, Ionian Boots of Lucidity, Liandry's Torment, Zhonya's Hourglass, Rylai's Crystal Scepter, Horizon Focus, Arcane Comet, Manaflow Band, Transcendence, Scorch, Cheap Shot, Ultimate Hunter}
 {Nunu & Willump, Plated Steelcaps, Liandry's Torment, Frozen Heart, Thornmail, Kaenic Rookern, Shadowflame, Phase Rush, Nimbus Cloak, Celerity, Waterwalking, Triumph, Haste}
 {Ryze, Sorcerer's Shoes, Rod of Ages, Seraph's Embrace, Rabadon's Deathcap, Zhonya's Hourglass, Void Staff, Phase Rush, Manaflow Band, Transcendence, Gathering Storm, Bone Plating, Overgrowth}
-{Sion, Plated Steelcaps, Sunfire Aegis, Unending Despair, Thornmail, Overlord's Bloodmail, Jak'Sho, The Protean, Grasp of the Undying, Demolish, Conditioning, Overgrowth, Cash back, Approach Velocity}
 {Sivir, Berserker's Greaves, Essence Reaver, Navori Flickerblade, Infinity Edge, Lord Dominik's Regards, Bloodthirster, Lethal Tempo, Presence of Mind, Alacrity, Cur Down, Magical Footwear, Biscuit Delivery}
 {Soraka, Dream Maker, Ionian Boots of Lucidity, Moonstone Renewer, Redemption, Dawncore, Ardent Censer, Summon Aery, Manaflow Band, Transcendence, Scorch, Bone Plating, Revitalize}
 {Teemo, Sorcerer's Shoes, Nashor's Tooth, Liandry's Torment, Malignance, Rabadon's Deathcap, Void Staff, Press the Attack, Triumph, Alacrity, Last Stand, Bone Plating, Overgrowth}
@@ -165,11 +161,10 @@
 {Briar, Plated Steelcaps, Titanic Hydra, Black Cleaver, Death's Dance, Spirit Visage, Sterak's Gage, Press the Attack, Triumph, Alacrity, Coup de Grace, Sudden Impact, Treasure Hunter}
 {Hwei, Sorcerer's Shoes, Blackfire Torch, Liandry's Torment, Shadowflame, Rabadon's Deathcap, Zhonya's Hourglass, Arcane Comet, Manaflow Band, Trascendence, Scorch, Haste, Cut Down}
 {Smolder, Ionian Boots of Lucidity, Essence Reaver, Spear of Shojin, Rapid Firecannon, Lord Dominik's Regards, Bloodthirster, Fleet Footwork, Presence of Mind, Bloodline, Cut Down, Magical Footwear, Biscuit Delivery}
-{Aurora, Sorcerer's Shoes, Luden's Companion, Shadowflame, Zhonya's Hourglass, Rabadon's Deathcap, Void Staff, Electrocute, Taste of Blood, Grisly Mementos, Ultimate Hunter, Manaflow Band, Trascendence}
-----------------------------------------------------------------------------------
-{champion:"Alistar", item1:"Celestial Opposition", item2:"Boots of Swiftness", item3:"Locket of the Iron Solari", item4:"Zeke's Convergence", item5:"Knight's Vow", item6:"Thornmail", rune1:"Aftershock", rune2:"Font of Life", rune3:"Bone Plating", rune4:"Unflinching", rune5:"Hextech Flashtraption", rune6:"Cosmic Insight"}
+
 ----------------------------------------------------------------------------------
 "Aurora"; "Sorcerer's Shoes"; "Luden's Companion"; "Shadowflame"; "Zhonya's Hourglass"; "Rabadon's Deathcap"; "Void Staff"; "Electrocute"; "Taste of Blood"; "Grisly Mementos"; "Ultimate Hunter"; "Manaflow Band"; "Trascendence"
+HAY QUE QUITARLE LAS COMILLAS
 
 
 

@@ -45,8 +45,9 @@ async function run() {
     let runes = await findRunes(client, runesName);
     // console.log(runes);
     // console.log("Checking if something appears inside the function ScoreGiver");
-    ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes));
-    CombinedBuildScore(StringsToBuild([champ, items, runes]), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes)));
+    // ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes));
+    // CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes)));
+    await SavePlayerBuilds(client, CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes))));
 
  } finally {
     // Ensures that the client will close when you finish/error
@@ -108,14 +109,15 @@ function CombinedBuildScore(codedBuild, finalScore){
   let buildCodified = codedBuild;
   console.log("The codified build is " + buildCodified);
   let buildScore = finalScore * 100;
-  console.log("The build score is " + buildScore);
+  // console.log("The build score is " + buildScore);
   let completeBuild = {build: buildCodified, score: buildScore};
-  console.log("The final result is " + completeBuild);
+  // console.log("The final result is " + completeBuild);
+  return completeBuild;
 }
 
 //Funcion para que se suban los resultados a mongo
 async function SavePlayerBuilds(client, newPlayerBuild) {
-  const scoreBuild = await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
+  let scoreBuild = await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
   console.log(`New listing created with the following id: ${scoreBuild.insertedId}`);
 }
 
@@ -248,30 +250,28 @@ let itemList = ["Berserker's Greaves", 'Boots of Swiftness', 'Ionian Boots of Lu
 let runeList = [ 'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conqueror', 'Absorb Life', 'Triumph', 'Presence of Mind', 'Alacrity', 'Haste', 'Bloodline', 'Coup de Grace', 'Cut Down', 'Last Stand', 'Electrocute', 'Dark Harvest', 'Hail of Blades', 'Cheap shot', 'Taste of Blood', 'Sudden Impact', 'Sixth Sense', 'Grisly Mementos', 'Deep Ward', 'Treasure Hunter', 'Relentless Hunter', 'Ultimate Hunter', 'Summon Aery', 'Arcane Comet', 'Phase Rush', 'Axiom Arcanist', 'Manaflow Band', 'Nimbus cloak', 'Transcendence', 'Celerity', 'Absolute Focus', 'Scorch', 'Waterwalking', 'Gathering Storm', 'Grasp of the Undying', 'Aftershock', 'Guardian', 'Demolish', 'Font of Life', 'Shield Bash', 'Conditioning', 'Second Wind', 'Bone Plating', 'Overgrowth', 'Revitalize', 'Unflinching', 'Glacial Augment', 'Unsealed Speelbook', 'First Strike', 'Hextech Flashtraption', 'Magical Footwear', 'Cash Back', 'Triple Tonic', 'Time Warp Tonic', 'Biscuit Delivery', 'Cosmic Insigh', 'Approach Velocity', 'Jack of All Trades'];
 
 // Function that convert the strings into code
-function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING
-  // const champIdx = championsList.findIndex(c => c.champion === strings[0]);
-  let champIdx = strings[0]; // no es el index sino el nombre
-  let champName = strings[0];
+function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING (data variable)
+  console.log("Champion name is " + strings[0]);
+  const champIdx = champList.findIndex(c => c === strings[0]);
   console.log("The champion is " + champIdx);
   if (champIdx === -1) {
     // console.log("S2B: Champion not found: " + strings[0]);
     return "999";
   }
-  let result = String(champIdx).padStart(3, "0"); // ????
-  console.log("The result has the champion code " + result);
+  let result = String(champIdx).padStart(3, "0");
+  // console.log("The result has the champion code " + result);
   // console.log("S2B: Champion " + strings[0] + " -> index " + champIdx + " -> padded " + result);
 
   // items
   for (let i = 1; i < 7; i++) {
-    const itemName = strings[i];
-    // const j = itemList.findIndex(it => it.item === itemName);
-    let j = strings[1,2,3,4,5,6]; // ...this is made up, use let result = strings.slice(1,7)
+    const buildItem = strings[i];
+    const j = itemList.findIndex(it => it === buildItem);
     if (j === -1) {
-      // console.log("S2B: Champion not found: " + itemName);
+      console.log("S2B: Item not found: " + itemName);
       result += "999";
     } else {
       let padded = String(j).padStart(3, "0");
-      // console.log("S2B: Found item + " + itemName + " at position " + j);
+      console.log("S2B: Found item " + buildItem + " at position " + j);
       // console.log("S2B: Addition before padding is " + j);
       // console.log("S2B: Addition after padding is " + padded);
       result += padded;
@@ -281,15 +281,14 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
   // console.log("S2B: After items result is " + result);
   
   for (let i = 7; i < 13; i++) {
-    const runeName = strings[i];
-    // const j = runesList.findIndex(it => it.rune === runeName);
-    let j = strings[7,8,9,10,11,12];
+    const buildRune = strings[i];
+    const j = runeList.findIndex(ru => ru === buildRune);
     if (j === -1) {
-      console.log("S2B: Champion not found: " + runeName);
+      console.log("S2B: Rune not found: " + buildRune);
       result += "999";
     } else {
       let padded = String(j).padStart(2, "0");
-      // console.log("S2B: Found item + " + runeName + " at position " + j);
+      console.log("S2B: Found rune " + buildRune + " at position " + j);
       // console.log("S2B: Addition before padding is " + j);
       // console.log("S2B: Addition after padding is " + padded);
       result += padded;

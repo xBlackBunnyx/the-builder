@@ -1,46 +1,25 @@
 {
-  "name": "The Builder",
-  "version": "1.0.0",
-  "description": "Personal business",
-  "main": "index.js",
-  "devDependencies": {
-    "@babel/core": "^7.17.4",
-    "@exercism/eslint-config-javascript": "^0.6.0",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^16.11.25",
-    "babel-jest": "^27.5.1",
-    "core-js": "^3.21.1",
-    "eslint": "^8.14.0",
-    "eslint-config-google": "^0.14.0",
-    "express": "^4.17.1",
-    "jest": "^27.5.1"
-  },
-  "scripts": {
-    "test": "jest --verbose",
-    "watch": "jest --watchAll --verbose",
-    "coverage": "jest --coverage --verbose",
-    "server": "http-server docs",
-    "start": "node web-server/app.js",
-    "start-back": "nohup sudo -b npm start"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://BLANK.git"
-  },
-  "keywords": [
-    "Javascript",
-    "HTML",
-    "css",
-    "figma",
-    "web",
-    "interactive"
-  ],
-  "author": "G. Zafra <jguillermozafra@gmail.com>, M. Dorta <loremd99@outlook.com>",
-  "license": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
-  "homepage": "https://BLANK",
+  "name": "the-builder",
+  "private": true,
   "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev": "CHOKIDAR_USEPOLLING=1 vite"
+  },
   "dependencies": {
-    "@babel/plugin-syntax-import-assertions": "^7.16.7",
-    "@babel/preset-env": "^7.16.11"
+    "@fontsource/roboto": "5.2.7",
+    "@mdi/font": "7.4.47",
+    "vue": "^3.5.21",
+    "vuetify": "^3.10.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "sass-embedded": "^1.92.1",
+    "unplugin-fonts": "^1.4.0",
+    "unplugin-vue-components": "^29.0.0",
+    "vite": "^7.1.5",
+    "vite-plugin-vuetify": "^2.1.2"
   }
 }

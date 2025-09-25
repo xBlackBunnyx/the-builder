@@ -461,7 +461,75 @@ function ScoreGiver(champ, items, runes) {
 
 console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   console.log("RuneSection score is " + runeScore);
-  return runeScore;
+
+//Yet another long ass loop for the fucking items
+for(let i = 0; i < itemSection.length; ++i){
+  let currentItemScore = 0;
+  let commonRoles = itemSection[i].common_role.split(", ");
+  for(let j = 0; j < commonRoles.length; ++j){
+    let champRoles = champ.role.split(", ");
+    for(let k = 0; k < champRoles.length; ++k){
+      if(champRoles[k] == commonRoles[j]){
+        console.log("10pts----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is in the champ role " + champRoles[k]);
+        currentItemScore += 10;
+        break;
+      } 
+      if (k == champRoles.length -1){
+        console.log("1pt----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is NOT in the champ role " + champRoles[k]);
+        currentItemScore += 1;
+      }
+    }
+  }
+  console.log("===============LOOKING FOR THE ABILITIES NOW===================");
+  let abilityType = itemSection[i].ability_type.split(", ");
+  for(let j = 0; j < abilityType.length; ++j){
+    let champRoles = champ.role.split(", ");
+    for(let k = 0; k < champRoles.length; ++k){
+      if (champRoles[k] == abilityType[j]){
+        console.log("5 pts----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is in the champ role " + champRoles[k]);
+        currentItemScore += 5;
+        break;
+      } 
+      if ( k == champRoles.length -1){
+        console.log("1pt----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is NOT in the champ role " + champRoles[k]);
+        currentItemScore += 1;
+      }
+    }
+  }
+  console.log("==================================");
+  let champRoles = champ.role.split(", ");
+  for (let j = 0; j < champRoles.length; j++){
+    let role = champRoles[j];
+    console.log("The role is " + role);
+    let stats = roleItemStatRelationship[role]
+    console.log("The stats are " + stats);
+    for (let k = 0; k < itemSection.length; k++){
+      let item = itemSection[k];
+      console.log("The item is " + item);
+      let itemStats = item.stats_given;
+      console.log("The stats of the item are " + itemStats);
+        for(let l = 0; l < stats.length; l++){
+          for(let m = 0; m < itemStats.length; m++){
+            if(stats[l] == itemStats[m]){
+              console.log("5 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
+              currentItemScore +=5;
+              break;
+            }
+            if(m == itemStats.length -1){
+              console.log("1 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are NOT equal to the item stats " + itemStats);
+              currentItemScore +=1;
+            }
+          }
+        }
+    }
+    
+  }
+  itemScore += currentItemScore;
+  console.log("The final item score is " + itemScore);
+}
+
+
+  return [itemScore, runeScore]; //👍
 }
 
 //Aqui va todo el codigo para calcular las puntuaciones

@@ -46,8 +46,9 @@ async function run() {
     // console.log(runes);
     // console.log("Checking if something appears inside the function ScoreGiver");
     // ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes));
-    CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes)));
-    // await SavePlayerBuilds(client, CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes))));
+    getReferenceBuild(client, "031");
+
+    // CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes)));
 
  } finally {
     // Ensures that the client will close when you finish/error
@@ -55,6 +56,41 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+// code is in string format, the three digits that dictate which champion is it. Code format
+async function getReferenceBuild(client, code)
+{
+  let cursor = await client.db("builder").collection("PlayerBuilds").find({score: 100});
+  console.log("The insides of cursor are " + typeof cursor);
+  let refBuilds = await cursor.toArray();
+  console.log("The insides of refBuilds are " + typeof refBuilds);
+  for(let i = 0; i < refBuilds.length; i++){
+    let buildCode = refBuilds[i].build;
+    console.log("The dictionary we are iterating is " + buildCode);
+     if (buildCode.slice(0,3) === code)
+      {
+        console.log("GRP-Debug: Could find the ref build");
+        return buildCode;
+      } else {
+        console.log("GRB-Debug: Ref build " + buildCode.slice(0,3) + " != " + code);
+      }
+  }
+  // let cursorExplanation = await cursor.explain();
+  // console.log("GRP-Debug: Cursor explanation: " + cursorExplanation);
+  // let refBuilds = await cursor.toArray();
+  // console.log("GRP-Debug: refBuilds size is " + refBuilds.length);
+  // for (let i = 0; i < refBuilds.length; ++i)
+  // {
+  //   if (refBuilds[i].slice(0,3) === code)
+  //   {
+  //     console.log("GRP-Debug: Could find the ref build");
+  //     return refBuilds[i];
+  //   } else {
+  //     console.log("GRB-Debug: Ref build " + refBuilds[i].slice(0,3) + " != " + code);
+  //   }
+  // }
+  console.log("GRB: Couldn't find reference build with champion code " + code);
+}
 
 //Function to return a specific champion 
 async function findChamps(client, nameOfChampion) {

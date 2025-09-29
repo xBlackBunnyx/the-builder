@@ -31,24 +31,28 @@ async function run() {
    
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
     let data = PlayerBuildImporter();
-    // console.log("raw data from the importer is " + ArrayToString(data));
+
     let championName = data[0];
-    // console.log("Champion name extracted is " + championName);
     let itemsName = data.slice(1,7);
-    // console.log("items name are" + itemsName);
     let runesName = data.slice(7);
-    // console.log("runes name are" + runesName);
+
     let champ = await findChamps(client, championName);
-    // console.log(champ);
     let items = await findItem(client, itemsName);
-    // console.log(items);
     let runes = await findRunes(client, runesName);
-    // console.log(runes);
     // console.log("Checking if something appears inside the function ScoreGiver");
     // ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes));
-    getReferenceBuild(client, "031");
 
-    // CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes)));
+    let codedReferenceBuild = await GetReferenceBuild(client, StringsToBuild(data));
+    let refBuildChampion = BuildToStrings(codedReferenceBuild)[0];
+    let refBuildItems = BuildToStrings(codedReferenceBuild).slice(1,7);
+    let refBuildRunes = BuildToStrings(codedReferenceBuild).slice(7);
+
+    let refChamp = await findChamps(client, refBuildChampion);
+    let refItems = await findItem(client, refBuildItems);
+    let refRunes = await findRunes(client, refBuildRunes);
+
+    let finalBuildResult = CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
+    await SavePlayerBuilds(client, finalBuildResult);
 
  } finally {
     // Ensures that the client will close when you finish/error
@@ -58,37 +62,20 @@ async function run() {
 run().catch(console.dir);
 
 // code is in string format, the three digits that dictate which champion is it. Code format
-async function getReferenceBuild(client, code)
+async function GetReferenceBuild(client, code)
 {
   let cursor = await client.db("builder").collection("PlayerBuilds").find({score: 100});
-  console.log("The insides of cursor are " + typeof cursor);
   let refBuilds = await cursor.toArray();
-  console.log("The insides of refBuilds are " + typeof refBuilds);
   for(let i = 0; i < refBuilds.length; i++){
     let buildCode = refBuilds[i].build;
-    console.log("The dictionary we are iterating is " + buildCode);
-     if (buildCode.slice(0,3) === code)
+    if (buildCode.slice(0,3) === code.slice(0,3))
       {
         console.log("GRP-Debug: Could find the ref build");
         return buildCode;
       } else {
-        console.log("GRB-Debug: Ref build " + buildCode.slice(0,3) + " != " + code);
+        // console.log("GRB-Debug: Ref build " + buildCode.slice(0,3) + " != " + code);
       }
-  }
-  // let cursorExplanation = await cursor.explain();
-  // console.log("GRP-Debug: Cursor explanation: " + cursorExplanation);
-  // let refBuilds = await cursor.toArray();
-  // console.log("GRP-Debug: refBuilds size is " + refBuilds.length);
-  // for (let i = 0; i < refBuilds.length; ++i)
-  // {
-  //   if (refBuilds[i].slice(0,3) === code)
-  //   {
-  //     console.log("GRP-Debug: Could find the ref build");
-  //     return refBuilds[i];
-  //   } else {
-  //     console.log("GRB-Debug: Ref build " + refBuilds[i].slice(0,3) + " != " + code);
-  //   }
-  // }
+  } 
   console.log("GRB: Couldn't find reference build with champion code " + code);
 }
 
@@ -159,13 +146,6 @@ async function SavePlayerBuilds(client, newPlayerBuild) {
 
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
 function PlayerBuildImporter(){
-  // let result = fs.readFile('build-test.txt', (err, data) => {
-  //   if (err) throw err;
-  //   let array = data.toString().split(",");
-  //   for(i in array){
-  //     console.log(array[i]);
-  //   }
-  // });
   let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
   return result;
 }
@@ -202,7 +182,7 @@ function BinarySearchName(itemName, list) {
 
 //Aqui va la funcion que traduce de codigo de barras a texto
 function BuildToStrings(build) { 
-  result = [];
+  let result = [];
   // Code extraction
   // At the database we have the following amounts per category: champions: 169, items: 111, runes: 61, at the time of writing this (01-09-2025)
   // Codes follow the following method:
@@ -216,7 +196,6 @@ function BuildToStrings(build) {
     console.log("Build length is incorrect, something went wrong. Length is " + build.length);
     return "";
   }
-
   // Champ section
   // Get rid of the pad
   let nonZeroSpot = -1;
@@ -233,7 +212,7 @@ function BuildToStrings(build) {
   }
   let champIndex = build.slice(nonZeroSpot, 3);
   // console.log("B2S: Non Zero Spot is  " + nonZeroSpot);
-  result.push(championsList[champIndex].champion);
+  result.push(champList[champIndex]);
 
   // Item part
   for (let i = 3; i < 21; i += 3) {
@@ -253,7 +232,7 @@ function BuildToStrings(build) {
     }
     let itemIndex = Number(build.slice(nonZeroSpot, i+3));
     // console.log("B2S: itemIndex is  |" + itemIndex + "|");
-    let itemName = itemList[itemIndex].item;
+    let itemName = itemList[itemIndex];
     result.push(itemName);
   }
   
@@ -275,15 +254,17 @@ function BuildToStrings(build) {
     }
     let runeIndex = Number(build.slice(nonZeroSpot, i+2));
     // console.log("B2S: itemIndex is  |" + runeIndex + "|");
-    result.push(runesList[runeIndex].rune);
+    result.push(runeList[runeIndex]);
   }
 
   return result;
 }
 
-let champList = ["Aphelios", "Ashe", "Caitlyn", "Draven", "Ezreal", "Jhin", "Jinx", "Kai'Sa", "Kalista", "Karthus", "Kog'Maw", "Lucian", "Miss Fortune", "Nilah", "Samira", "Senna", "Seraphine", "Sivir", "Smolder", "Tristana", "Twisted Fate", "Twitch", "Varus", "Vayne", "Xayah", "Yasuo", "Zeri", "Ziggs", "Alistar", "Amumu", "Anivia", "Annie", "Bard", "Blitzcrank", "Brand", "Braum", "Camille", "Fiddlesticks", "Galio", "Heimerdinger", "Ivern", "Janna", "Karma", "Leona", "Lulu", "Lux", "Malphite", "Maokai", "Milio", "Morgana", "Nami", "Nautilus", "Neeko", "Pantheon", "Pyke", "Rakan", "Rell", "Renata Glasc", "Shaco", "Shen", "Sona", "Soraka", "Swain", "Tahm Kench", "Taric", "Teemo", "Thresh", "Veigar", "Vel'Koz", "Xerath", "Yuumi", "Zac", "Zilean", "Zyra", "Ahri", "Akali", "Aurelion Sol", "Aurora", "Azir", "Cassiopeia", "Corki", "Diana", "Ekko", "Fizz", "Gragas", "Hwei", "Irelia", "Jayce", "Kassadin", "Katarina", "LeBlanc", "Lissandra", "Naafiri", "Orianna", "Qiyana", "Rumble", "Ryze", "Sylas", "Syndra", "Taliyah", "Talon", "Vex", "Viktor", "Vladimir", "Yone", "Zed", "Zoe", "Bel'Veth", "Briar", "Elise", "Evelynn", "Graves", "Hecarim", "Ivern", "Jarvan IV", "Jax", "Kayn", "Kha'Zix", "Kindred", "Lee Sin", "Lillia", "Master Yi", "Nidalee", "Nocturne", "Nunu & Willump", "Poppy", "Rammus", "Rek'Sai", "Rengar", "Sejuani", "Shyvana", "Skarner", "Trundle", "Udyr", "Vi", "Viego", "Volibear", "Warwick", "Wukong", "Xin Zhao", "Aatrox", "Cho'Gath", "Darius", "Dr. Mundo", "Fiora", "Gangplank", "Garen", "Gnar", "Gwen", "Illaoi", "K'Sante", "Kayle", "Kennen", "Kled", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Quinn", "Renekton", "Riven", "Sett", "Singed", "Sion", "Tryndamere", "Urgot", "Yorick", "Malzahar", "Akshan"];
+let champList = ["Aphelios", "Ashe", "Caitlyn", "Draven", "Ezreal", "Jhin", "Jinx", "Kai'Sa", "Kalista", "Karthus", "Kog'Maw", "Lucian", "Miss Fortune", "Nilah", "Samira", "Senna", "Seraphine", "Sivir", "Smolder", "Tristana", "Twisted Fate", "Twitch", "Varus", "Vayne", "Xayah", "Yasuo", "Zeri", "Ziggs", "Alistar", "Amumu", "Anivia", "Annie", "Bard", "Blitzcrank", "Brand", "Braum", "Camille", "Fiddlesticks", "Galio", "Heimerdinger", "Ivern", "Janna", "Karma", "Leona", "Lulu", "Lux", "Malphite", "Maokai", "Milio", "Morgana", "Nami", "Nautilus", "Neeko", "Pantheon", "Pyke", "Rakan", "Rell", "Renata Glasc", "Shaco", "Shen", "Sona", "Soraka", "Swain", "Tahm Kench", "Taric", "Teemo", "Thresh", "Veigar", "Vel'Koz", "Xerath", "Yuumi", "Zac", "Zilean", "Zyra", "Ahri", "Akali", "Aurelion Sol", "Aurora", "Azir", "Cassiopeia", "Corki", "Diana", "Ekko", "Fizz", "Gragas", "Hwei", "Irelia", "Jayce", "Kassadin", "Katarina", "LeBlanc", "Lissandra", "Naafiri", "Orianna", "Qiyana", "Rumble", "Ryze", "Sylas", "Syndra", "Taliyah", "Talon", "Vex", "Viktor", "Vladimir", "Yone", "Zed", "Zoe", "Bel'Veth", "Briar", "Elise", "Evelynn", "Graves", "Hecarim", "BLANK", "Jarvan IV", "Jax", "Kayn", "Kha'Zix", "Kindred", "Lee Sin", "Lillia", "Master Yi", "Nidalee", "Nocturne", "Nunu & Willump", "Poppy", "Rammus", "Rek'Sai", "Rengar", "Sejuani", "Shyvana", "Skarner", "Trundle", "Udyr", "Vi", "Viego", "Volibear", "Warwick", "Wukong", "Xin Zhao", "Aatrox", "Cho'Gath", "Darius", "Dr. Mundo", "Fiora", "Gangplank", "Garen", "Gnar", "Gwen", "Illaoi", "K'Sante", "Kayle", "Kennen", "Kled", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Quinn", "Renekton", "Riven", "Sett", "Singed", "Sion", "Tryndamere", "Urgot", "Yorick", "Malzahar", "Akshan"];
 let itemList = ["Berserker's Greaves", 'Boots of Swiftness', 'Ionian Boots of Lucidity', "Mercury's Treads", 'Plated Steelcaps',  "Sorcerer's Shoes",  'Abyssal Mask',  "Bloodletter's Curse",  'Cryptbloom', 'Abyssal Mask', 'Terminus', 'Void Staff',  'Black Cleaver', "Lord Dominik's Regards", 'Mortal Reminder', "Serylda's Grudge",  "Banshee's Veil", 'Edge of Night', "Dead Man's Plate", 'Trailblazer', 'Hollow Radiance',  'Sunfire Aegis', 'Iceborn Gauntlet', 'Lich Bane', 'Trinity Force', 'Immortal Shieldbow', 'Maw of Malmortius', "Sterak's Gage",  "Seraph's Embrace", 'Muramana', 'Fimbulwinter', 'Profane Hydra', 'Ravenous Hydra',  'Titanic Hydra',  'Stridebreaker', 'Celestial Opposition', 'Bloodsong', 'Dream Maker', 'Solstice Sleigh', "Zaz'Zak's Realmspike", 'Ardent Censer', 'Axiom Arc', 'Blackfire Torch', 'Blade of the Ruined King', 'Bloodthirster', 'Chempunk Chainsword',  'Cosmic Drive', 'Dawncore', "Death's Dance", 'Echoes of Helia',  'Eclipse', 'Essence Reaver', 'Experimental Hexplate', 'Force of Nature', 'Frozen Heart', 'Guardian Angel', "Guinsoo's Rageblade", 'Heartsteel', 'Hextech Rocketbelt', 'Horizon Focus', 'Hubris', 'Hullbreaker', 'Imperial Mandate', 'Infinity Edge', "Jak'Sho, The Protean", 'Kaenic Rookern', "Knight's Vow", 'Kraken Slayer', "Liandry's Torment", 'Locket of the Iron Solari', "Luden's Companion", 'Malignance', "Mejai's Soulstealer", 'Mercurial Scimitar', "Mikael's Blessing", 'Moonstone Renewer', 'Morellonomicon', "Nashor's Tooth", 'Navori Flickerblade', 'Opportunity', "Overlord's Bloodmail", 'Phantom Dancer', "Rabadon's Deathcap", "Randuin's Omen", 'Rapid Firecannon', 'Redemption', 'Riftmaker', 'Rod of Ages', "Runaan's Hurricane", "Rylai's Crystal Scepter", "Serpent's Fang", 'Shadowflame', "Shurelya's Battlesong", 'Spear of Shojin', 'Spirit Visage', 'Staff of Flowing Water', 'Statikk Shiv', 'Stormsurge', 'Sundered Sky', 'The Collector', 'Thornmail', 'Umbral Glaive', 'Unending Despair', 'Vigilant Wardstone', 'Voltaic Cyclosword', "Warmog's Armor", "Wit's End", "Youmuu's Ghostblade", 'Yun Tal Wildarrows', "Zeke's Convergence", "Zhonya's Hourglass" ];
 let runeList = [ 'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conqueror', 'Absorb Life', 'Triumph', 'Presence of Mind', 'Alacrity', 'Haste', 'Bloodline', 'Coup de Grace', 'Cut Down', 'Last Stand', 'Electrocute', 'Dark Harvest', 'Hail of Blades', 'Cheap Shot', 'Taste of Blood', 'Sudden Impact', 'Sixth Sense', 'Grisly Mementos', 'Deep Ward', 'Treasure Hunter', 'Relentless Hunter', 'Ultimate Hunter', 'Summon Aery', 'Arcane Comet', 'Phase Rush', 'Axiom Arcanist', 'Manaflow Band', 'Nimbus Cloak', 'Transcendence', 'Celerity', 'Absolute Focus', 'Scorch', 'Waterwalking', 'Gathering Storm', 'Grasp of the Undying', 'Aftershock', 'Guardian', 'Demolish', 'Font of Life', 'Shield Bash', 'Conditioning', 'Second Wind', 'Bone Plating', 'Overgrowth', 'Revitalize', 'Unflinching', 'Glacial Augment', 'Unsealed Spellbook', 'First Strike', 'Hextech Flashtraption', 'Magical Footwear', 'Cash Back', 'Triple Tonic', 'Time Warp Tonic', 'Biscuit Delivery', 'Cosmic Insight', 'Approach Velocity', 'Jack of All Trades'];
+// console.log(champList[113]);
+
 
 // Function that convert the strings into code
 function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING (data variable)
@@ -303,7 +284,7 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
     const buildItem = strings[i];
     const j = itemList.findIndex(it => it === buildItem);
     if (j === -1) {
-      console.log("S2B: Item not found: " + itemName);
+      console.log("S2B: Item not found: " + buildItem);
       result += "999";
     } else {
       let padded = String(j).padStart(3, "0");
@@ -364,7 +345,7 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
  * 
  */
 
-// Funcion que añade los puntos a la build
+// Function that Scores the Build
 function ScoreGiver(champ, items, runes) {
   //No son arrays, son objetos
   let championName = champ;
@@ -561,12 +542,14 @@ function ScoreCalculator(referenceBuild, playerBuild)
   const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 
   //Calculate the reference total value
   let referenceScore = 1 + (itemWeight * referenceItemsScore) + (runeWeight * referenceRunesScore);
+  // console.log("The reference score is " + referenceScore);
   //Calculate the player total value
   let playerScore = 1 + (itemWeight * playerItemsScore) + (runeWeight * playerRunesScore);
+  // console.log("The total value for the player build is " + playerScore);
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 
-  // console.log("the normalizedResult is " + normalizedResult * 100);
+  // console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
     //Llamada para que devuelva el resultado a la página web (KIWI MALE SABE, KIWI MALE ES MUY LISTO)
 }

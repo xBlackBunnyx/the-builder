@@ -2,13 +2,14 @@
 
 //include (librerias necesarias)
 const fs = require('fs');
+const uc = require("../mongo-connection");
 //Lectura de documento html
 
 // Aqui va el señor que escucha (aka el listener)
 
 //conexion con el señor mongo
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://lorenamartindorta_db_user:wXwuir25H6YXLj14@builder.t1daj30.mongodb.net/?retryWrites=true&w=majority&appName=Builder";
+let uri = uc.uriConnection();
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -29,34 +30,29 @@ async function run() {
    await client.db("admin").command({ ping: 1 });
    
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    //Prueba de la funcion test
     let data = PlayerBuildImporter();
-    // console.log("raw data from the importer is " + ArrayToString(data));
+
     let championName = data[0];
-    // console.log("Champion name extracted is " + championName);
     let itemsName = data.slice(1,7);
-    // console.log("itemsName is " + itemsName[0]);
-    // console.log("items name are" + itemsName);
     let runesName = data.slice(7);
-    // console.log("runes name are" + runesName);
+
     let champ = await findChamps(client, championName);
-    // await findChamps(client, championName);
-    // console.log(champ);
     let items = await findItem(client, itemsName);
-    // await findItem(client, itemsName);
-    // console.log(items);
     let runes = await findRunes(client, runesName);
-    // await findRunes(client, runesName);
-    // console.log(runes);
-    console.log("Checking if something appears inside the function ScoreGiver");
-    let buildScore = ScoreGiver(champ, items, runes);
-    // console.log(buildScore);
-    // let finalScore = BuildplusScorefinal(data, ScoreGiver(championName, items, runes));
-    //MONGOSHIT BELOW //////////////////////////////////
-    //await findChamps(client, "Aphelios");
-    //  await findItem(client, ["Opportunity", "Sorcerer's Shoes"]);
-    // await findRunes(client, ['Press the Attack', 'Conditioning']);
-    // await savePlayerBuilds(client)
+    // console.log("Checking if something appears inside the function ScoreGiver");
+    // ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes));
+
+    let codedReferenceBuild = await GetReferenceBuild(client, StringsToBuild(data));
+    let refBuildChampion = BuildToStrings(codedReferenceBuild)[0];
+    let refBuildItems = BuildToStrings(codedReferenceBuild).slice(1,7);
+    let refBuildRunes = BuildToStrings(codedReferenceBuild).slice(7);
+
+    let refChamp = await findChamps(client, refBuildChampion);
+    let refItems = await findItem(client, refBuildItems);
+    let refRunes = await findRunes(client, refBuildRunes);
+
+    let finalBuildResult = CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
+    await SavePlayerBuilds(client, finalBuildResult);
 
  } finally {
     // Ensures that the client will close when you finish/error
@@ -65,11 +61,28 @@ async function run() {
 }
 run().catch(console.dir);
 
+// code is in string format, the three digits that dictate which champion is it. Code format
+async function GetReferenceBuild(client, code)
+{
+  let cursor = await client.db("builder").collection("PlayerBuilds").find({score: 100});
+  let refBuilds = await cursor.toArray();
+  for(let i = 0; i < refBuilds.length; i++){
+    let buildCode = refBuilds[i].build;
+    if (buildCode.slice(0,3) === code.slice(0,3))
+      {
+        console.log("GRP-Debug: Could find the ref build");
+        return buildCode;
+      } else {
+        // console.log("GRB-Debug: Ref build " + buildCode.slice(0,3) + " != " + code);
+      }
+  } 
+  console.log("GRB: Couldn't find reference build with champion code " + code);
+}
+
 //Function to return a specific champion 
 async function findChamps(client, nameOfChampion) {
   let championCharacteristics = await client.db("builder").collection("Characters").findOne({champion:nameOfChampion});
-  // let championCharacteristics = await cursor.toArray()[0];
-  console.log("championCharacteristics is " + championCharacteristics);
+  // console.log("championCharacteristics is " + championCharacteristics);
   if (championCharacteristics){
     // console.log(`Found a listing in the collection with the name '${nameOfChampion}'`);
     // console.log(championCharacteristics);
@@ -82,24 +95,15 @@ async function findChamps(client, nameOfChampion) {
 //Function to return the items
 async function findItem(client, namesOfItems) {
   if (typeof namesOfItems === "string") namesOfItems = [namesOfItems];
-
   let cursor = await client.db("builder").collection("Items").find({item:{$in:namesOfItems}});
-  let results = [];
-  for await (let doc of cursor){
-    results.push(doc);
-  }
+  const results = await cursor.toArray();
+  // let results = [];
+  // for await (let doc of cursor){
+  //   results.push(doc);
+  // }
   // let itemResults = await cursor.toArray();
-   // const results = await client.db("builder").collection("Items").find({item: { $elemMatch: { namesOfItems}}});
   if (results.length > 0){
-    // console.log(`Found ${results.length} items for: ${namesOfItems.join(",")}`);
-    // console.log(JSON.stringify(results, null, 2));
     return results;
-    // console.log("Result's propert values are " + Object.cursor.values());
-    // console.log("Result of the query is " + cursor);
-    // cursor.forEach(doc => { 
-    //   console.log("The data of the document is " + doc);
-    //   return doc;
-    // });
 
   } else {
     console.log(`No listing found with the name '${[namesOfItems]}'`);
@@ -107,10 +111,8 @@ async function findItem(client, namesOfItems) {
   }
 }
 
-
 //Function to return the runes
 async function findRunes(client, namesOfRunes) {
- 
    if (typeof namesOfRunes === "string") namesOfRunes = [namesOfRunes];
   let cursor = await client.db("builder").collection("Runes").find({rune:{$in:namesOfRunes}});
   const results = await cursor.toArray();
@@ -118,51 +120,35 @@ async function findRunes(client, namesOfRunes) {
   //   results.push(doc);
   // }
   if (results.length > 0){
-    // console.log(`Found ${results.length} items for: ${namesOfRunes.join(",")}`);
-    // console.log(JSON.stringify(results, null, 2));
     return results;
-
   } else {
     console.log(`No listing found with the name '${[namesOfRunes]}'`);
     return [];
   }
 }
 
+//Funcion que combina la build codificada con la puntuación
+function CombinedBuildScore(codedBuild, finalScore){
+  let buildCodified = codedBuild;
+  console.log("The codified build is " + buildCodified);
+  let buildScore = finalScore * 100;
+  console.log("The build score is " + buildScore);
+  let completeBuild = {build: buildCodified, score: buildScore};
+  // console.log("The final result is " + completeBuild);
+  return completeBuild;
+}
+
 //Funcion para que se suban los resultados a mongo
-async function savePlayerBuilds(client, newPlayerBuild) {
-  const scoreBuild = await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
+async function SavePlayerBuilds(client, newPlayerBuild) {
+  let scoreBuild = await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
   console.log(`New listing created with the following id: ${scoreBuild.insertedId}`);
 }
 
-// Aqui va la funcion que le pide a mongo toda la info de los champion, items y runas
-// Estos tienen toda la pesca, nombre, id, etc
-championsList = [{champion: "NaC", _id: -1}, {champion: "Vayne", _id: 0}, {champion: "Ahri", _id: 1}, {champion: "Akali", _id: 2}, {champion: "Alistar", _id: 3}, {champion: "Amumu", _id: 4}, {champion: "Anivia", _id: 5}, {champion: "Annie", _id: 6}, {champion: "Aphelios", _id: 7}, {champion: "Ashe", _id: 8}, {champion: "Aurelion Sol", _id: 9}]; // This is just a sample, the real one has all the champions
-itemList = [{item: "NaI", _id: -1}, {item: "Berserker's Greaves", _id: 0}, {item: "Blade of The Ruined King", _id: 1}, {item: "Guinsoo's Rageblade", _id: 2}, {item: "Terminus", _id: 3}, {item: "Experimental Hexplate", _id: 4}, {item: "Wit's End", _id: 5}]; // This is just a sample, the real one has all the items}
-runesList = [{rune: "NaR", _id: -1}, {rune: "Lethal Tempo", _id: 0}, {rune: "Triumph", _id: 1}, {rune: "Alacrity", _id: 2}, {rune: "Coup de Grace", _id: 3}, {rune: "Conditionig", _id: 4}, {rune: "Overgrowth", _id: 5}]; // This is just a sample, the real one has all the runes:
-
-
-//Aquí va la llamada a la base de datos para coger la build de referencia y comparar
-
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
 function PlayerBuildImporter(){
-  // let result = fs.readFile('build-test.txt', (err, data) => {
-  //   if (err) throw err;
-  //   let array = data.toString().split(",");
-  //   for(i in array){
-  //     console.log(array[i]);
-  //   }
-  // });
   let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
-  // for(i in result){
-  //   console.log(result[i]);
-  // }
-  // console.log("PBI - Result is " + result);
-  // console.log("PBI - Type of result is " + typeof result);
-  // console.log("PBI - First element is " + result[0]);
-  // console.log(Object.prototype.toString.call(result));
   return result;
 }
-// PlayerBuildImporter()
 
 // Function that search by the id of the champion, item and rune (HAY QUE HACERLO GENERAL PARA QUE FUNCIONE CON TODOS)
 function BinarySearchID(itemID, list) {
@@ -196,7 +182,7 @@ function BinarySearchName(itemName, list) {
 
 //Aqui va la funcion que traduce de codigo de barras a texto
 function BuildToStrings(build) { 
-  result = [];
+  let result = [];
   // Code extraction
   // At the database we have the following amounts per category: champions: 169, items: 111, runes: 61, at the time of writing this (01-09-2025)
   // Codes follow the following method:
@@ -210,7 +196,6 @@ function BuildToStrings(build) {
     console.log("Build length is incorrect, something went wrong. Length is " + build.length);
     return "";
   }
-
   // Champ section
   // Get rid of the pad
   let nonZeroSpot = -1;
@@ -227,7 +212,7 @@ function BuildToStrings(build) {
   }
   let champIndex = build.slice(nonZeroSpot, 3);
   // console.log("B2S: Non Zero Spot is  " + nonZeroSpot);
-  result.push(championsList[champIndex].champion);
+  result.push(champList[champIndex]);
 
   // Item part
   for (let i = 3; i < 21; i += 3) {
@@ -247,7 +232,7 @@ function BuildToStrings(build) {
     }
     let itemIndex = Number(build.slice(nonZeroSpot, i+3));
     // console.log("B2S: itemIndex is  |" + itemIndex + "|");
-    let itemName = itemList[itemIndex].item;
+    let itemName = itemList[itemIndex];
     result.push(itemName);
   }
   
@@ -269,32 +254,41 @@ function BuildToStrings(build) {
     }
     let runeIndex = Number(build.slice(nonZeroSpot, i+2));
     // console.log("B2S: itemIndex is  |" + runeIndex + "|");
-    result.push(runesList[runeIndex].rune);
+    result.push(runeList[runeIndex]);
   }
 
   return result;
 }
 
+let champList = ["Aphelios", "Ashe", "Caitlyn", "Draven", "Ezreal", "Jhin", "Jinx", "Kai'Sa", "Kalista", "Karthus", "Kog'Maw", "Lucian", "Miss Fortune", "Nilah", "Samira", "Senna", "Seraphine", "Sivir", "Smolder", "Tristana", "Twisted Fate", "Twitch", "Varus", "Vayne", "Xayah", "Yasuo", "Zeri", "Ziggs", "Alistar", "Amumu", "Anivia", "Annie", "Bard", "Blitzcrank", "Brand", "Braum", "Camille", "Fiddlesticks", "Galio", "Heimerdinger", "Ivern", "Janna", "Karma", "Leona", "Lulu", "Lux", "Malphite", "Maokai", "Milio", "Morgana", "Nami", "Nautilus", "Neeko", "Pantheon", "Pyke", "Rakan", "Rell", "Renata Glasc", "Shaco", "Shen", "Sona", "Soraka", "Swain", "Tahm Kench", "Taric", "Teemo", "Thresh", "Veigar", "Vel'Koz", "Xerath", "Yuumi", "Zac", "Zilean", "Zyra", "Ahri", "Akali", "Aurelion Sol", "Aurora", "Azir", "Cassiopeia", "Corki", "Diana", "Ekko", "Fizz", "Gragas", "Hwei", "Irelia", "Jayce", "Kassadin", "Katarina", "LeBlanc", "Lissandra", "Naafiri", "Orianna", "Qiyana", "Rumble", "Ryze", "Sylas", "Syndra", "Taliyah", "Talon", "Vex", "Viktor", "Vladimir", "Yone", "Zed", "Zoe", "Bel'Veth", "Briar", "Elise", "Evelynn", "Graves", "Hecarim", "BLANK", "Jarvan IV", "Jax", "Kayn", "Kha'Zix", "Kindred", "Lee Sin", "Lillia", "Master Yi", "Nidalee", "Nocturne", "Nunu & Willump", "Poppy", "Rammus", "Rek'Sai", "Rengar", "Sejuani", "Shyvana", "Skarner", "Trundle", "Udyr", "Vi", "Viego", "Volibear", "Warwick", "Wukong", "Xin Zhao", "Aatrox", "Cho'Gath", "Darius", "Dr. Mundo", "Fiora", "Gangplank", "Garen", "Gnar", "Gwen", "Illaoi", "K'Sante", "Kayle", "Kennen", "Kled", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Quinn", "Renekton", "Riven", "Sett", "Singed", "Sion", "Tryndamere", "Urgot", "Yorick", "Malzahar", "Akshan"];
+let itemList = ["Berserker's Greaves", 'Boots of Swiftness', 'Ionian Boots of Lucidity', "Mercury's Treads", 'Plated Steelcaps',  "Sorcerer's Shoes",  'Abyssal Mask',  "Bloodletter's Curse",  'Cryptbloom', 'Abyssal Mask', 'Terminus', 'Void Staff',  'Black Cleaver', "Lord Dominik's Regards", 'Mortal Reminder', "Serylda's Grudge",  "Banshee's Veil", 'Edge of Night', "Dead Man's Plate", 'Trailblazer', 'Hollow Radiance',  'Sunfire Aegis', 'Iceborn Gauntlet', 'Lich Bane', 'Trinity Force', 'Immortal Shieldbow', 'Maw of Malmortius', "Sterak's Gage",  "Seraph's Embrace", 'Muramana', 'Fimbulwinter', 'Profane Hydra', 'Ravenous Hydra',  'Titanic Hydra',  'Stridebreaker', 'Celestial Opposition', 'Bloodsong', 'Dream Maker', 'Solstice Sleigh', "Zaz'Zak's Realmspike", 'Ardent Censer', 'Axiom Arc', 'Blackfire Torch', 'Blade of the Ruined King', 'Bloodthirster', 'Chempunk Chainsword',  'Cosmic Drive', 'Dawncore', "Death's Dance", 'Echoes of Helia',  'Eclipse', 'Essence Reaver', 'Experimental Hexplate', 'Force of Nature', 'Frozen Heart', 'Guardian Angel', "Guinsoo's Rageblade", 'Heartsteel', 'Hextech Rocketbelt', 'Horizon Focus', 'Hubris', 'Hullbreaker', 'Imperial Mandate', 'Infinity Edge', "Jak'Sho, The Protean", 'Kaenic Rookern', "Knight's Vow", 'Kraken Slayer', "Liandry's Torment", 'Locket of the Iron Solari', "Luden's Companion", 'Malignance', "Mejai's Soulstealer", 'Mercurial Scimitar', "Mikael's Blessing", 'Moonstone Renewer', 'Morellonomicon', "Nashor's Tooth", 'Navori Flickerblade', 'Opportunity', "Overlord's Bloodmail", 'Phantom Dancer', "Rabadon's Deathcap", "Randuin's Omen", 'Rapid Firecannon', 'Redemption', 'Riftmaker', 'Rod of Ages', "Runaan's Hurricane", "Rylai's Crystal Scepter", "Serpent's Fang", 'Shadowflame', "Shurelya's Battlesong", 'Spear of Shojin', 'Spirit Visage', 'Staff of Flowing Water', 'Statikk Shiv', 'Stormsurge', 'Sundered Sky', 'The Collector', 'Thornmail', 'Umbral Glaive', 'Unending Despair', 'Vigilant Wardstone', 'Voltaic Cyclosword', "Warmog's Armor", "Wit's End", "Youmuu's Ghostblade", 'Yun Tal Wildarrows', "Zeke's Convergence", "Zhonya's Hourglass" ];
+let runeList = [ 'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conqueror', 'Absorb Life', 'Triumph', 'Presence of Mind', 'Alacrity', 'Haste', 'Bloodline', 'Coup de Grace', 'Cut Down', 'Last Stand', 'Electrocute', 'Dark Harvest', 'Hail of Blades', 'Cheap Shot', 'Taste of Blood', 'Sudden Impact', 'Sixth Sense', 'Grisly Mementos', 'Deep Ward', 'Treasure Hunter', 'Relentless Hunter', 'Ultimate Hunter', 'Summon Aery', 'Arcane Comet', 'Phase Rush', 'Axiom Arcanist', 'Manaflow Band', 'Nimbus Cloak', 'Transcendence', 'Celerity', 'Absolute Focus', 'Scorch', 'Waterwalking', 'Gathering Storm', 'Grasp of the Undying', 'Aftershock', 'Guardian', 'Demolish', 'Font of Life', 'Shield Bash', 'Conditioning', 'Second Wind', 'Bone Plating', 'Overgrowth', 'Revitalize', 'Unflinching', 'Glacial Augment', 'Unsealed Spellbook', 'First Strike', 'Hextech Flashtraption', 'Magical Footwear', 'Cash Back', 'Triple Tonic', 'Time Warp Tonic', 'Biscuit Delivery', 'Cosmic Insight', 'Approach Velocity', 'Jack of All Trades'];
+// console.log(champList[113]);
+
+
 // Function that convert the strings into code
-function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING
-  const champIdx = championsList.findIndex(c => c.champion === strings[0]);
+function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING (data variable)
+  console.log("Champion name is " + strings[0]);
+  const champIdx = champList.findIndex(c => c === strings[0]);
+  console.log("The champion is " + champIdx);
   if (champIdx === -1) {
     // console.log("S2B: Champion not found: " + strings[0]);
     return "999";
   }
   let result = String(champIdx).padStart(3, "0");
+  // console.log("The result has the champion code " + result);
   // console.log("S2B: Champion " + strings[0] + " -> index " + champIdx + " -> padded " + result);
 
   // items
   for (let i = 1; i < 7; i++) {
-    const itemName = strings[i];
-    const j = itemList.findIndex(it => it.item === itemName);
+    const buildItem = strings[i];
+    const j = itemList.findIndex(it => it === buildItem);
     if (j === -1) {
-      // console.log("S2B: Champion not found: " + itemName);
+      console.log("S2B: Item not found: " + buildItem);
       result += "999";
     } else {
       let padded = String(j).padStart(3, "0");
-      // console.log("S2B: Found item + " + itemName + " at position " + j);
+      console.log("S2B: Found item " + buildItem + " at position " + j);
       // console.log("S2B: Addition before padding is " + j);
       // console.log("S2B: Addition after padding is " + padded);
       result += padded;
@@ -304,14 +298,14 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
   // console.log("S2B: After items result is " + result);
   
   for (let i = 7; i < 13; i++) {
-    const runeName = strings[i];
-    const j = runesList.findIndex(it => it.rune === runeName);
+    const buildRune = strings[i];
+    const j = runeList.findIndex(ru => ru === buildRune);
     if (j === -1) {
-      console.log("S2B: Champion not found: " + runeName);
+      console.log("S2B: Rune not found: " + buildRune);
       result += "999";
     } else {
       let padded = String(j).padStart(2, "0");
-      // console.log("S2B: Found item + " + runeName + " at position " + j);
+      console.log("S2B: Found rune " + buildRune + " at position " + j);
       // console.log("S2B: Addition before padding is " + j);
       // console.log("S2B: Addition after padding is " + padded);
       result += padded;
@@ -351,21 +345,16 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
  * 
  */
 
-// Funcion que añade los puntos a la build
+// Function that Scores the Build
 function ScoreGiver(champ, items, runes) {
   //No son arrays, son objetos
   let championName = champ;
   let runeSection = runes;
   let itemSection = items;
 
-  // console.log(championName);
-  console.log(typeof runeSection); 
-
-// console.log(itemSection);
-
   //Here we are going to store the final result of the scores
   let runeScore = 0;
-  let itemScore = [];
+  let itemScore = 0;
 
   const roleRuneRelationship = {
     Resolve:["TANK", "Bruiser", "Support"],
@@ -384,22 +373,7 @@ function ScoreGiver(champ, items, runes) {
     Support:["Heal & shield power", "Health", "Magic Resistance", "Armor", "Tenacity", "Health regen.", "Mana", "Mana regen.", "Attack damage", "Ability power", "Armor pen.", "Magic pen.", "Attack speed", "Ability haste", "Movement speed"]
   };
 
-  const bootsRoleRelationship = {
-    "Plated Steelcaps":["TANK", "Bruiser", "Assassin"],
-    "Mercury's Treads":["TANK", "Bruiser", "Assassin"],
-    "Berserker's Greaves":["DPS", "Bruiser", "Assassin"],
-    "Boots of Swiftness":["Support", "Bruiser", "Assassin", "DPS"],
-    "Ionian Boots of Lucidity":["Support", "MAGE", "Assassin"],
-    "Sorcerer's Shoes":["Support", "MAGE", "Assassin"],
-  };
-
-  // aquí tienes que inicializar los puntos que da esta parte
-  // for rune in runes
-  //  guardar en variable el path del campeón
-  //  comprobar si en alguna de las runas el path.substring(rune) devuelve lo correcto (true, o una copia, depende de substring)
-  //  añadir puntos si si
-
-  // console.log("SG: runeSection length is " + runeSection.length);
+  //Incredible long ass loop for the runes
   let champRoles;
   for (let i = 0; i < runeSection.length; ++i)
   {
@@ -419,47 +393,40 @@ function ScoreGiver(champ, items, runes) {
         {
           if (champRoles[l] == roles[k])
           {
-            console.log("5-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is the same as champion role " + champRoles[l]);
+            // console.log("5-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is the same as champion role " + champRoles[l]);
             currentRuneScore += 5;
             break;
             
-            // console.log(runeSection[i] + "|" + dividedPaths[j] + ":" + roles[k] + "==" + champRoles[l]);
           } if (l == champRoles.length -1) 
           {
-            console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is NOT the same as champion role " + champRoles[l]);
+            // console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", within rune path " + dividedPaths[j] + ", the rune role " + roles[k] + " is NOT the same as champion role " + champRoles[l]);
             currentRuneScore += 1;
           }
         }
       }
-      console.log("==================================");
+      // console.log("==================================");
     }
-    
     let commonRoles = runeSection[i].common_role.split(", ");
-    // console.log("SG: commonRoles length is " + champRoles.length);
     for (let j = 0; j < commonRoles.length; ++j)
     {
         let champRoles = champ.role.split(", ");
         for (let k = 0; k < champRoles.length; ++k)
         {
-          // console.log("SG: see champroles" + champRoles[k]);
           if (champRoles[k] == commonRoles[j])
           {
-            console.log("10-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is in champ role " + champRoles[k]);
+            // console.log("10-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is in champ role " + champRoles[k]);
             currentRuneScore += 10;
             break;
           } if ( k == champRoles.length - 1) 
           {
-            console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is NOT in champ role " + champRoles[k]);
+            // console.log("1-------SG: Within rune iteration " + runeSection[i].rune + ", the common roles " + commonRoles[j] + " is NOT in champ role " + champRoles[k]);
             currentRuneScore += 1;
           }
         }
     }
-    console.log("---------------------------------------------");
-    console.log("The total amount of Score is " + runeScore);
+    // console.log("---------------------------------------------");
     runeScore += currentRuneScore;
   }
-
-console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   console.log("RuneSection score is " + runeScore);
 
 //Yet another long ass loop for the fucking items
@@ -470,64 +437,83 @@ for(let i = 0; i < itemSection.length; ++i){
     let champRoles = champ.role.split(", ");
     for(let k = 0; k < champRoles.length; ++k){
       if(champRoles[k] == commonRoles[j]){
-        console.log("10pts----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is in the champ role " + champRoles[k]);
+        // console.log("10pts----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is in the champ role " + champRoles[k]);
         currentItemScore += 10;
         break;
       } 
       if (k == champRoles.length -1){
-        console.log("1pt----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is NOT in the champ role " + champRoles[k]);
+        // console.log("1pt----- Within the item iteration " + itemSection[i].item + " the common roles " + commonRoles[j] + " is NOT in the champ role " + champRoles[k]);
         currentItemScore += 1;
       }
     }
   }
-  console.log("===============LOOKING FOR THE ABILITIES NOW===================");
+  // console.log("==================================");
   let abilityType = itemSection[i].ability_type.split(", ");
   for(let j = 0; j < abilityType.length; ++j){
     let champRoles = champ.role.split(", ");
     for(let k = 0; k < champRoles.length; ++k){
       if (champRoles[k] == abilityType[j]){
-        console.log("5 pts----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is in the champ role " + champRoles[k]);
+        // console.log("5 pts----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is in the champ role " + champRoles[k]);
         currentItemScore += 5;
         break;
       } 
       if ( k == champRoles.length -1){
-        console.log("1pt----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is NOT in the champ role " + champRoles[k]);
+        // console.log("1pt----- Within the item iteration " + itemSection[i].item + " the ability type " + abilityType[j] + " is NOT in the champ role " + champRoles[k]);
         currentItemScore += 1;
       }
     }
   }
-  console.log("==================================");
-  let champRoles = champ.role.split(", ");
-  for (let j = 0; j < champRoles.length; j++){
-    let role = champRoles[j];
-    console.log("The role is " + role);
-    let stats = roleItemStatRelationship[role]
-    console.log("The stats are " + stats);
-    for (let k = 0; k < itemSection.length; k++){
-      let item = itemSection[k];
-      console.log("The item is " + item);
-      let itemStats = item.stats_given;
-      console.log("The stats of the item are " + itemStats);
-        for(let l = 0; l < stats.length; l++){
-          for(let m = 0; m < itemStats.length; m++){
-            if(stats[l] == itemStats[m]){
-              console.log("5 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
+  // console.log("-------------------------------------");
+  let itemLimitation = itemSection[i].limitations;
+  if(itemLimitation == "Boots"){
+    // console.log("The item has the limitation " + itemLimitation);
+    currentItemScore += 20;      
+  }
+  // console.log("==================================");
+  // console.log("Here starts the problematic loop");
+  // console.log("Inside common_roles are the roles: " + commonRoles);
+  for (let j = 0; j < commonRoles.length; j++){
+    // console.log("We entered the hell loop");
+    let champRoles = champ.role.split(", ");
+    // console.log("The champion role is " + champRoles);
+    for (let k = 0; k < champRoles.length; k++){
+      if(champRoles[k] == commonRoles[j]){
+        let stats = roleItemStatRelationship[champRoles[k]];
+        // console.log("The stats are " + stats);
+        // for( let l = 0; l < itemSection.length; l++){
+          let item = itemSection[i];
+          // console.log("The item is " + item.item);
+          let itemStats = item.stats_given.split(", ");
+          // console.log("The stats of the item are " + itemStats);
+          let addedExtra = false;
+          let someStatMatched = false;
+          for(let m = 0; m < stats.length; m++){
+            // if(stats[m] == itemStats[l]){
+            // }
+            if (itemStats.includes(stats[m])){
+              // console.log("5 pts--------- The common role of the object is " + commonRoles[j] + " , the champion role is " + champRoles[k] + " the relationship stats are " + ArrayToString(stats) + " are equal to the item stats " + itemStats);
               currentItemScore +=5;
-              break;
+              someStatMatched = true;
+              if (itemStats.length < 3 && !addedExtra) {
+                currentItemScore += 15;
+                // console.log("15 pts-------- Item has mental issues so we give it extra");
+                addedExtra = true;
+              } else {
+                // console.log("Item " + item.item + " itemStats length is " + itemStats.length + " and addedExtra is " + addedExtra + ", so it in full cognitive function"); 
+              }
             }
-            if(m == itemStats.length -1){
-              console.log("1 pts--------- The champion role is " + champRoles[j] + " , the object is " + itemSection[k] + " the relationship stats are " + ArrayToString(stats) + " are NOT equal to the item stats " + itemStats);
+            if(m == stats.length -1 && !someStatMatched){
+              // console.log("1 pts--------- The common role of the object is " + commonRoles[j] + " , the champion role is " + champRoles[k] + " the relationship stats are " + ArrayToString(stats) + " are NOT equal to the item stats " + itemStats);
               currentItemScore +=1;
             }
           }
-        }
+        // }
+      } 
     }
-    
   }
   itemScore += currentItemScore;
   console.log("The final item score is " + itemScore);
 }
-
 
   return [itemScore, runeScore]; //👍
 }
@@ -545,71 +531,28 @@ function ScoreCalculator(referenceBuild, playerBuild)
   const minimumRunesScore = 30;
 
   //Reference build score
-  let refBuild = [referenceBuild];
-  let referenceRunesScore = refBuild.slice(Math.max(refBuild.length - 6, 0));
-  let referenceItemsScore = refBuild.slice(1,7);
+  let referenceRunesScore = referenceBuild[1];
+  let referenceItemsScore = referenceBuild[0];
   //Player build score
-  let newBuild = [playerBuild];
-  let playerRunesScore = newBuild.slice(Math.max(newBuild.length - 6, 0));
-  let playerItemsScore = newBuild.slice(1,7);
+  let playerRunesScore = playerBuild[1];
+  let playerItemsScore = playerBuild[0];
 
-  //QUITAR LA SUMA DE LAS PUNTUACIONES PORQUE LAS SUMAMOS YA ANTES
-  //Sum of the values for the minimumScore
-  let sumMinimumItems = 0;
-  for (let i = 0; i < minimumItemsScore.length; i++) {
-    sumMinimumItems += minimumItemsScore[i];
-  }
-  let sumMinimumRunes = 0;
-  for (let i = 0; i < minimumRunesScore.length; i++) {
-    sumMinimumRunes += minimumRunesScore[i];
-  }
-
-  //Sum of the values for the referenceScore
-  let sumReferenceItems = 0;
-  for (let i = 0; i < referenceItemsScore.length; i++) {
-    sumReferenceItems += referenceItemsScore[i];
-  }
-  let sumReferenceRunes = 0;
-  for (let i = 0; i < referenceRunesScore.length; i++) {
-    sumReferenceRunes += referenceRunesScore[i];
-  }
-
-  //Sum of the values for the playerScore
-  let sumPlayerItems = 0;
-  for (let i = 0; i < playerItemsScore.length; i++) {
-    sumPlayerItems += minimumItemsScore[i];
-  }
-  let sumPlayerRunes = 0;
-  for (let i = 0; i < playerRunesScore.length; i++) {
-    sumPlayerRunes += playerRunesScore[i];
-  }
 
   //Calculate the minimum value possible
-  const minimumScore = 1 + (itemWeight * sumMinimumItems) + (runeWeight * sumMinimumRunes); 
+  const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 
   //Calculate the reference total value
-  let referenceScore = 1 + (itemWeight * sumReferenceItems) + (runeWeight * sumReferenceRunes);
+  let referenceScore = 1 + (itemWeight * referenceItemsScore) + (runeWeight * referenceRunesScore);
+  // console.log("The reference score is " + referenceScore);
   //Calculate the player total value
-  let playerScore = 1 + (itemWeight * sumPlayerItems) + (runeWeight * sumPlayerRunes);
+  let playerScore = 1 + (itemWeight * playerItemsScore) + (runeWeight * playerRunesScore);
+  // console.log("The total value for the player build is " + playerScore);
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 
+  // console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
     //Llamada para que devuelva el resultado a la página web (KIWI MALE SABE, KIWI MALE ES MUY LISTO)
 }
-
-// function LargeNumberToString(number)
-// {
-//   result ="";
-//   let number2 = number;
-//   while (number2 > 0)
-//   {
-//     rest = number2 % 10;
-//     result += rest.toString();
-//     number2 = Math.floor(number2 / 10);
-//   }
-//   let returnResult = result.split('').reverse().join('');
-//   return returnResult;
-// }
 
 // Helper function to debug arrays
 function ArrayToString(array)
@@ -636,11 +579,11 @@ function main()
 {
   // let build = ["Vayne", "Berserker's Greaves", "Blade of The Ruined King", "Guinsoo's Rageblade", "Terminus", "Experimental Hexplate", "Wit's End", "Lethal Tempo", "Triumph", "Alacrity", "Coup de Grace", "Conditionig", "Overgrowth"];
   // let code = StringsToBuild(PlayerBuildImporter());
-  // ScoreCalculator(0, 0);
+  // // ScoreCalculator(ScoreGiver(champ, items, runes), ScoreGiver(champ, items, runes));
   // ScoreGiver()
   // run(); //👍
   // console.log("Build code is: " + code);
   // let buildAgain = BuildToStrings(code);
   // console.log("Build in strings is: " + ArrayToString(buildAgain));
 }
-main();
+// run();

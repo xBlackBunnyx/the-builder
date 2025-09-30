@@ -1,0 +1,33 @@
+:root {
+  --LOL-title-font-family: "Beaufort for LOL", Helvetica;
+  --LOL-title-font-weight: 400;
+  --LOL-title-font-size: 64px;
+  --LOL-title-letter-spacing: -1.28px;
+  --LOL-title-line-height: normal;
+  --LOL-title-font-style: normal;
+  --LOL-subtitles-font-family: "Beaufort for LOL", Helvetica;
+  --LOL-subtitles-font-weight: 500;
+  --LOL-subtitles-font-size: 40px;
+  --LOL-subtitles-letter-spacing: 0px;
+  --LOL-subtitles-line-height: 150%;
+  --LOL-subtitles-font-style: normal;
+  --LOL-text1-font-family: "Beaufort for LOL", Helvetica;
+  --LOL-text1-font-weight: 400;
+  --LOL-text1-font-size: 32px;
+  --LOL-text1-letter-spacing: 0px;
+  --LOL-text1-line-height: 150%;
+  --LOL-text1-font-style: normal;
+  --LOL-text2-font-family: "Beaufort for LOL", Helvetica;
+  --LOL-text2-font-weight: 400;
+  --LOL-text2-font-size: 16px;
+  --LOL-text2-letter-spacing: 0px;
+  --LOL-text2-line-height: 150%;
+  --LOL-text2-font-style: italic;
+  --LOL-header-font-family: "Beaufort for LOL", Helvetica;
+  --LOL-header-font-weight: 500;
+  --LOL-header-font-size: 48px;
+  --LOL-header-letter-spacing: 1.44px;
+  --LOL-header-line-height: 120.00000476837158%;
+  --LOL-header-font-style: normal;
+  --button-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}

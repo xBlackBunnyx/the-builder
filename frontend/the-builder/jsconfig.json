@@ -3,13 +3,13 @@
     "allowJs": true,
     "target": "es5",
     "module": "esnext",
-    "baseUrl": "./",
+    // "baseUrl": "./",
     "moduleResolution": "bundler",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
+    // "paths": {
+    //   "@/*": [
+    //     "src/*"
+    //   ]
+    // },
     "lib": [
       "esnext",
       "dom",

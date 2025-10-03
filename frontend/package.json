@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite build",
     "preview": "vite preview",
-    "dev": "CHOKIDAR_USEPOLLING=1 vite"
+   "dev": "cross-env CHOKIDAR_USEPOLLING=1 vite"
   },
   "dependencies": {
     "@fontsource/roboto": "5.2.7",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
+    "cross-env": "^10.1.0",
     "sass-embedded": "^1.92.1",
     "unplugin-fonts": "^1.4.0",
     "unplugin-vue-components": "^29.0.0",

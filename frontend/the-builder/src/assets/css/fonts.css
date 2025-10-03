@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "BeaufortforLOLBold";
+    src: local("BeaufortforLOL-Bold"), url("@/assets/LOL-Font/BeaufortforLOL-Bold.otf"), format("opentype");
+}
+
+@font-face {
+    font-family: "BeaufortforLOLRegular";
+    src: url("@/assets/LOL-Font/BeaufortforLOL-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "BeaufortforLOLItalic";
+    src: url("@/assets/LOL-Font/BeaufortforLOL-Italic.otf") format("opentype");
+}

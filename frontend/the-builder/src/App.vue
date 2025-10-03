@@ -1,13 +1,21 @@
 <template>
   <v-app>
-    <v-main>
-      <HelloWorld />
-    </v-main>
+    <v-content>
+      <router-view> </router-view>
 
-    <AppFooter />
+    </v-content>
   </v-app>
 </template>
 
-<script setup>
-  //
+<script>
+  
+
 </script>
+
+<style>
+   /* .text2{
+      font-size: 20px;
+      color: #bf913b;
+      font-family: "BeaufortforLOLItalic", sans-serif;
+    } */
+</style>

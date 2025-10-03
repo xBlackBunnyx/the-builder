@@ -1,13 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Vuetify 3</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>    
+    <link rel="stylesheet" href="./src/assets/css/fonts.css">
+    <title>The Builder</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <div id="app">
+      <h1 class="h1"> Welcome to The Builder </h1>
+      <span> Random Text </span>
+      <span class="h3"> Random Text </span>
+      <span class="text2">Random Text</span>
+    </div>
   </body>
+  <script>
+    const {createApp, ref} = Vue;
+    
+    createApp({
+      setup(){
+        return{  };
+      },
+    }).mount("#app");
+  </script>
+  <style>
+    .h1{
+      font-size: 60px;
+      color: #bf913b;
+      font-family: "BeaufortforLOLBold", sans-serif;
+    }
+    .h3{
+      font-size: 32px;
+      color: black;
+      font-family: "BeaufortforLOLRegular", sans-serif;
+    }
+    .text2{
+      font-size: 20px;
+      color: #bf913b;
+      font-family: "BeaufortforLOLItalic", sans-serif;
+    }
+  </style>
 </html>

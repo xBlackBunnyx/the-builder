@@ -9,12 +9,12 @@ import { registerPlugins } from '@/plugins'
 
 // Components
 import App from './App.vue'
-
+import '@/assets/css/fonts.css'
 // Composables
 import { createApp } from 'vue'
 
 // Styles
-import 'unfonts.css'
+// import 'unfonts.css'
 
 const app = createApp(App)
 

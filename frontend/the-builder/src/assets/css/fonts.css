@@ -12,3 +12,8 @@
     font-family: "BeaufortforLOLItalic";
     src: url("@/assets/LOL-Font/BeaufortforLOL-Italic.otf") format("opentype");
 }
+
+@font-face {
+    font-family: "BeaufortforLOLMedium";
+    src: url("@/assets/LOL-Font/BeaufortforLOLMedium.otf") format("opentype");
+}

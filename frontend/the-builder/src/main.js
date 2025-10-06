@@ -9,15 +9,26 @@ import { registerPlugins } from '@/plugins'
 
 // Components
 import App from './App.vue'
-import '@/assets/css/fonts.css'
+import ButtonSettler from './components/ButtonComponent.vue'
+
+
 // Composables
 import { createApp } from 'vue'
+import { createVuetify } from 'vuetify'
+
+const vuetify = createVuetify()
 
 // Styles
-// import 'unfonts.css'
+import 'unfonts.css'
+import '@/assets/css/fonts.css'
+
 
 const app = createApp(App)
 
 registerPlugins(app)
 
-app.mount('#app')
+// Here we should only import  the global components, if it's not global, we should import it locally
+app.component("button-setler", ButtonSettler);
+
+app.use(vuetify).mount('#app')
+

@@ -1,26 +1,41 @@
-<template>
-  <v-card theme="dark"> 
-    <!-- This will set the website to dark mode until we figure out how to really make it with a theme-->
-  <div class="titles"> Welcome to The Builder</div>
-  <ContactUs> </ContactUs>
-  <button-setler> </button-setler>
-  <v-app>
-    <v-content>
-      
-      <router-view> </router-view>
+<!DOCTYPE html>
+<html class="bgstyle">
+  <head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>    
+    <link rel="stylesheet" href="./src/assets/css/fonts.css">
+    <title>The Builder</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1 class="titles"> Welcome to The Builder </h1>
+      <div>
+        <button @click="DailyBuildButtonClick" class="buttonsettings" > Daily Build </button>
+      </div>
+        <br />
+     </div>
+      <input type="text" @keyup.intro="ItemSearch"/> 
+      <!-- Esto se supone que te devulve un mensaje cuando apretas el intro, no es el caso -->
+    </div>
+  </body>
+  <script>
+    const {createApp, ref} = Vue;
+    
+    createApp({
+      setup(){
 
-    </v-content>
-  </v-app>
-  </v-card>
-</template>
+        function DailyBuildButtonClick(){
+          alert('Button Clicked'); //We should use this to change the page
+        }
 
-<script setup>
-import ContactUs from './components/ContactUs.vue';
+        function ItemSearch(){
+          alert('Item Searched'); //We can use this to search for the champion
+        }
 
-
-</script>
-
-<style>
+        return{DailyBuildButtonClick, ItemSearch};
+      },
+    }).mount("#app");
+  </script>
+  <style>
     .titles{
       font-size: 60px;
       color: #bf913b;
@@ -68,4 +83,5 @@ import ContactUs from './components/ContactUs.vue';
         height: auto;
         position: relative;
     }
-</style>
+  </style>
+</html>

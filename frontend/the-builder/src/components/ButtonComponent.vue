@@ -1,5 +1,5 @@
 <template>
-<button @click="DailyBuildButtonClick" class="buttonsettings"> Status of the button </button>
+<button @click="DailyBuildButtonClick" class="buttonsettings"> Daily Build </button>
 
 </template>
 

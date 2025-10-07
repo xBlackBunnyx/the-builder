@@ -1,4 +1,6 @@
 <template>
+  <!-- Everything that you put inside here will appear in all the pages inside the project -->
+   <!-- Therefore we should clean up this mess -->
   <v-card theme="dark"> 
     <!-- This will set the website to dark mode until we figure out how to really make it with a theme-->
   <div class="titles"> Welcome to The Builder</div>
@@ -15,8 +17,8 @@
 </template>
 
 <script setup>
-import ContactUs from './components/ContactUs.vue';
-
+import ContactUs from './components/Home/ContactUs.vue';
+import ButtonComponent from './components/ButtonComponent.vue';
 
 </script>
 

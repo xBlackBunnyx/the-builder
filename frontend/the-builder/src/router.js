@@ -1,30 +1,17 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './Pages/Home.vue'
-import { components } from 'vuetify/dist/vuetify.js'
-import DailyBuild from './Pages/DailyBuild.vue'
-import path from 'path'
+import {createRouter, createWebHistory} from "vue-router";
+import Home from "@/components/Home/Home.vue"
+import ContactUs from "@/components/Home/ContactUs.vue";
+import DailyBuild from "./components/DailyBuild/DailyBuild.vue";
+import path from "path";
+import { components } from "vuetify/dist/vuetify.js";
 
-Vue.use(Router)
+const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes:[
+        {path:"/", component:Home},
+        {path:"/contact", component:ContactUs}, 
+        {path: "/dailybuild", component: DailyBuild}
+    ],
+});
 
-export default new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home
-        },
-        {
-            path: '/DailyBuild',
-            name: 'dailybuild',
-            component: () => import( './Pages/DailyBuild.vue')
-        },
-        {
-            path: '/BuildCreator',
-            name: 'buildcreator',
-            component: () => import('./Pages/BuildCreator.vue')
-        }
-    ]
-})
+export default router;

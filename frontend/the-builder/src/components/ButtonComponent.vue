@@ -1,14 +1,20 @@
 <template>
-<button @click="DailyBuildButtonClick" class="buttonsettings"> Daily Build </button>
-
+  <button @click="goToDailyBuild" class="buttonsettings"> Daily Build </button>
+  <br>
+ <button @click="goToBuildCreator" class="buttonsettings"> Create your build </button>
 </template>
 
 <script setup>
 
-        function DailyBuildButtonClick(){
-          alert('Button Clicked'); //We should use this to change the page
-        }
+  import { useRouter} from 'vue-router';
+  const router = useRouter();
 
+  function goToDailyBuild(){
+      return router.push({name: "DailyBuild"});
+  }
+  function goToBuildCreator(){
+      router.push({name: "BuildCreator"});
+  }
 </script>
 
 <style>

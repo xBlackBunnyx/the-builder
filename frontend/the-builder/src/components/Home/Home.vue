@@ -1,12 +1,18 @@
 <template>
-    <div class="home">
-        <h1 color="#bf913b">
+    <v-app>
+        <h1 class="text-secondary">
             The Builder
         </h1>
-    </div>
+        <button-settler></button-settler>
+        <br>
+        <search-bar></search-bar>
+        <br>
+        <ContactUs></ContactUs>
+ </v-app>
 </template>
 
 <script setup>
-
+import ContactUs from './ContactUs.vue';
 
 </script>
+

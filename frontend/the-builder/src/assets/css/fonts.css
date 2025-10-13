@@ -17,3 +17,33 @@
     font-family: "BeaufortforLOLMedium";
     src: url("@/assets/LOL-Font/BeaufortforLOLMedium.otf") format("opentype");
 }
+
+h1{
+    font-size: 60px;
+    font-family: "BeaufortforLOLBold", sans-serif;
+}
+h2{
+    font-size: 40px;
+    font-family: "BeaufortforLOLMedium", sans-serif;
+}
+h3{
+    font-size: 20px;
+    font-family: "BeaufortforLOLItalic", sans-serif;
+}
+body{
+    font-size: 32px;
+    font-family: "BeaufortforLOLRegular", sans-serif;
+}
+
+.v-theme--dark .v-application h1 {
+     color: var(--v-theme-secondary) !important;
+}
+.v-theme--dark h2 {
+    color: var(--v-theme-secondary);
+}
+.v-theme--dark h3 {
+    color: var(--v-theme-secondary);
+}
+.v-theme--dark body {
+    color: var(--v-theme-info);
+}

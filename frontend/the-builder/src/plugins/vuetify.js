@@ -6,11 +6,13 @@
 
 // Styles
 import '@mdi/font/css/materialdesignicons.css'
+import 'font-awesome/css/font-awesome.min.css'
 import 'vuetify/styles'
 
 // Composables
 import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
+import { aliases, fa } from 'vuetify/iconsets/fa4'
 
 //We can create our custom theme here
 
@@ -42,6 +44,13 @@ export default createVuetify({
     defaultTheme: 'customTheme',
     themes:{
       customTheme,
+    },
+  },
+  icons: {
+    defaultSet: 'fa',
+    aliases,
+    sets: {
+      fa,
     },
   },
 })

@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "BeaufortforLOLBold";
+    src: local("BeaufortforLOL-Bold"), url("@/assets/LOL-Font/BeaufortforLOL-Bold.otf"), format("opentype");
+}
+
+@font-face {
+    font-family: "BeaufortforLOLRegular";
+    src: url("@/assets/LOL-Font/BeaufortforLOL-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "BeaufortforLOLItalic";
+    src: url("@/assets/LOL-Font/BeaufortforLOL-Italic.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "BeaufortforLOLMedium";
+    src: url("@/assets/LOL-Font/BeaufortforLOL-Medium.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "BeaufortforLOLLightItalic";
+    src: url("@/assets/LOL-Font/BeaufortforLOL-LightItalic.otf") format("opentype");
+}
+
+h1{
+    font-size: 60px;
+    font-family: "BeaufortforLOLBold", sans-serif;
+}
+h2{
+    font-size: 40px;
+    font-family: "BeaufortforLOLMedium", sans-serif;
+}
+h3{
+    font-size: 30px;
+    font-family: "BeaufortforLOLItalic", sans-serif;
+}
+body{
+    font-size: 25px;
+    font-family: "BeaufortforLOLRegular", sans-serif;
+}
+
+p{
+    font-size: 20px;
+    font-family: "BeaufortforLOLLightItalic", sans-serif;
+}
+
+.v-theme--dark .v-application h1 {
+     color: var(--v-theme-secondary) !important;
+}
+.v-theme--dark h2 {
+    color: var(--v-theme-secondary);
+}
+.v-theme--dark h3 {
+    color: var(--v-theme-secondary);
+}
+.v-theme--dark body {
+    color: var(--v-theme-info);
+}

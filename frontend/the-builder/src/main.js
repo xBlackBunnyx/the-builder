@@ -10,8 +10,9 @@ import { createVuetify } from 'vuetify'
 
 // Components
 import App from './App.vue'
-import ButtonSettler from './components/ButtonComponent.vue'
+import DailyButton from './components/DailyButtonComponent.vue'
 import SearchBar from './components/SearchBar.vue'
+import CreateBuildButton from './components/CreateBuildButtonComponent.vue'
 
 // Plugins
 import { registerPlugins } from './plugins'
@@ -29,8 +30,9 @@ const app = createApp(App)
 registerPlugins(app)
 
 // Here we should only import  the global components, if it's not global, we should import it locally
-app.component("button-settler", ButtonSettler);
+app.component("button-daily", DailyButton);
 app.component("search-bar", SearchBar);
+app.component("button-build", CreateBuildButton);
 
 app.use(router)
 app.use(vuetify)

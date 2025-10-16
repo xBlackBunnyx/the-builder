@@ -1,7 +1,20 @@
 <template>
-  <button @click="goToDailyBuild" class="buttonsettings"> Daily Build </button>
-  <br>
- <button @click="goToBuildCreator" class="buttonsettings"> Create your build </button>
+  <v-container>
+   <v-row>
+    <v-col>
+      <button @click="goToDailyBuild" class="buttonsettings"> Daily Build </button>
+      <v-sheet class="ml-11">
+      <v-img
+        :width="100"
+        src = "../../public/Chevrons_up.png">
+      </v-img>
+      </v-sheet>
+      <span class="text-secondary"> Challenge yourself</span>
+      <br>
+      <span class="text-secondary">with the daily build!</span>
+      </v-col>
+    </v-row>
+</v-container>  
 </template>
 
 <script setup>
@@ -33,5 +46,8 @@
         rgba(142, 96, 42, 1) 94%
       );
       padding:  20px 32px;
+      width: 200px;
+      height: 100px;
       }
+
 </style>

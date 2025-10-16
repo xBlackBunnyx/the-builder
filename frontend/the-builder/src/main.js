@@ -18,7 +18,7 @@ import { registerPlugins } from './plugins'
 import vuetify from './plugins/vuetify'
 
 // Styles
-import 'unfonts.css'
+// import 'unfonts.css'
 import './assets/css/fonts.css'
 
 //Routes

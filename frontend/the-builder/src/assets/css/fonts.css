@@ -24,7 +24,7 @@
 }
 
 h1{
-    font-size: 60px;
+    font-size: 70px;
     font-family: "BeaufortforLOLBold", sans-serif;
 }
 h2{
@@ -43,6 +43,13 @@ body{
 p{
     font-size: 20px;
     font-family: "BeaufortforLOLLightItalic", sans-serif;
+}
+
+a{
+    font-size: 18px;
+    font-family: "BeaufortforLOLLightItalic", sans-serif;
+    text-decoration: none;
+    color: whitesmoke;
 }
 
 .v-theme--dark .v-application h1 {

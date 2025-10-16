@@ -11,7 +11,6 @@ const router = createRouter({
         {path: "/dailybuild", component: DailyBuild, name: "DailyBuild"},
         {path: "/buildcreator", component: BuildCreator, name: "BuildCreator"},
        
-
     ],
 });
 

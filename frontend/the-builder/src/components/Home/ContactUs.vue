@@ -21,11 +21,12 @@
       >
         <v-col 
         cols="auto"
-        class="d-flex justify-center">
+        class="d-flex justify-center"
+        offset="2">
           <v-sheet>
             <v-img
             cover
-            :width="200"
+            :width="250"
               src = "../../assets/bard-behind-no-bg.png"
               >
             </v-img>
@@ -39,20 +40,19 @@
             <v-row class="align-center justify-center" no-gutters>
                 <v-col class="d-flex align-center"> 
               <v-icon icon="fa-github" class="text-secondary me-2" size="small"></v-icon>
-              <p> The builder </p>
-              
+              <a href="https://github.com/xBlackBunnyx/the-builder"> The builder</a>
                 </v-col>
             </v-row>
             <v-row class="align-center justify-center" no-gutters>
                 <v-col class="d-flex align-center"> 
               <v-icon icon="fa-linkedin" class="text-secondary me-2" size="small"></v-icon>
-              <p> Juan Guillermo Zafra Fernández</p>
+              <a href="https://www.linkedin.com/in/guillermozafrafernandez"> Juan Guillermo Zafra Fernández</a>
                 </v-col>
             </v-row>
             <v-row class="align-center justify-center" no-gutters>
                 <v-col class="d-flex align-center"> 
               <v-icon icon="fa-linkedin" class="text-secondary me-2" size="small"></v-icon>
-              <p> Lorena Martín Dorta</p>
+              <a href="https://www.linkedin.com/in/lorenamartindorta"> Lorena Martín Dorta</a>
                 </v-col>
             </v-row>  
 
@@ -65,7 +65,7 @@
           <v-sheet>
             <v-img
             cover
-            :width="200"
+            :width="250"
             src = "../../assets/bard-front-no-bg.png"
             ></v-img>
           </v-sheet>
@@ -73,11 +73,12 @@
 
          <v-col 
           cols="auto"
-         class="d-flex justify-center">
+         class="d-flex justify-center"
+         offset="2">
           <v-sheet>
             <v-img
             cover
-            :width="300"
+            :width="400"
             src = "../../assets/LoL_Logo_Rendered_LARGE.png"
             ></v-img>
           </v-sheet>

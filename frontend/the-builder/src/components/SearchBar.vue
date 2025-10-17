@@ -204,6 +204,7 @@
     168: "/characters-picture/zyra.png",
   }
 
+  
   const champions = [
     { name: 'Aatrox', avatar: srcs[1] },
     { name: 'Ahri ', avatar: srcs[2] },

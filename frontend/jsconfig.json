@@ -7,7 +7,7 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": [
-        "src/*"
+        "./the-builder/src/*"
       ]
     },
     "lib": [

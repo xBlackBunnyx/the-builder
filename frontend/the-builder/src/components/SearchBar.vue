@@ -3,10 +3,8 @@
       <v-container >
         <v-row  align="center">
           <v-col>
-            <v-autocomplete
+            <v-autocomplete :model-value="chosenChampion" @update:model-value="onUpdateModel"
             class="barsettings"
-              v-model="friends"
-              :disabled="isUpdating"
               :items="champions"
               item-title="name"
               item-value="name"
@@ -17,9 +15,15 @@
                   v-bind="props"
                   :prepend-avatar="item.raw.avatar"
                   :title="item.raw.name"
+                  :return-object="true"
+                  v-model:selected="selectedChampion"
+                  update:selected="selectedChampionFunc"
                 ></v-list-item>
               </template>
             </v-autocomplete>
+          </v-col>
+          <v-col>
+            <v-btn class="buildsettings" @click="goToBuildCreatorAndSaveData">Submit</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -371,15 +375,29 @@
     { name: 'Zyra', avatar: srcs[168] },
   ]
 
-  const isUpdating = ref(false)
+  import { useRouter} from 'vue-router';
+  const router = useRouter();
+  let selectedChampion;
 
-  let timeout = -1
-  watch(isUpdating, val => {
-    clearTimeout(timeout)
-    if (val) {
-      timeout = setTimeout(() => (isUpdating.value = false), 3000)
+  function goToBuildCreatorAndSaveData(){
+    if (!selectedChampion)
+    {
+      console.log("Not submitting without choosing a champion");
+    } else {
+      console.log("Selected champion is " + selectedChampion);
     }
-  })
+    // router.push({name: "BuildCreator"});
+  }
+
+  import { shallowRef } from 'vue';
+  function onUpdateModel(value)
+  {
+    const chosenChampion = shallowRef('chosenChampion');
+    chosenChampion.value = value;
+    selectedChampion = value;
+    // goToBuildCreatorAndSaveData(value)
+  }
+
 </script>
 
 <style>

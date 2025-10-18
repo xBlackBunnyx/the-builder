@@ -5,12 +5,12 @@
           <v-col>
             <v-autocomplete
             class="barsettings"
-              v-model="friends"
+              
               :disabled="isUpdating"
               :items="champions"
               item-title="name"
               item-value="name"
-              label="Select your favourite champion"
+              placeholder="Select your favourite champion"
             >
               <template v-slot:item="{ props, item }">
                 <v-list-item

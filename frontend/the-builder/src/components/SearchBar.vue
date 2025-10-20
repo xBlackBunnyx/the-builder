@@ -5,10 +5,16 @@
           <v-col>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <v-autocomplete
             class="barsettings"
               
               :disabled="isUpdating"
+=======
+            <v-autocomplete 
+              :model-value="chosenChampion" @update:model-value="onUpdateModel"
+              class="barsettings"
+>>>>>>> Stashed changes
 =======
             <v-autocomplete 
               :model-value="chosenChampion" @update:model-value="onUpdateModel"

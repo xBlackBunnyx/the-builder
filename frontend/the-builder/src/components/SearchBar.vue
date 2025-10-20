@@ -3,12 +3,12 @@
       <v-container >
         <v-row  align="center">
           <v-col>
-            <v-autocomplete :model-value="chosenChampion" @update:model-value="onUpdateModel"
+            <v-autocomplete
             class="barsettings"
-              :disabled="isUpdating"
-              v-model:search-input="search" 
-              @update:search="onUpdateModel"
               :items="champions"
+              :disabled="false"
+              v-model:search-input="search"
+              @update:search="onUpdateModel"
               item-title="name"
               item-value="name"
               placeholder="Select your favourite champion"
@@ -19,15 +19,12 @@
                   :prepend-avatar="item.raw.avatar"
                   :title="item.raw.name"
                   :return-object="true"
-                  v-model:selected="selectedChampion"
-                  update:selected="selectedChampionFunc"
-                  
                 ></v-list-item>
               </template>
             </v-autocomplete>
           </v-col>
           <v-col>
-            <v-btn class="buildsettings" @click="goToBuildCreatorAndSaveData">Submit</v-btn>
+            <v-btn class="buttonsettings" @click="goToBuildCreatorAndSaveData">Submit</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -387,32 +384,36 @@
   function goToBuildCreatorAndSaveData(){
     if (!selectedChampion)
     {
-      console.log("Not submitting without choosing a champion");
+      // console.log("Not submitting without choosing a champion");
     } else {
-      console.log("Selected champion is " + selectedChampion);
+      // console.log("Selected champion is " + selectedChampion);
     }
     // router.push({name: "BuildCreator"});
   }
 
-  import { shallowRef } from 'vue';
   function onUpdateModel(value)
   {
-    const chosenChampion = shallowRef('chosenChampion');
+    // console.log("oUM: Value is " + value);
+    if (!value) return selectedChampion;
+    const chosenChampion = shallowRef('search');
     chosenChampion.value = value;
     selectedChampion = value;
+    if (!value) return false;
+    else return value;
     // goToBuildCreatorAndSaveData(value)
   }
 
-  //   function onUpdateModel(value)
-  // {
-  //   const chosenChampion = shallowRef('chosenChampion');
-  //   chosenChampion.value = value;
-  //   selectedChampion = value;
-  // }
   const search = ref()
-  const onUpdateModel = val => {
-    if (!val) return false
-  }
+
+  const isUpdating = ref(false)
+
+  let timeout = -1
+  watch(isUpdating, val => {
+    clearTimeout(timeout)
+    if (val) {
+      timeout = setTimeout(() => (isUpdating.value = false), 3000)
+    }
+  })
 
 </script>
 

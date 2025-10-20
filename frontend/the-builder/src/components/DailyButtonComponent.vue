@@ -6,7 +6,7 @@
       <v-sheet class="ml-11">
       <v-img
         :width="100"
-        src = "../../public/Chevrons_up.png">
+        src = "/Chevrons_up.png">
       </v-img>
       </v-sheet>
       <span class="text-secondary"> Challenge yourself</span>

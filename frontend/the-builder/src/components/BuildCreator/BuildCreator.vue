@@ -1,11 +1,25 @@
 <template>
-    <div class="buildcreator">
-        <h1 color="#bf913b">
-            Create your build!
-        </h1>
-    </div>
-        <button @click="$router.go(-1)" class="buttonsettings"> Return to Home </button>
+    <v-container>
+        <v-row>
+            <v-col>
+                  <h1 class="text-secondary">  Create your build!  </h1>
+            </v-col>
+        </v-row>
 
+        <v-row>
+            <v-col offset="3">
+                <item-selector></item-selector>
+                <v-spacer></v-spacer>
+                <br />
+            </v-col>
+        </v-row>
+        
+        <v-row>
+            <v-col>
+                <button @click="$router.go(-1)" class="buttonsettings"> Return to Home </button>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script setup>

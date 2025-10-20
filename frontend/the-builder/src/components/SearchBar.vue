@@ -5,10 +5,13 @@
           <v-col>
             <v-autocomplete :model-value="chosenChampion" @update:model-value="onUpdateModel"
             class="barsettings"
+              :disabled="isUpdating"
+              v-model:search-input="search" 
+              @update:search="onUpdateModel"
               :items="champions"
               item-title="name"
               item-value="name"
-              label="Select your favourite champion"
+              placeholder="Select your favourite champion"
             >
               <template v-slot:item="{ props, item }">
                 <v-list-item
@@ -18,6 +21,7 @@
                   :return-object="true"
                   v-model:selected="selectedChampion"
                   update:selected="selectedChampionFunc"
+                  
                 ></v-list-item>
               </template>
             </v-autocomplete>
@@ -31,7 +35,7 @@
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue'
+  import { ref, watch, shallowRef } from 'vue'
 
   const srcs = {
     1: '/characters-picture/aatrox.png',
@@ -397,6 +401,17 @@
     chosenChampion.value = value;
     selectedChampion = value;
     // goToBuildCreatorAndSaveData(value)
+  }
+
+  //   function onUpdateModel(value)
+  // {
+  //   const chosenChampion = shallowRef('chosenChampion');
+  //   chosenChampion.value = value;
+  //   selectedChampion = value;
+  // }
+  const search = ref()
+  const onUpdateModel = val => {
+    if (!val) return false
   }
 
 </script>

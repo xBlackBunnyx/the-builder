@@ -3,28 +3,11 @@
       <v-container >
         <v-row  align="center">
           <v-col>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             <v-autocomplete
             class="barsettings"
-              
               :disabled="isUpdating"
-=======
-            <v-autocomplete 
-              :model-value="chosenChampion" @update:model-value="onUpdateModel"
-              class="barsettings"
->>>>>>> Stashed changes
-=======
-            <v-autocomplete 
-              :model-value="chosenChampion" @update:model-value="onUpdateModel"
-              class="barsettings"
->>>>>>> Stashed changes
-=======
-            <v-autocomplete 
-              :model-value="chosenChampion" @update:model-value="onUpdateModel"
-              class="barsettings"
->>>>>>> Stashed changes
+              v-model:search-input="search" 
+              @update:search="onUpdateModel"
               :items="champions"
               item-title="name"
               item-value="name"
@@ -35,6 +18,10 @@
                   v-bind="props"
                   :prepend-avatar="item.raw.avatar"
                   :title="item.raw.name"
+                  :return-object="true"
+                  v-model:selected="selectedChampion"
+                  update:selected="selectedChampionFunc"
+                  
                 ></v-list-item>
               </template>
             </v-autocomplete>
@@ -45,7 +32,7 @@
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue'
+  import { ref, watch, shallowRef } from 'vue'
 
   const srcs = {
     1: '/characters-picture/aatrox.png',
@@ -398,6 +385,18 @@
       timeout = setTimeout(() => (isUpdating.value = false), 3000)
     }
   })
+
+  //   function onUpdateModel(value)
+  // {
+  //   const chosenChampion = shallowRef('chosenChampion');
+  //   chosenChampion.value = value;
+  //   selectedChampion = value;
+  // }
+  const search = ref()
+  const onUpdateModel = val => {
+    if (!val) return false
+  }
+
 </script>
 
 <style>

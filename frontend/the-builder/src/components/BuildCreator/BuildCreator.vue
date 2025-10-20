@@ -6,6 +6,13 @@
             </v-col>
         </v-row>
 
+        <v-row>
+            <v-col offset="3">
+                <item-selector></item-selector>
+                <v-spacer></v-spacer>
+                <br />
+            </v-col>
+        </v-row>
         
         <v-row>
             <v-col>

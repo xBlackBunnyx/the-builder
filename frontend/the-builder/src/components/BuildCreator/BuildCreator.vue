@@ -7,10 +7,11 @@
         </v-row>
 
         <v-row>
-            <v-col offset="3">
+            <v-col>
+                <champ-img></champ-img>
+            </v-col>
+            <v-col>
                 <item-selector></item-selector>
-                <v-spacer></v-spacer>
-                <br />
             </v-col>
         </v-row>
         

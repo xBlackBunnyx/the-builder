@@ -1,45 +1,167 @@
 <template>
-  <div class="d-flex justify-space-around">
-    <v-menu>
+ <div class="text-center">
+    <v-menu
+      v-model="menu"
+      :close-on-content-click="false"
+      location="end"
+    >
       <template v-slot:activator="{ props }">
         <button
           class="selectorstyle"
           v-bind="props"
         >
-          Activator slot
-        </button>
+          Item
+      </button>
       </template>
-    <v-list 
-    :items="items"
-    @update:selected="selected"> 
-      <v-list-subheader>REPORTS</v-list-subheader>
+
+      <v-card min-width="300">
+        <v-list>
           <v-list-item
-           v-for="(item, i) in items"
-           :key="i"
-           :value="item"
-           active-color="primary"
-           >
-
-            <template v-slot:prepend>
-              <v-icon :icon="item.icon"></v-icon>
-            </template>
-
-            <v-list-item-title v-text="item.text"></v-list-item-title>
+          v-for="(item, i) in items"
+          :key="i"
+          :value="i"
+          >
+          <img @click="itemSelected">{{ item.name }}</img>
+          <!-- <img src="/items-picture/Abyssal_Mask.png" @click="itemSelected"/>
+          <img src="/items-picture/Ardent_Censer.png" @click="itemSelected"/> -->
           </v-list-item>
-    </v-list>
+        </v-list>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="primary"
+            variant="text"
+            @click="menu = false"
+          >
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-menu>
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
 
-  const selected = ref([])
-  const items = ref( [
-    { text: 'Real-Time', icon: 'mdi-clock' },
-    { text: 'Audience', icon: 'mdi-account' },
-    { text: 'Conversions', icon: 'mdi-flag' },
-  ])
+  import { ref } from 'vue'
+
+  const menu = ref(false)
+
+  const items = [
+    {name: "Abyssal Mask", img: "/items-picture/Abyssal_Mask.png"},
+    {name: "Arden Censer", img: "/items-picture/Ardent_Censer.png"},
+    {name: "Axiom Arc", img: "/items-picture/Axiom_Arc.png"},
+    {name: "Banshee's Veil", img: "/items-picture/Banshee_Veil.png"},
+    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png"},
+    {name: "Black Cleaver", img: "/items-picture/Black_Cleaver.png"},
+    {name: "Blackfire Torch", img: "/items-picture/Blackfire_Torch.png"},
+    {name: "Blade of the Ruined King", img: "/items-picture/Blade_Ruined_King.png"},
+    {name: "Bloodletter's Curse", img: "/items-picture/Bloodletter_Curse.png"},
+    {name: "Bloodsong", img: "/items-picture/Bloodsong.png"},
+    {name: "Bloodthirster", img: "/items-picture/Bloodthirster.png"},
+    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png"},
+    {name: "Celestial Opposition", img: "/items-picture/Celestial_Opposition.png"},
+    {name: "Chempunk Chainsword", img: "/items-picture/Chempunk_Chainsword.png"},
+    {name: "Cosmic Drive", img: "/items-picture/Cosmic_Drive.png"},
+    {name: "Cryptbloom", img: "/items-picture/Cryptbloom.png"},
+    {name: "Dawncore", img: "/items-picture/Dawncore.png"},
+    {name: "Dead Man's Plate", img: "/items-picture/Dead_Man_Plate.png"},
+    {name: "Death's Dance", img: "/items-picture/Death_Dance.png"},
+    {name: "Dream Maker", img: "/items-picture/Dream_Maker.png"},
+    {name: "Echoes of Helia", img: "/items-picture/Echoes_Helia.png"},
+    {name: "Eclipse", img: "/items-picture/Eclipse.png"},
+    {name: "Edge of Night", img: "/items-picture/Edge_Night.png"},
+    {name: "Essence Reaver", img: "/items-picture/Essence_Reaver.png"},
+    {name: "Experimental Hexplate", img: "/items-picture/Experimental_Hexplate.png"},
+    {name: "Fimbulwinter", img: "/items-picture/Fimbulwinter.png"},
+    {name: "Force of Nature", img: "/items-picture/Force_Nature.png"},
+    {name: "Frozen Heart", img: "/items-picture/Frozen_Heart.png"},
+    {name: "Guardian Angel", img: "/items-picture/Guardian_Angel.png"},
+    {name: "Guinsoo's Rageblade", img: "/items-picture/Guinsoo_Rageblade.png"},
+    {name: "Heartsteel", img: "/items-picture/Heartsteel.png"},
+    {name: "Hextech Rocketbelt", img: "/items-picture/Hextech_Rocketbelt.png"},
+    {name: "Hollow Radiance", img: "/items-picture/Hollow_Radiance.png"},
+    {name: "Horizon Focus", img: "/items-picture/Horizon_Focus.png"},
+    {name: "Hubris", img: "/items-picture/Hubris.png"},
+    {name: "Hullbreaker", img: "/items-picture/Hullbreaker.png"},
+    {name: "Iceborn Gauntlet", img: "/items-picture/Iceborn_Gauntlet.png"},
+    {name: "Immortal Shieldbow", img: "/items-picture/Immortal_Shieldbow.png"},
+    {name: "Imperial Mandate", img: "/items-picture/Imperial_Mandate.png"},
+    {name: "Infinity Edge", img: "/items-picture/Infinity_Edge.png"},
+    {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png"},
+    {name: "Jak'Sho, The Protean", img: "/items-picture/Jak_The_Protean.png"},
+    {name: "Kaenic Rookern", img: "/items-picture/Kaenic_Rookern.png"},
+    {name: "Knight's Vow", img: "/items-picture/Knight_Vow.png"},
+    {name: "Kraken Slayer", img: "/items-picture/Kraken_Slayer.png"},
+    {name: "Liandry's Torment", img: "/items-picture/Liandry_Torment.png"},
+    {name: "Lich Bane", img: "/items-picture/Lich_Bane.png"},
+    {name: "Locket of the Iron Solari", img: "/items-picture/Locket_Solari.png"},
+    {name: "Lord Dominik's Regards", img: "/items-picture/Lord_Dominik_Regards.png"},
+    {name: "Luden's Companion", img: "/items-picture/Luden_Companion.png"},
+    {name: "Malignance", img: "/items-picture/Malignance.png"},
+    {name: "Maw of Malmortius", img: "/items-picture/Maw_Malmortius.png"},
+    {name: "Mejai's Soulstealer", img: "/items-picture/Mejai_Soulstealer.png"},
+    {name: "Mercurial Scimitar", img: "/items-picture/Mercurial_Scimitar.png"},
+    {name: "Mercury's Treads", img: "/items-picture/Mercury_Treads.png"},
+    {name: "Mikael's Blessing", img: "/items-picture/Mikael_Blessing.png"},
+    {name: "Moonstone Renewer", img: "/items-picture/Moonstone_Renewer.png"},
+    {name: "Morellonomicon", img: "/items-picture/Morellonomicon.png"},
+    {name: "Mortal Reminder", img: "/items-picture/Mortal_Reminder.png"},
+    {name: "Muramana", img: "/items-picture/Muramana.png"},
+    {name: "Nashor's Tooth", img: "/items-picture/Nashor_Tooth.png"},
+    {name: "Navori Flickerblade", img: "/items-picture/Navori_Flickerblade.png"},
+    {name: "Opportunity", img: "/items-picture/Opportunity.png"},
+    {name: "Overlord's Bloodmail", img: "/items-picture/Overlord_Bloodmail.png"},
+    {name: "Phantom Dancer", img: "/items-picture/Phantom_Dancer.png"},
+    {name: "Plated Steelcaps", img: "/items-picture/Plated_Steelcaps.png"},
+    {name: "Profane Hydra", img: "/items-picture/Profane_Hydra.png"},
+    {name: "Rabadon's Deathcap", img: "/items-picture/Rabadon_Deathcap.png"},
+    {name: "Randuin's Omen", img: "/items-picture/Randuin_Omen.png"},
+    {name: "Rapid Firecannon", img: "/items-picture/Rapid_Firecannon.png"},
+    {name: "Ravenous Hydra", img: "/items-picture/Ravenous_Hydra.png"},
+    {name: "Redemption", img: "/items-picture/Redemption.png"},
+    {name: "Riftmaker", img: "/items-picture/Riftmaker.png"},
+    {name: "Rod of Ages", img: "/items-picture/Rod_Ages.png"},
+    {name: "Serpent's Fang", img: "/items-picture/Serpent_Fang.png"},
+    {name: "Serylda's Grudge", img: "/items-picture/Serylda_Grudge.png"},
+    {name: "Shadowflame", img: "/items-picture/Shadowflame.png"},
+    {name: "Shurelya's Battlesong", img: "/items-picture/Shurelya_Battlesong.png"},
+    {name: "Solstice Sleigh", img: "/items-picture/Solstice_Sleigh.png"},
+    {name: "Sorcerer's Shoes", img: "/items-picture/Sorcerer_Shoes.png"},
+    {name: "Spear of Shojin", img: "/items-picture/Spear_Shojin.png"},
+    {name: "Spirit Visage", img: "/items-picture/Spirit_Visage.png"},
+    {name: "Staff of Flowing Water", img: "/items-picture/Staff_Flowing_Water.png"},
+    {name: "Statikk Shiv", img: "/items-picture/Statikk_Shiv.png"},
+    {name: "Sterak's Gage", img: "/items-picture/Sterak_Gage.png"},
+    {name: "Stormsurge", img: "/items-picture/Stormsurge.png"},
+    {name: "Stridebreaker", img: "/items-picture/Stridebreaker.png"},
+    {name: "Sundered Sky", img: "/items-picture/Sundered_Sky.png"},
+    {name: "Sunfire Aegis", img: "/items-picture/Sunfire_Aegis.png"},
+    {name: "Terminus", img: "/items-picture/Terminus.png"},
+    {name: "The Collector", img: "/items-picture/The_Collector.png"},
+    {name: "Thornmail", img: "/items-picture/Thornamil.png"},
+    {name: "Titanic Hydra", img: "/items-picture/Titanic_Hydra.png"},
+    {name: "Trailblazer", img: "/items-picture/Trailblazer.png"},
+    {name: "Trinity Force", img: "/items-picture/Trinity_Force.png"},
+    {name: "Umbral Glaive", img: "/items-picture/Umbral_Glaive.png"},
+    {name: "Unending Despair", img: "/items-picture/Unending_Despair.png"},
+    {name: "Vigilant Wardstone", img: "/items-picture/Vigilant_Wardstone.png"},
+    {name: "Void Staff", img: "/items-picture/Void_Staff.png"},
+    {name: "Voltaic Cyclosword", img: "/items-picture/Voltaic_Cyclosword.png"},
+    {name: "Warmog's Armor", img: "/items-picture/Warmog_Armor.png"},
+    {name: "Wit's End", img: "/items-picture/Wit_End.png"},
+    {name: "Youmuu's Ghostblade", img: "/items-picture/Youmuu_Ghostblade.png"},
+    {name: "Yun Tal Wildarrows", img: "/items-picture/Yun_Tal_Wildarrows.png"},
+    {name: "Zaz'Zak's Realmspike", img: "/items-picture/ZazZak_Realmspike.png"},
+    {name: "Zeke's Convergence", img: "/items-picture/Zeke_Convergence.png"},
+    {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png"},
+  ]
+
+  function itemSelected(){
+    console.log("The item selected is "+ items.name)
+  }
 
 </script>
 

@@ -23,9 +23,6 @@
               </template>
             </v-autocomplete>
           </v-col>
-          <v-col>
-            <v-btn class="buttonsettings" @click="goToBuildCreatorAndSaveData">Submit</v-btn>
-          </v-col>
         </v-row>
       </v-container>
     </v-form>
@@ -377,19 +374,21 @@
     { name: 'Zyra', avatar: srcs[168] },
   ]
 
-  import { useRouter} from 'vue-router';
-  const router = useRouter();
+  import ChampionImage from './ChampionImage.vue';
+
   let selectedChampion;
 
-  function goToBuildCreatorAndSaveData(){
-    if (!selectedChampion)
-    {
-      // console.log("Not submitting without choosing a champion");
-    } else {
-      // console.log("Selected champion is " + selectedChampion);
-    }
-    // router.push({name: "BuildCreator"});
-  }
+
+
+  // function goToBuildCreatorAndSaveData(){
+  //   if (!selectedChampion)
+  //   {
+  //     // console.log("Not submitting without choosing a champion");
+  //   } else {
+  //     // console.log("Selected champion is " + selectedChampion);
+  //   }
+  //   // router.push({name: "BuildCreator"});
+  // }
 
   function onUpdateModel(value)
   {

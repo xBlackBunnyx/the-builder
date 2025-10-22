@@ -24,6 +24,8 @@
                 </v-col>
             </v-row>
         </v-container>
+        <button @click="onClick">Send message</button>
+        
 
         <ContactUs></ContactUs>
  </v-app>
@@ -31,6 +33,11 @@
 
 <script setup>
 import ContactUs from './ContactUs.vue';
+
+function onClick()
+{
+  this.$root.$emit("message", "Hi!");
+}
 
 </script>
 

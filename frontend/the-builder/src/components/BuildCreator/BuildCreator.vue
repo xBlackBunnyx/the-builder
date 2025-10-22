@@ -12,9 +12,24 @@
             </v-col>
             <v-col>
                 <item-selector></item-selector>
+                <item-selector></item-selector>
+            </v-col>
+            <v-col>
+                <item-selector></item-selector>
+                <item-selector></item-selector>
+            </v-col>
+            <v-col>
+                <item-selector></item-selector>
+                <item-selector></item-selector>
             </v-col>
         </v-row>
-        
+
+        <v-row>
+            <v-col>
+                <rune-selector></rune-selector>
+            </v-col>
+        </v-row>
+
         <v-row>
             <v-col>
                 <button @click="$router.go(-1)" class="buttonsettings"> Return to Home </button>

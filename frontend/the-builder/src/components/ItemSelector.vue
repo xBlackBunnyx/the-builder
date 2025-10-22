@@ -1,46 +1,53 @@
 <template>
- <div class="text-center">
+  <v-container class="d-flex justify-center pa-3">
     <v-menu
       v-model="menu"
-      :close-on-content-click="false"
-      location="end"
+      transition="scale-transition"
     >
       <template v-slot:activator="{ props }">
         <button
           class="selectorstyle"
           v-bind="props"
         >
-          Item
+          <img
+          v-if="selectedItem"
+          :src="selectedItem.img"
+          alt="Selected item">
+          </img>
+          <span v-else class="placeholder-text"> Item</span>
       </button>
       </template>
 
-      <v-card min-width="300">
-        <v-list>
+        <v-list class="d-flex flex-wrap" style="max-width: 300px;">
           <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :value="i"
+          v-for="item in items"
+          :key="item.name"
+          class="ma-1 pa-0"
           >
-          <img @click="itemSelected">{{ item.name }}</img>
-          <!-- <img src="/items-picture/Abyssal_Mask.png" @click="itemSelected"/>
-          <img src="/items-picture/Ardent_Censer.png" @click="itemSelected"/> -->
+          <v-tooltip location="top left" class="golden-tooltip" :open-delay="100">
+            <template #activator="{props}">
+              <v-img 
+              v-bind="props"
+              :src="item.img"
+              class="cursor-pointer"
+              alt="Item"
+              @click="selectItem(item)"
+              />
+            </template>
+            <div class="tooltip-content">
+              <strong class="tooltip-title">{{ item.name }}</strong>
+              <ul class="tooltip-stats">
+                <li v-for="(value, stat) in item.stats" :key="stat">
+                  <strong>{{ stat }}</strong> {{ value }}
+                </li>
+              </ul>
+            </div>
+            </v-tooltip>
           </v-list-item>
         </v-list>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn
-            color="primary"
-            variant="text"
-            @click="menu = false"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
     </v-menu>
-  </div>
+  </v-container>
 </template>
 
 <script setup>
@@ -50,26 +57,32 @@
   const menu = ref(false)
 
   const items = [
+    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"},},
+    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png"},
+    {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png"},
+    {name: "Mercury's Treads", img: "/items-picture/Mercury_Treads.png"},
+    {name: "Plated Steelcaps", img: "/items-picture/Plated_Steelcaps.png"},
+    {name: "Sorcerer's Shoes", img: "/items-picture/Sorcerer_Shoes.png"},
+    {name: "Bloodsong", img: "/items-picture/Bloodsong.png"},
+    {name: "Celestial Opposition", img: "/items-picture/Celestial_Opposition.png"},
+    {name: "Dream Maker", img: "/items-picture/Dream_Maker.png"},
+    {name: "Solstice Sleigh", img: "/items-picture/Solstice_Sleigh.png"},
+    {name: "Zaz'Zak's Realmspike", img: "/items-picture/ZazZak_Realmspike.png"},
     {name: "Abyssal Mask", img: "/items-picture/Abyssal_Mask.png"},
     {name: "Arden Censer", img: "/items-picture/Ardent_Censer.png"},
     {name: "Axiom Arc", img: "/items-picture/Axiom_Arc.png"},
     {name: "Banshee's Veil", img: "/items-picture/Banshee_Veil.png"},
-    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png"},
     {name: "Black Cleaver", img: "/items-picture/Black_Cleaver.png"},
     {name: "Blackfire Torch", img: "/items-picture/Blackfire_Torch.png"},
     {name: "Blade of the Ruined King", img: "/items-picture/Blade_Ruined_King.png"},
     {name: "Bloodletter's Curse", img: "/items-picture/Bloodletter_Curse.png"},
-    {name: "Bloodsong", img: "/items-picture/Bloodsong.png"},
     {name: "Bloodthirster", img: "/items-picture/Bloodthirster.png"},
-    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png"},
-    {name: "Celestial Opposition", img: "/items-picture/Celestial_Opposition.png"},
     {name: "Chempunk Chainsword", img: "/items-picture/Chempunk_Chainsword.png"},
     {name: "Cosmic Drive", img: "/items-picture/Cosmic_Drive.png"},
     {name: "Cryptbloom", img: "/items-picture/Cryptbloom.png"},
     {name: "Dawncore", img: "/items-picture/Dawncore.png"},
     {name: "Dead Man's Plate", img: "/items-picture/Dead_Man_Plate.png"},
     {name: "Death's Dance", img: "/items-picture/Death_Dance.png"},
-    {name: "Dream Maker", img: "/items-picture/Dream_Maker.png"},
     {name: "Echoes of Helia", img: "/items-picture/Echoes_Helia.png"},
     {name: "Eclipse", img: "/items-picture/Eclipse.png"},
     {name: "Edge of Night", img: "/items-picture/Edge_Night.png"},
@@ -90,7 +103,6 @@
     {name: "Immortal Shieldbow", img: "/items-picture/Immortal_Shieldbow.png"},
     {name: "Imperial Mandate", img: "/items-picture/Imperial_Mandate.png"},
     {name: "Infinity Edge", img: "/items-picture/Infinity_Edge.png"},
-    {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png"},
     {name: "Jak'Sho, The Protean", img: "/items-picture/Jak_The_Protean.png"},
     {name: "Kaenic Rookern", img: "/items-picture/Kaenic_Rookern.png"},
     {name: "Knight's Vow", img: "/items-picture/Knight_Vow.png"},
@@ -104,7 +116,6 @@
     {name: "Maw of Malmortius", img: "/items-picture/Maw_Malmortius.png"},
     {name: "Mejai's Soulstealer", img: "/items-picture/Mejai_Soulstealer.png"},
     {name: "Mercurial Scimitar", img: "/items-picture/Mercurial_Scimitar.png"},
-    {name: "Mercury's Treads", img: "/items-picture/Mercury_Treads.png"},
     {name: "Mikael's Blessing", img: "/items-picture/Mikael_Blessing.png"},
     {name: "Moonstone Renewer", img: "/items-picture/Moonstone_Renewer.png"},
     {name: "Morellonomicon", img: "/items-picture/Morellonomicon.png"},
@@ -115,7 +126,6 @@
     {name: "Opportunity", img: "/items-picture/Opportunity.png"},
     {name: "Overlord's Bloodmail", img: "/items-picture/Overlord_Bloodmail.png"},
     {name: "Phantom Dancer", img: "/items-picture/Phantom_Dancer.png"},
-    {name: "Plated Steelcaps", img: "/items-picture/Plated_Steelcaps.png"},
     {name: "Profane Hydra", img: "/items-picture/Profane_Hydra.png"},
     {name: "Rabadon's Deathcap", img: "/items-picture/Rabadon_Deathcap.png"},
     {name: "Randuin's Omen", img: "/items-picture/Randuin_Omen.png"},
@@ -128,8 +138,6 @@
     {name: "Serylda's Grudge", img: "/items-picture/Serylda_Grudge.png"},
     {name: "Shadowflame", img: "/items-picture/Shadowflame.png"},
     {name: "Shurelya's Battlesong", img: "/items-picture/Shurelya_Battlesong.png"},
-    {name: "Solstice Sleigh", img: "/items-picture/Solstice_Sleigh.png"},
-    {name: "Sorcerer's Shoes", img: "/items-picture/Sorcerer_Shoes.png"},
     {name: "Spear of Shojin", img: "/items-picture/Spear_Shojin.png"},
     {name: "Spirit Visage", img: "/items-picture/Spirit_Visage.png"},
     {name: "Staff of Flowing Water", img: "/items-picture/Staff_Flowing_Water.png"},
@@ -141,7 +149,7 @@
     {name: "Sunfire Aegis", img: "/items-picture/Sunfire_Aegis.png"},
     {name: "Terminus", img: "/items-picture/Terminus.png"},
     {name: "The Collector", img: "/items-picture/The_Collector.png"},
-    {name: "Thornmail", img: "/items-picture/Thornamil.png"},
+    {name: "Thornmail", img: "/items-picture/Thornmail.png"},
     {name: "Titanic Hydra", img: "/items-picture/Titanic_Hydra.png"},
     {name: "Trailblazer", img: "/items-picture/Trailblazer.png"},
     {name: "Trinity Force", img: "/items-picture/Trinity_Force.png"},
@@ -154,46 +162,82 @@
     {name: "Wit's End", img: "/items-picture/Wit_End.png"},
     {name: "Youmuu's Ghostblade", img: "/items-picture/Youmuu_Ghostblade.png"},
     {name: "Yun Tal Wildarrows", img: "/items-picture/Yun_Tal_Wildarrows.png"},
-    {name: "Zaz'Zak's Realmspike", img: "/items-picture/ZazZak_Realmspike.png"},
     {name: "Zeke's Convergence", img: "/items-picture/Zeke_Convergence.png"},
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png"},
   ]
 
-  function itemSelected(){
-    console.log("The item selected is "+ items.name)
+  const selectedItem = ref(null)
+
+  function selectItem(item){
+    selectedItem.value = item
+    menu.value = false
   }
 
 </script>
 
-<style>
-    .selectorstyle{
-      font-size: 20px;
-      text-align: center;
-      color: black;
-      font-family: "BeaufortforLOLItalic", sans-serif;
-      border-radius: 10px;
-      border: 3px solid;
-      border-color: #653a1b;
-      background: radial-gradient(
-        50% 50% at 50% 50%,
-        rgba(222, 200, 128, 1) 8%,
-        rgba(222, 197, 118, 1) 35%,
-        rgba(191, 145, 59, 1) 75%,
-        rgba(142, 96, 42, 1) 94%
-      );
-      padding:  20px 20px;
-      }
+<style scoped>
+  .selectorstyle{
+    font-size: 20px;
+    text-align: center;
+    color: black;
+    font-family: "BeaufortforLOLItalic", sans-serif;
+    border-radius: 10px;
+    border: 3px solid;
+    border-color: #653a1b;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(222, 200, 128, 1) 8%,
+      rgba(222, 197, 118, 1) 35%,
+      rgba(191, 145, 59, 1) 75%,
+      rgba(142, 96, 42, 1) 94%
+    );
+    padding:  20px 20px;
+    cursor: pointer;
+    }
 
-      .bgselector{
-        background: radial-gradient(
-        50% 50% at 50% 50%,
-        rgba(222, 200, 128, 1) 8%,
-        rgba(222, 197, 118, 1) 35%,
-        rgba(191, 145, 59, 1) 75%,
-        rgba(142, 96, 42, 1) 94%
-        );
-        border-radius: 10px;
-        border: 3px solid;
-        border-color: #653a1b;
-      }
+    .cursor-pointer {
+      cursor: pointer;
+    }
+
+  .golden-tooltip :deep(.v-overlay__content) {
+    background-color: #653a1b !important; /* gold background */
+    color: #1a1a1a !important; /* dark text */
+    border-radius: 6px;
+    padding: 8px 10px;
+    max-width: 200px;
+    font-family: "BeaufortforLOL-Regular", sans-serif;
+    box-shadow: 0 0 10px rgba(191, 145, 59, 0.6);
+  }
+
+  .golden-tooltip :deep(.v-overlay__content) strong {
+    color: #1a1a1a !important;
+  }
+
+    .tooltip-content {
+      background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(222, 200, 128, 1) 8%,
+      rgba(222, 197, 118, 1) 35%,
+      rgba(191, 145, 59, 1) 75%,
+      rgba(142, 96, 42, 1) 94%
+    );
+      color: black;
+      border-radius: 8px;
+      padding: 8px 12px;
+      max-width: 220px;
+      font-family: "BeaufortforLOLRegular", sans-serif;
+    }
+
+    .tooltip-title{
+      font-family: "BeaufortforLOLBold", sans-serif;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    
+    .tooltip-stats{
+      list-style: none;
+      padding: 0;
+      margin: 0 0 6px 0;
+      font-size: 0.85rem;
+    }
 </style>

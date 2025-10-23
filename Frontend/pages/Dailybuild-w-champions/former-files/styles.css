@@ -1,0 +1,1363 @@
+
+/* Add font files for Beaufort for LOL */
+@font-face {
+  font-family: 'Beaufort for LOL';
+  src: url('fonts/beaufort-for-lol.woff2') format('woff2'),
+       url('fonts/beaufort-for-lol.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+:root {
+  --font-family-beaufort-for-lol: 'Beaufort for LOL', sans-serif;
+  --font-family-inter: 'Inter', sans-serif;
+  --text-black: rgba(0, 0, 0, 1);
+  --text-rgb-69-69-69: rgba(69, 69, 69, 1);
+  --text-rgb-130-130-130: rgba(130, 130, 130, 1);
+  --text-rgb-191-145-59: rgba(191, 145, 59, 1);
+  --text-white: rgba(255, 255, 255, 1);
+  --text-rgb-30-30-30: rgba(30, 30, 30, 1);
+}
+
+.text-black {
+  color: var(--text-black);
+}
+
+.text-rgb-69-69-69 {
+  color: var(--text-rgb-69-69-69);
+}
+
+.text-rgb-130-130-130 {
+  color: var(--text-rgb-130-130-130);
+}
+
+.text-rgb-191-145-59 {
+  color: var(--text-rgb-191-145-59);
+}
+
+.text-white {
+  color: var(--text-white);
+}
+
+.text-rgb-30-30-30 {
+  color: var(--text-rgb-30-30-30);
+}
+
+
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.text-2 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 110.00000238418579%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-3 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.image-5 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+}
+
+.image-6 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+}
+
+.images-4 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.text-7 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-10 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-11 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.text-12 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.text-13 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.items-9 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.text-15 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-16 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.text-17 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.text-18 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.items-14 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.text-20 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-21 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.text-22 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.text-23 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-69-69-69);
+}
+
+.items-19 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.text-24 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.icon-28 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  fill: rgba(130, 130, 130, 1);
+  border: none;
+  outline: none;
+}
+
+.icon-27 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.buttons-icon-26 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 4px;
+}
+
+.icon-31 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  fill: rgba(130, 130, 130, 1);
+  border: none;
+  outline: none;
+}
+
+.icon-30 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.buttons-icon-29 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 4px;
+}
+
+.icon-34 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  fill: rgba(130, 130, 130, 1);
+  border: none;
+  outline: none;
+}
+
+.icon-33 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.buttons-icon-32 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 4px;
+}
+
+.icon-37 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  fill: rgba(130, 130, 130, 1);
+  border: none;
+  outline: none;
+}
+
+.icon-36 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.buttons-icon-35 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 4px;
+}
+
+.social-icons-25 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.divider-38 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 1px solid rgba(230, 230, 230, 1);
+  border: none;
+  outline: none;
+}
+
+.navigation-footer-8 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.image-41 {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+}
+
+.text-43 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-44 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-130-130-130);
+}
+
+.copy-42 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.card-40 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 31.661442006269592%;
+}
+
+.image-46 {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+}
+
+.text-48 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-49 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-130-130-130);
+}
+
+.copy-47 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.card-45 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 31.661442006269592%;
+}
+
+.image-51 {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+}
+
+.text-53 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.text-54 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-inter);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-130-130-130);
+}
+
+.copy-52 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.card-50 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 31.661442006269592%;
+}
+
+.cards-39 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-56 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-55 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-58 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-57 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-60 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-59 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-62 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-61 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-64 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-63 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-66 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-65 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-68 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-67 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-70 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-69 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-72 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-71 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-74 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-73 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.icon-76 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  border: 4px solid rgba(179, 179, 179, 1);
+  border: none;
+  outline: none;
+}
+
+.image-75 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.lol-subtitles {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-191-145-59);
+}
+
+.lol-title {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: normal;
+  font-size: 64px;
+  letter-spacing: -2%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-191-145-59);
+}
+
+.lol-subtitles {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-white);
+}
+
+.article-title-79 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 0px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.lol-text1 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-white);
+}
+
+.text-83 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-82 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 3px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-85 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-84 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 3px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-87 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-86 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 3px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-89 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-88 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 3px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-91 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-90 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 3px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-93 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-92 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 3px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.lol-subtitles {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-191-145-59);
+}
+
+.text-96 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-95 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 7.8125%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-98 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.button-97 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 10.416666666666668%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-100 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.button-99 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 9.375%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-102 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-101 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-104 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-103 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-106 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-105 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-108 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-107 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-110 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-109 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.text-112 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-30-30-30);
+}
+
+.button-111 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 5.208333333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.lol-subtitles {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-rgb-191-145-59);
+}
+
+.text-115 {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  font-family: var(--font-family-beaufort-for-lol);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--text-black);
+}
+
+.button-114 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  width: 13.020833333333334%;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  border: 1px solid rgba(102, 58, 27, 1);
+  border-radius: 8px;
+}
+
+.node-1 {
+@media (max-width: 1440px) {
+  .node-1 {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .node-1 {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}

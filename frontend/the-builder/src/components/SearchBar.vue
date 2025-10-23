@@ -397,7 +397,8 @@
     const chosenChampion = shallowRef('search');
     chosenChampion.value = value;
     selectedChampion = value;
-    return value;
+    if (!value) return false;
+    else return value;
     // goToBuildCreatorAndSaveData(value)
   }
 

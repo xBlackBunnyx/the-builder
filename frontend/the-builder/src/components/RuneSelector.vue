@@ -56,75 +56,116 @@
 
   const menu = ref(false)
 
-  const runes = [
-    {name: "Absolute Focus", img: "/runes-picture/Absolute_Focus.png"},
-    {name: "Absorb Life", img: "/runes-picture/Absorb_Life.png"},
-    {name: "Aftershock", img: "/runes-picture/Aftershock.png"},
-    {name: "Alacrity", img: "/runes-picture/Alacrity.png"},
-    {name: "Approach Velocity", img: "/runes-picture/Approach_Velocity.png"},
-    {name: "Arcane Comet", img: "/runes-picture/Arcane_Comet.png"},
-    {name: "Axiom Arcanist", img: "/runes-picture/Axiom_Arcanist.png"},
-    {name: "Biscuit Delivery", img: "/runes-picture/Biscuit_Delivery.png"},
-    {name: "Bloodline", img: "/runes-picture/Bloodline.png"},
-    {name: "Bone Plating", img: "/runes-picture/Bone_Plating.png"},
-    {name: "Cash Back", img: "/runes-picture/Cash_Back.png"},
-    {name: "Celerity", img: "/runes-picture/Celerity.png"},
-    {name: "Cheap Shot", img: "/runes-picture/Cheap_Shot.png"},
-    {name: "Conditioning", img: "/runes-picture/Conditioning.png"},
-    {name: "Conqueror", img: "/runes-picture/Conqueror.png"},
-    {name: "Cosmic Insight", img: "/runes-picture/Cosmic_Insight.png"},
-    {name: "Coup de Grace", img: "/runes-picture/Coup_Grace.png"},
-    {name: "Cut Down", img: "/runes-picture/Cut_Down.png"},
-    {name: "Dark Harvest", img: "/runes-picture/Dark_Harvest.png"},
-    {name: "Deep Ward", img: "/runes-picture/Deep_Ward.png"},
-    {name: "Demolish", img: "/runes-picture/Demolish.png"},
-    {name: "Domination", img: "/runes-picture/Domination.png"},
-    {name: "Electrocute", img: "/runes-picture/Electrocute.png"},
-    {name: "First Strike", img: "/runes-picture/First_Strike.png"},
-    {name: "Fleet Footwork", img: "/runes-picture/Fleet_Footwork.png"},
-    {name: "Font of Life", img: "/runes-picture/Font_Life.png"},
-    {name: "Gathering Storm", img: "/runes-picture/Gathering_Storm.png"},
-    {name: "Glacial Augment", img: "/runes-picture/Glacial_Augment.png"},
-    {name: "Grasp of the Undying", img: "/runes-picture/Grasp_Undying.png"},
-    {name: "Grisly Mementos", img: "/runes-picture/Grisly_Mementos.png"},
-    {name: "Guardian", img: "/runes-picture/Guardian.png"},
-    {name: "Hail of Blades", img: "/runes-picture/Hail_Blades.png"},
-    {name: "Haste", img: "/runes-picture/Haste.png"},
-    {name: "Hextech Flashtraption", img: "/runes-picture/Hextech_Flashtraption.png"},
-    {name: "Inspiration", img: "/runes-picture/Inspiration.png"},
-    {name: "Jack of All Trades", img: "/runes-picture/Jack_All_Trades.png"},
-    {name: "Last Stand", img: "/runes-picture/Last_Stand.png"},
-    {name: "Lethal Tempo", img: "/runes-picture/Lethal_Tempo.png"},
-    {name: "Magical Footwear", img: "/runes-picture/Magical_Footwear.png"},
-    {name: "Manaflow Band", img: "/runes-picture/Manaflow_Band.png"},
-    {name: "Nimbus Cloak", img: "/runes-picture/Nimbus_Cloak.png"},
-    {name: "Overgrowth", img: "/runes-picture/Overgrowth.png"},
-    {name: "Phase Rush", img: "/runes-picture/Phase_Rush.png"},
-    {name: "Precision", img: "/runes-picture/Precision.png"},
-    {name: "Presence of Mind", img: "/runes-picture/Presence_Mind.png"},
-    {name: "Press the Attack", img: "/runes-picture/Press_Attack.png"},
-    {name: "Relentless Hunter", img: "/runes-picture/Relentless_Hunter.png"},
-    {name: "Resolve", img: "/runes-picture/Resolve.png"},
-    {name: "Revitalize", img: "/runes-picture/Revitalize.png"},
-    {name: "Scorch", img: "/runes-picture/Scorch.png"},
-    {name: "Second Wind", img: "/runes-picture/Second_Wind.png"},
-    {name: "Shield Bash", img: "/runes-picture/Shield_Bash.png"},
-    {name: "Sixth Sense", img: "/runes-picture/Sixth_Sense.png"},
-    {name: "Sorcery", img: "/runes-picture/Sorcery.png"},
-    {name: "Sudden Impact", img: "/runes-picture/Sudden_Impact.png"},
-    {name: "Summon Aery", img: "/runes-picture/Summon_Aery.png"},
-    {name: "Taste of Blood", img: "/runes-picture/Taste_Blood.png"},
-    {name: "Time Warp Tonic", img: "/runes-picture/Time_Warp_Tonic.png"},
-    {name: "Transcendence", img: "/runes-picture/Transcendence.png"},
-    {name: "Treasure Hunter", img: "/runes-picture/Treasure_Hunter.png"},
-    {name: "Triple Tonic", img: "/runes-picture/Triple_Tonic.png"},
-    {name: "Triumph", img: "/runes-picture/Triumph.png"},
-    {name: "Ultimate Hunter", img: "/runes-picture/Ultimate_Hunter.png"},
-    {name: "Unflinching", img: "/runes-picture/Unflinching.png"},
-    {name: "Unsealed Spellbook", img: "/runes-picture/Unsealed_Spellbook.png"},
-    {name: "Waterwalking", img: "/runes-picture/Waterwalking.png"},
-  ]
+  const precisionRunes = {
+    id:"precision", name: "Precision", img: "/runes-picture/Precision.png",
+          keystones: [
+            {id: "pressAttack" , slot: 0 ,name: "Press the Attack", img: "/runes-picture/Press_Attack.png"},
+            {id: "lethalTempo", slot: 0 ,name: "Lethal Tempo", img: "/runes-picture/Lethal_Tempo.png"},
+            {id: "fleetFootwork", slot: 0 ,name: "Fleet Footwork", img: "/runes-picture/Fleet_Footwork.png"},
+            {id: "conqueror", slot: 0 ,name: "Conqueror", img: "/runes-picture/Conqueror.png"},
+          ],
+          runes: [
+            {id: "absorbLife", slot: 1 ,name: "Absorb Life", img: "/runes-picture/Absorb_Life.png"},
+            {id: "triumph", slot: 1 ,name: "Triumph", img: "/runes-picture/Triumph.png"},
+            {id: "presenceMind", slot: 1 ,name: "Presence of Mind", img: "/runes-picture/Presence_Mind.png"},
 
+            {id:"alacrity", slot: 2 ,name: "Alacrity", img: "/runes-picture/Alacrity.png"},
+            {id:"haste", slot: 2 ,name: "Haste", img: "/runes-picture/Haste.png"},
+            {id: "bloodline", slot: 2 ,name: "Bloodline", img: "/runes-picture/Bloodline.png"},
+
+            {id: "coupGrace", slot: 3 ,name: "Coup de Grace", img: "/runes-picture/Coup_Grace.png"},
+            {id: "cutDown", slot: 3 ,name: "Cut Down", img: "/runes-picture/Cut_Down.png"},
+            {id: "lastStand", slot: 3 ,name: "Last Stand", img: "/runes-picture/Last_Stand.png"},
+          ],
+  }
+
+  const dominationRunes = {
+    id: "domination", name: "Domination", img: "/runes-picture/Domination.png",
+    keystones: [
+      {id:"electrocute", slot:0 ,name: "Electrocute", img: "/runes-picture/Electrocute.png"},
+      {id: "darkHarvest" , slot:0 ,name: "Dark Harvest", img: "/runes-picture/Dark_Harvest.png"},
+      {id:"hailBlades", slot:0 ,name: "Hail of Blades", img: "/runes-picture/Hail_Blades.png"},
+    ],
+    runes: [
+      {id:"cheapShot", slot:1 ,name: "Cheap Shot", img: "/runes-picture/Cheap_Shot.png"},
+      {id:"tasteBlood", slot:1 ,name: "Taste of Blood", img: "/runes-picture/Taste_Blood.png"},
+      {id:"suddenImpact",  slot:1 ,name: "Sudden Impact", img: "/runes-picture/Sudden_Impact.png"},
+
+      {id: "sixthSense", slot: 2,name: "Sixth Sense", img: "/runes-picture/Sixth_Sense.png"},
+      {id: "grislyMementos", slot:2 ,name: "Grisly Mementos", img: "/runes-picture/Grisly_Mementos.png"},
+      {id: "deepWard", slot:2 ,name: "Deep Ward", img: "/runes-picture/Deep_Ward.png"},
+
+      {id: "treasureHunter", slot: 3 , name: "Treasure Hunter", img: "/runes-picture/Treasure_Hunter.png"},
+      {id: "relentlessHunter", slot:3 ,name: "Relentless Hunter", img: "/runes-picture/Relentless_Hunter.png"},
+      {id: "ultimateHunter", slot:3 ,name: "Ultimate Hunter", img: "/runes-picture/Ultimate_Hunter.png"},
+    ],
+  }
+
+  const sorceryRunes = {
+    id: "sorcery", name: "Sorcery", img: "/runes-picture/Sorcery.png",
+    keystones: [
+      {id: "summonAery", slot:0 ,name: "Summon Aery", img: "/runes-picture/Summon_Aery.png"},
+      {id:"arcaneComet", slot: 0 ,name: "Arcane Comet", img: "/runes-picture/Arcane_Comet.png"},
+      {id: "phaseRush", slot:0 ,name: "Phase Rush", img: "/runes-picture/Phase_Rush.png"},
+    ],
+    runes: [
+      {id: "axiomArcanist", slot:1 ,name: "Axiom Arcanist", img: "/runes-picture/Axiom_Arcanist.png"},
+      {id:"manaflowBand", slot: 1 ,name: "Manaflow Band", img: "/runes-picture/Manaflow_Band.png"},
+      {id:"nimbusCloak", slot:1 , name: "Nimbus Cloak", img: "/runes-picture/Nimbus_Cloak.png"},
+
+      {id:"transcendence", slot:2 ,name: "Transcendence", img: "/runes-picture/Transcendence.png"},
+      {id:"celerity", slot:2 ,name: "Celerity", img: "/runes-picture/Celerity.png"},
+      {id:"absoluteFocus", slot:2 ,name: "Absolute Focus", img: "/runes-picture/Absolute_Focus.png"},
+
+      {id:"scorch", slot:3 ,name: "Scorch", img: "/runes-picture/Scorch.png"},
+      {id:"waterwalking", slot:3 ,name: "Waterwalking", img: "/runes-picture/Waterwalking.png"},
+      {id:"gatheringStorm", slot:3 ,name: "Gathering Storm", img: "/runes-picture/Gathering_Storm.png"},
+    ],
+  }
+
+  const resolveRunes = {
+    id: "resolve", name: "Resolve", img: "/runes-picture/Resolve.png",
+    keystones: [
+      {id:"graspUndying", slot:0 ,name: "Grasp of the Undying", img: "/runes-picture/Grasp_Undying.png"},
+      {id:"aftershock", slot:0 ,name: "Aftershock", img: "/runes-picture/Aftershock.png"},
+      {id:"guardian", slot:0 ,name: "Guardian", img: "/runes-picture/Guardian.png"},
+    ],
+    runes: [
+      {id:"demolish", slot:1 ,name: "Demolish", img: "/runes-picture/Demolish.png"},
+      {id:"fontLife", slot:1 ,name: "Font of Life", img: "/runes-picture/Font_Life.png"},
+      {id:"shieldBash", slot:1 ,name: "Shield Bash", img: "/runes-picture/Shield_Bash.png"},
+
+      {id:"conditioning", slot:2 ,name: "Conditioning", img: "/runes-picture/Conditioning.png"},
+      {id:"secondWind", slot:2 ,name: "Second Wind", img: "/runes-picture/Second_Wind.png"},
+      {id:"bonePlating", slot:2 , name: "Bone Plating", img: "/runes-picture/Bone_Plating.png"},
+
+      {id:"overgrowth", slot:3 ,name: "Overgrowth", img: "/runes-picture/Overgrowth.png"},
+      {id:"revitalize", slot:3 ,name: "Revitalize", img: "/runes-picture/Revitalize.png"},
+      {id:"unflinching", slot: 3 ,name: "Unflinching", img: "/runes-picture/Unflinching.png"},
+    ],
+  }
+
+  const inspirationRunes = {
+    id: "inspiration", name: "Inspiration", img: "/runes-picture/Inspiration.png",
+    keystones: [
+      {id: "glacialAugment", slot:0 ,name: "Glacial Augment", img: "/runes-picture/Glacial_Augment.png"},
+      {id:"unsealedSpellbook", slot:0 ,name: "Unsealed Spellbook", img: "/runes-picture/Unsealed_Spellbook.png"},
+      {id: "firstStrike", slot:0 ,name: "First Strike", img: "/runes-picture/First_Strike.png"},
+    ],
+    runes: [
+      {id:"hextechFlashtraption", slot:1 ,name: "Hextech Flashtraption", img: "/runes-picture/Hextech_Flashtraption.png"},
+      {id: "magicalFootwear", slot:1 ,name: "Magical Footwear", img: "/runes-picture/Magical_Footwear.png"},
+      {id: "cashBack", slot:1 , name: "Cash Back", img: "/runes-picture/Cash_Back.png"},
+
+      {id: "tripleTonic", slot:2 ,name: "Triple Tonic", img: "/runes-picture/Triple_Tonic.png"},
+      {id: "timeWarpTonic", slot: 2 ,name: "Time Warp Tonic", img: "/runes-picture/Time_Warp_Tonic.png"},
+      {id:"biscuitDelivery", slot:2 ,name: "Biscuit Delivery", img: "/runes-picture/Biscuit_Delivery.png"},
+
+      {id:"approachVelocity", slot: 3 , name: "Approach Velocity", img: "/runes-picture/Approach_Velocity.png"},
+      {id:"cosmicInsight", slot: 3 ,name: "Cosmic Insight", img: "/runes-picture/Cosmic_Insight.png"},
+      {id:"jackAllTrades", slot: 3 ,name: "Jack of All Trades", img: "/runes-picture/Jack_All_Trades.png"},
+    ],
+  }
   const selectedRune = ref(null)
 
   function selectRune(rune){

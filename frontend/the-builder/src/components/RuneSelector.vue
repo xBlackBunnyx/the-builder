@@ -3,37 +3,48 @@
 
     <!-- Primary runes -->
 
-    <v-row class="justify-center mb-6">
-      <v-col>
+    <v-row class="justify-center mb-2">
+      <v-col cols="auto">
         <button class="selector-style ma-2" @click="showPrimaryDialog = true">
             <v-img
               v-if="selectedPrimaryBranch"
-              :src="selectedPrimaryBranch.icon"
-              width="30"
-              height="30"
-              class="me-2"
+              :src="selectedPrimaryBranch.img"
+              width="64"
+              height="64"
             ></v-img>
             {{ selectedPrimaryBranch ? selectedPrimaryBranch.name : "Primary runes" }}
         </button>
       </v-col>
-      <v-col v-if="selectedPrimaryBranch">
-        <h3>{{ selectedPrimaryBranch.name }}</h3>
-        <v-row class="justify-center mb-2">
+
+      <v-col v-if="selectedPrimaryBranch?.name" cols="4" class="text-center">
+        <v-row class="justify-center">
           <v-col
-          v-for="rune in selectedPrimaryBranch.keystones"
-          :key="rune.name"
+          v-for="keystone in selectedPrimaryBranch.keystones"
+          :key="keystone.name"
           cols="auto"
           >
-            <v-tooltip>
+            <v-tooltip
+            class="golden-tooltip rune-row"
+              :text="keystone.stat"
+              location="top left"
+              open-delay="100"
+            >
               <template #activator="{props}">
-                <v-img
+                <div
                   v-bind="props"
-                  :src="rune.img"
-                  :class="{'selected-rune': selectedRunes.primary.keystone === rune.name,}"
-                  @click="selectRunes('primary', 'keystone', rune.name)"
-                ></v-img>
+                  class="rune"
+                  :class="{selected: selectedRunes.primary.keystone === keystone.name}"
+                  @click.stop="selectRune('primary', 'keystone', keystone.name)"
+                >
+                  <v-img
+                    :src="keystone.img"
+                    :alt="keystone.name"
+                    width="64"
+                    height="64"
+                    cover
+                  ></v-img>
+                </div>
               </template>
-              <span class="golden-tooltip">{{ rune.stat }}</span>
             </v-tooltip>
           </v-col>
         </v-row>
@@ -41,74 +52,102 @@
         <v-row
           v-for="(row, rowIndex) in selectedPrimaryBranch.rows"
           :key="rowIndex"
-          class="justify-center mb-2"
+          class="justify-center"
         >
           <v-col 
-            v-for="rune in row"
-            :key="rune.name"
+            v-for="rowrune in row"
+            :key="rowrune.name"
             cols="auto"
           >
-            <v-tooltip>
+              <v-tooltip
+                class="rune-row golden-tooltip"
+                :text="rowrune.stat"
+                location="top left"
+                open-delay="100"
+              >
               <template #activator="{props}">
-                <v-img
+                <div
                   v-bind="props"
-                  :src="rune.img"
-                  :class="{ 'selected-rune' : selectedRunes.primary.rows[rowIndex] === rune.name,}"
-                  @click="selectRunes('primary', 'row', rune.name, rowIndex)"
-                ></v-img>
+                  class="rune"
+                  :class="{ selected: selectedRunes.primary.rows[rowIndex] === rowrune.name}"
+                  @click.stop="selectRune('primary', 'row', rowrune.name, rowIndex)"
+                >
+                  <v-img
+                      :src="rowrune.img"
+                      :alt="rowrune.name"
+                      width="40"
+                      height="40"
+                      cover
+                    ></v-img>
+                </div>
               </template>
-              <span class="golden-tooltip"> {{ rune.stat }}</span>
             </v-tooltip>
           </v-col>
         </v-row>
       </v-col>
-    </v-row>
 
     <!-- Secondary runes -->
 
-    <v-row class="justify-center">
-      <v-col>
+      <v-col cols="auto">
         <button class="selector-style ma-2" @click="showSecondaryDialog = true">
           <v-img
             v-if="selectedSecondaryBranch"
-            :src="selectedSecondaryBranch.icon"
-            width="30"
-            height="30"
-            class="me-2"
+            :src="selectedSecondaryBranch.img"
+            width="64"
+            height="64"
           ></v-img>
           {{ selectedSecondaryBranch ? selectedSecondaryBranch.name : "Secondary runes" }}
         </button>
       </v-col>
 
-      <v-col v-if="selectedSecondaryBranch">
-        <h3>{{ selectedSecondaryBranch.name }}</h3>
-        <v-row class="justify-center">
+      <v-col v-if="selectedSecondaryBranch" cols="3" class="text-center">
+        <v-row 
+          v-for="(row, rowIndex) in selectedSecondaryBranch.rows"
+          :key="`secondary-row-${rowIndex}`"
+          class="justify-center mb-2"
+        >
           <v-col
-            v-for="rune in selectedSecondaryBranch.allRunes"
-            :key="rune.name"
+            v-for="rowrune in row"
+            :key="rowrune.name"
             cols="auto"
           >
-            <v-tooltip>
+            <v-tooltip
+            class="golden-tooltip rune-row"
+              :text="rowrune.stat"
+              location="top left"
+              open-delay="100"
+            >
               <template #activator="{props}">
-                <v-img
+                <div
                   v-bind="props"
-                  :src="rune.img"
-                  :class="{ 'selected-rune' : selectedRunes.secondary.includes(rune.name),}"
-                  @click="selectRune('secondary', 'flat', rune.name)"
-                ></v-img>
+                  class="rune"
+                  :class="{ selected : selectedRunes.secondary.some(selectedRune =>
+                    selectedRune.name === rowrune.name
+                  ), 'rune-disabled': selectedRunes.secondary.length >=2 &&
+                  !selectedRunes.secondary.some(selectedRune => selectedRune.name ===rowrune.name) &&
+                  !selectedRunes.secondary.some(selectedRune => selectedRune.rowIndex === rowIndex)}"
+                  @click.stop="selectSecondaryRune(rowrune, rowIndex)"
+                >
+                  <v-img
+                    :src="rowrune.img"
+                    :alt="rowrune.name"
+                    width="40"
+                    height="40"
+                    cover
+                  ></v-img>
+                </div>
               </template>
-              <span class="golden-tooltip">{{ rune.stat }}</span>
             </v-tooltip>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
 
-    <v-dialog v-model="showPrimaryDialog" max-width="600">
+    <v-dialog v-model="showPrimaryDialog" max-width="500">
       <v-card>
         <v-card-title> Select Primary Path </v-card-title>
         <v-card-text>
-          <v-row class="justify-center">
+          <v-row justify="center">
             <v-col
               v-for="branch in runeBranches"
               :key="branch.name"
@@ -125,13 +164,13 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="showSecondaryDialog" max-width="600">
+    <v-dialog v-model="showSecondaryDialog" max-width="500">
       <v-card>
         <v-card-title> Select Secondary Path </v-card-title>
         <v-card-text>
-          <v-row class="justify-center">
+          <v-row justify="center">
             <v-col
-              v-for="branch in runeBranches"
+              v-for="branch in availableSecondaryBranches"
               :key="branch.name"
               cols="auto"
             >
@@ -151,16 +190,19 @@
 
 <script setup>
 
-  import { ref} from 'vue'
+  import { ref, computed} from 'vue'
+
+  const showPrimaryDialog = ref(false);
+  const showSecondaryDialog = ref(false);
 
   const runeBranches = [
   {
-    name: "Precision", icon: "/runes-picture/Precision.png", stat: "Become a legend",
+    name: "Precision", img: "/runes-picture/Precision.png", stat: "Become a legend",
     keystones: [
       {name: "Press the Attack", img: "/runes-picture/Press_Attack.png", stat: "On three successive Basic Attacks against enemy champion, deal damage and deal increased game against them subsequently"},
       {name: "Lethal Tempo", img: "/runes-picture/Lethal_Tempo.png", stat: "On successive Basic Attacks against enemy champion, gain Attack Speed and a stack per attack. Upon gaining six stacks, deal extra damage on Basic Attack"},
       {name: "Fleet Footwork", img: "/runes-picture/Fleet_Footwork.png", stat: "Generate stacks when moving and performing Basic Attacks. At max stacks, deal extra damage with your next Basic Attack, heal and gain Movement Speed"},
-      {name: "Conqueror", img: "/runes-picture/Conqueror.png", stat: "Dealing damage against enemy champions grants stacks that grant Attack Damage or Ability Power. At twelve stacks, heal when dealing damage to enemy champions"},
+      {name: "Conqueror", img: "/runes-picture/Conqueror.png", stat: "Dealing damage against enemy champions grants stacks that give Attack Damage or Ability Power. At 12 stacks, heal when dealing damage to enemy champions"},
     ],
     rows: [
       [
@@ -181,7 +223,7 @@
     ],
   },
   {
-    name: "Domination", icon: "/runes-picture/Domination.png", stat: "Hunt and eliminate prey",
+    name: "Domination", img: "/runes-picture/Domination.png", stat: "Hunt and eliminate prey",
     keystones: [
       {name: "Electrocute", img: "/runes-picture/Electrocute.png", stat: "Affecting a champion generates a stack on the champion per source. Stacks reset after three seconds. Applying three stacks deals damage to the champion"},
       {name: "Dark Harvest", img: "/runes-picture/Dark_Harvest.png", stat: "Dealing damage to an enemy champion below half health grants a stack. Damage increases with stacks"},
@@ -206,7 +248,7 @@
     ],
   },
   {
-    name: "Sorcery", icon: "/runes-picture/Sorcery.png", stat: "Unleash destruction",
+    name: "Sorcery", img: "/runes-picture/Sorcery.png", stat: "Unleash destruction",
     keystones: [
       {name: "Summon Aery", img: "/runes-picture/Summon_Aery.png", stat: "Damaging Basic Attacks, Abilities and Item Effects deal extra damage. Healing, shielding and buffing an ally grants them a shield"},
       {name: "Arcane Comet", img: "/runes-picture/Arcane_Comet.png", stat: "Dealing Ability Damage hurls a projectile at the enemy champion's position that deals magic damage"},
@@ -231,7 +273,7 @@
     ],
   },
   {
-    name: "Resolve", icon: "/runes-picture/Resolve.png", stat: "Live forever",
+    name: "Resolve", img: "/runes-picture/Resolve.png", stat: "Live forever",
     keystones: [
       {name: "Grasp of the Undying", img: "/runes-picture/Grasp_Undying.png", stat: "Entering and staying in combat with an enemy champion for four makes your next Basic Attack against an enemy champion deal bonus damage and heal you"},
       {name: "Aftershock", img: "/runes-picture/Aftershock.png", stat: "Immobilizing an enemy champion grants bonus armor and magic resistance. After a short while, release a shockwave that deals damage"},
@@ -256,7 +298,7 @@
     ],
   },
   {
-    name: "Inspiration", icon: "/runes-picture/Inspiration.png", stat: "Outwit mere mortals",
+    name: "Inspiration", img: "/runes-picture/Inspiration.png", stat: "Outwit mere mortals",
     keystones: [
       {name: "Glacial Augment", img: "/runes-picture/Glacial_Augment.png", stat: "Immobilizing an enemy champion will cause three glacial rays to emanate from them to you and nearby enemy champions. The rays leave a path that slows enemies and makes them deal less damage"},
       {name: "Unsealed Spellbook", img: "/runes-picture/Unsealed_Spellbook.png", stat: "While not channeling Teleport and being out-of-combat for five seconds, you can swap one of your summoner spells for another"},
@@ -282,37 +324,80 @@
   },
   ]
 
-  const showPrimaryDialog = ref(false)
-  const showSecondaryDialog = ref(false)
+  const selectedPrimaryBranch = ref(null);
+  const selectedSecondaryBranch = ref(null);
 
-  const selectedPrimaryBranch = ref(null)
-  const selectedSecondaryBranch = ref(null)
   const selectedRunes = ref({
     primary: {keystone: null, rows: [null, null, null]}, 
     secondary:[],
+  });
+
+  const availableSecondaryBranches = computed(() => {
+    if (!selectedPrimaryBranch.value) {
+      return runeBranches;
+    }
+    return runeBranches.filter(branch => branch.name !== selectedPrimaryBranch.value.name);
   })
 
 
   function selectBranch(type, branch) {
     if (type === 'primary') {
-      selectedPrimaryBranch.value = branch
-      showPrimaryDialog.value = false
+      if (selectedSecondaryBranch.value?.name === branch.name) {
+        selectedSecondaryBranch.value = selectedPrimaryBranch.value;
+
+        const tempRunes = {...selectedRunes.value};
+        selectedRunes.value.primary = {keystone: null, rows: [null, null, null]};
+        selectedRunes.value.secondary = [];
+      }
+      selectedPrimaryBranch.value = branch;
+      showPrimaryDialog.value = false;
     } else {
-      selectedSecondaryBranch.value = branch
-      showSecondaryDialog.value = false
+      if (selectedPrimaryBranch.value?.name === branch.name) {
+        return;
+      }
+      selectedSecondaryBranch.value = branch;
+      showSecondaryDialog.value = false;
     }
   }
 
   function selectRune(type, section, runeName, rowIndex){
     if (type === 'primary') {
-      if (section === 'keystone') selectedRunes.value.primary.keystone = runeName
-      else if (section === 'row') selectedRunes.value.primary.rows[rowIndex] = runeName
+      if (section === 'keystone') { 
+        selectedRunes.value.primary.keystone = runeName;
+      } else if (section === 'row') {
+        selectedRunes.value.primary.rows[rowIndex] = runeName;
     } else {
-      const selected = selectedRunes.value.secondary
-      if (selected.includes(runeName)) {
-        selectedRunes.value.secondary = selected.filter(r => r !== runeName)
-      } else if (selected.length < 2) {
-        selectedRunes.value.secondary.push(runeName)
+      const newRows = [...selectedRunes.value.primary.rows];
+      newRows[rowIndex] = runeName;
+      selectedRunes.value.primary.rows = newRows;
+      }
+    }
+  }
+
+  function selectSecondaryRune(rune, rowIndex) {
+    const currentSelection = selectedRunes.value.secondary;
+    const existingIndex = currentSelection.findIndex(selectedRune => 
+      selectedRune.name === rune.name);
+    if (existingIndex !== -1) {
+      selectedRunes.value.secondary.splice(existingIndex, 1);
+    } else {
+      const existingRowIndex = currentSelection.findIndex(selectedRune =>
+        selectedRune.rowIndex === rowIndex
+      );
+      if (existingRowIndex !== -1) {
+        selectedRunes.value.secondary.splice(existingRowIndex, 1, {
+        name: rune.name,
+        img: rune.img,
+        stat: rune.stat,
+        rowIndex: rowIndex
+      });
+      } else if (currentSelection.length < 2) {
+        selectedRunes.value.secondary.push({
+        name: rune.name,
+        img: rune.img,
+        stat: rune.stat,
+        rowIndex: rowIndex
+      });
       }
     }
   }
@@ -337,20 +422,47 @@
     );
     padding:  20px 20px;
     cursor: pointer;
+
     }
 
-    .selected-rune{
-      border: 3px solid var(#653a1b);
+    .rune{
       border-radius: 8px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .rune-disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .rune-row{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin: 6px 0;
+      flex-wrap: wrap;
+    }
+
+    .selected{
+      border: 3px solid #653a1b;
     }
 
   .golden-tooltip :deep(.v-overlay__content) {
-    background-color: #653a1b !important; /* gold background */
-    color: #1a1a1a !important; /* dark text */
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(222, 200, 128, 1) 8%,
+      rgba(222, 197, 118, 1) 35%,
+      rgba(191, 145, 59, 1) 75%,
+      rgba(142, 96, 42, 1) 94%
+    ); 
+    color: #1a1a1a !important; 
     border-radius: 6px;
     padding: 8px 10px;
     max-width: 200px;
-    font-family: "BeaufortforLOL-Regular", sans-serif;
+    font-family: "BeaufortforLOLRegular", sans-serif;
     box-shadow: 0 0 10px rgba(191, 145, 59, 0.6);
   }
 
@@ -358,31 +470,4 @@
     color: #1a1a1a !important;
   }
 
-    .tooltip-content {
-      background: radial-gradient(
-      50% 50% at 50% 50%,
-      rgba(222, 200, 128, 1) 8%,
-      rgba(222, 197, 118, 1) 35%,
-      rgba(191, 145, 59, 1) 75%,
-      rgba(142, 96, 42, 1) 94%
-    );
-      color: black;
-      border-radius: 8px;
-      padding: 8px 12px;
-      max-width: 220px;
-      font-family: "BeaufortforLOLRegular", sans-serif;
-    }
-
-    .tooltip-title{
-      font-family: "BeaufortforLOLBold", sans-serif;
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-    
-    .tooltip-stats{
-      list-style: none;
-      padding: 0;
-      margin: 0 0 6px 0;
-      font-size: 0.85rem;
-    }
 </style>

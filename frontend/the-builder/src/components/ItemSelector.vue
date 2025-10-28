@@ -1,24 +1,28 @@
 <template>
-  <v-container class="d-flex justify-center pa-3">
+  <v-container class="d-flex justify-center">
     <v-menu
       v-model="menu"
       transition="scale-transition"
     >
       <template v-slot:activator="{ props }">
         <button
-          class="selectorstyle"
+          class="selectorstyle pa-3"
           v-bind="props"
         >
-          <img
-          v-if="selectedItem"
-          :src="selectedItem.img"
-          alt="Selected item">
-          </img>
-          <span v-else class="placeholder-text"> Item</span>
-      </button>
+          <div class="buton-content">
+            <img
+            v-if="selectedItem"
+            :src="selectedItem.img"
+            alt="Selected item"
+            class="item-image"
+            >
+            </img>
+            <span v-else class="placeholder-text"> Item</span>
+          </div>
+        </button>
       </template>
 
-        <v-list class="d-flex flex-wrap" style="max-width: 300px;">
+        <v-list class="d-flex flex-wrap selectorstyle" style="max-width: 400px;">
           <v-list-item
           v-for="item in items"
           :key="item.name"
@@ -29,7 +33,7 @@
               <v-img 
               v-bind="props"
               :src="item.img"
-              class="cursor-pointer"
+              class="cursor-pointer item-image"
               alt="Item"
               @click="selectItem(item)"
               />
@@ -193,10 +197,34 @@
       rgba(191, 145, 59, 1) 75%,
       rgba(142, 96, 42, 1) 94%
     );
-    padding:  20px 20px;
     cursor: pointer;
+    min-width: 64px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
 
+    .button-content{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .item-image {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .placeholder-text {
+      display: inline-block;
+      min-width: 48px;
+      text-align: center;
+    }
+  
     .cursor-pointer {
       cursor: pointer;
     }

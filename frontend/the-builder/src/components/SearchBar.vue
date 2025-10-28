@@ -4,7 +4,7 @@
         <v-row  align="center">
           <v-col>
             <v-autocomplete
-            class="barsettings"
+              class="barsettings"
               :items="champions"
               :disabled="false"
               v-model:search-input="search"
@@ -202,7 +202,6 @@
     168: "/characters-picture/zyra.png",
   }
 
-  
   const champions = [
     { name: 'Aatrox', avatar: srcs[1] },
     { name: 'Ahri ', avatar: srcs[2] },
@@ -374,11 +373,7 @@
     { name: 'Zyra', avatar: srcs[168] },
   ]
 
-  import ChampionImage from './ChampionImage.vue';
-
   let selectedChampion;
-
-
 
   // function goToBuildCreatorAndSaveData(){
   //   if (!selectedChampion)
@@ -396,6 +391,9 @@
     if (!value) return selectedChampion;
     const chosenChampion = shallowRef('search');
     chosenChampion.value = value;
+
+    //Here is the result of  the selected champion
+    console.log('The chosen champion is: ', value);
     selectedChampion = value;
     if (!value) return false;
     else return value;

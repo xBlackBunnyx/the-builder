@@ -12,7 +12,6 @@ import { createVuetify } from 'vuetify'
 import App from './App.vue'
 import DailyButton from './components/DailyButtonComponent.vue'
 import SearchBar from './components/SearchBar.vue'
-import CreateBuildButton from './components/CreateBuildButtonComponent.vue'
 import ItemSelector from './components/ItemSelector.vue'
 import RuneSelector from './components/RuneSelector.vue'
 import BuildScore from './components/BuildScore.vue'
@@ -35,7 +34,6 @@ registerPlugins(app)
 // Here we should only import  the global components, if it's not global, we should import it locally
 app.component("button-daily", DailyButton);
 app.component("search-bar", SearchBar);
-app.component("button-build", CreateBuildButton);
 app.component("item-selector", ItemSelector);
 app.component("rune-selector", RuneSelector);
 app.component("build-score", BuildScore);

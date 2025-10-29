@@ -1,5 +1,4 @@
 <template>
-  <v-form>
       <v-container >
         <v-row  align="center">
           <v-col>
@@ -7,29 +6,44 @@
               class="barsettings"
               :items="champions"
               :disabled="false"
-              v-model:search-input="search"
-              @update:search="onUpdateModel"
+              v-model="selectedChampion"
+              @update:search="onSearchUpdate"
               item-title="name"
               item-value="name"
               placeholder="Select your favourite champion"
+              return-object
             >
               <template v-slot:item="{ props, item }">
                 <v-list-item
                   v-bind="props"
                   :prepend-avatar="item.raw.avatar"
                   :title="item.raw.name"
-                  :return-object="true"
                 ></v-list-item>
+              </template>
+              <template v-slot:selection="{item}">
+                <v-list-item>
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item>
               </template>
             </v-autocomplete>
           </v-col>
+          <v-col cols="auto">
+            <button 
+            @click="goToBuildCreator" 
+            class="buttonsettings" 
+            :disabled="!selectedChampion"> 
+              Create your build 
+            </button>
+          </v-col>
         </v-row>
       </v-container>
-    </v-form>
 </template>
 
 <script setup>
-  import { ref, watch, shallowRef } from 'vue'
+  import { ref, watch} from 'vue'
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
 
   const srcs = {
     1: '/characters-picture/aatrox.png',
@@ -204,7 +218,7 @@
 
   const champions = [
     { name: 'Aatrox', avatar: srcs[1] },
-    { name: 'Ahri ', avatar: srcs[2] },
+    { name: 'Ahri', avatar: srcs[2] },
     { name: 'Akali', avatar: srcs[3] },
     { name: 'Akshan', avatar: srcs[4] },
     { name: 'Alistar', avatar: srcs[5] },
@@ -225,11 +239,11 @@
     { name: 'Caitlyn', avatar: srcs[20] },
     { name: 'Camille', avatar: srcs[21] },
     { name: 'Cassiopeia', avatar: srcs[22] },
-    { name: 'Cho\'Gath', avatar: srcs[23] },
+    { name: "Cho'Gath", avatar: srcs[23] },
     { name: 'Corki', avatar: srcs[24] },
     { name: 'Darius', avatar: srcs[25] },
     { name: 'Diana', avatar: srcs[26] },
-    { name: 'Dr.Mundo', avatar: srcs[27] },
+    { name: 'Dr. Mundo', avatar: srcs[27] },
     { name: 'Draven', avatar: srcs[28] },
     { name: 'Ekko', avatar: srcs[29] },
     { name: 'Elise', avatar: srcs[30] },
@@ -257,8 +271,8 @@
     { name: 'Jayce', avatar: srcs[52] },
     { name: 'Jhin', avatar: srcs[53] },
     { name: 'Jinx', avatar: srcs[54] },
-    { name: 'K\'sante', avatar: srcs[55] },
-    { name: 'Kai\'Sa', avatar: srcs[56] },
+    { name: "K'Sante", avatar: srcs[55] },
+    { name: "Kai'Sa", avatar: srcs[56] },
     { name: 'Kalista', avatar: srcs[57] },
     { name: 'Karma', avatar: srcs[58] },
     { name: 'Karthus', avatar: srcs[59] },
@@ -267,10 +281,10 @@
     { name: 'Kayle', avatar: srcs[62] },
     { name: 'Kayn', avatar: srcs[63] },
     { name: 'Kennen', avatar: srcs[64] },
-    { name: 'Kha\'Zix', avatar: srcs[65] },
+    { name: "Kha'Zix", avatar: srcs[65] },
     { name: 'Kindred', avatar: srcs[66] },
     { name: 'Kled', avatar: srcs[67] },
-    { name: 'Kog\'Maw', avatar: srcs[68] },
+    { name: "Kog'Maw", avatar: srcs[68] },
     { name: 'LeBlanc', avatar: srcs[69] },
     { name: 'Lee Sin', avatar: srcs[70] },
     { name: 'Leona', avatar: srcs[71] },
@@ -306,7 +320,7 @@
     { name: 'Quinn', avatar: srcs[101] },
     { name: 'Rakan', avatar: srcs[102] },
     { name: 'Rammus', avatar: srcs[103] },
-    { name: 'Rek\'Sai', avatar: srcs[104] },
+    { name: "Rek'Sai", avatar: srcs[104] },
     { name: 'Rell', avatar: srcs[105] },
     { name: 'Renata Glasc', avatar: srcs[106] },
     { name: 'Renekton', avatar: srcs[107] },
@@ -348,7 +362,7 @@
     { name: 'Varus', avatar: srcs[143] },
     { name: 'Vayne', avatar: srcs[144] },
     { name: 'Veigar', avatar: srcs[145] },
-    { name: 'Vel\'Koz', avatar: srcs[146] },
+    { name: "Vel'Koz", avatar: srcs[146] },
     { name: 'Vex', avatar: srcs[147] },
     { name: 'Vi', avatar: srcs[148] },
     { name: 'Viego', avatar: srcs[149] },
@@ -373,36 +387,41 @@
     { name: 'Zyra', avatar: srcs[168] },
   ]
 
-  let selectedChampion;
+  const selectedChampion = ref(null)
+  const search = ref(' ')
+  const isUpdating = ref(false)
 
-  // function goToBuildCreatorAndSaveData(){
-  //   if (!selectedChampion)
-  //   {
-  //     // console.log("Not submitting without choosing a champion");
-  //   } else {
-  //     // console.log("Selected champion is " + selectedChampion);
-  //   }
-  //   // router.push({name: "BuildCreator"});
-  // }
-
-  function onUpdateModel(value)
-  {
-    // console.log("oUM: Value is " + value);
-    if (!value) return selectedChampion;
-    const chosenChampion = shallowRef('search');
-    chosenChampion.value = value;
-
-    //Here is the result of  the selected champion
-    console.log('The chosen champion is: ', value);
-    selectedChampion = value;
-    if (!value) return false;
-    else return value;
-    // goToBuildCreatorAndSaveData(value)
+  const onSearchUpdate = (searchValue) => {
+    console.log('Search updated: ', searchValue)
   }
 
-  const search = ref()
+    const goToBuildCreator = () => {
+      console.log('===== Button activated, function summoned =======')
+      console.log('The champion we chose to sacrifice is: ', selectedChampion.value?.name)
 
-  const isUpdating = ref(false)
+      if (!selectedChampion.value){
+        console.error("No champion selected")
+        return
+      }
+      const championName = selectedChampion.value.name
+      console.log("Let's see if we can travel together: ", championName)
+
+      try {
+        router.push({
+          name: "BuildCreator",
+          query:{ championName: championName}
+        }) 
+        console.log("We are leaving roger, let's fucking go")
+      } catch (error) {
+        console.error("The world is an awful place because of the error: ", error)
+      }
+    }
+
+  watch(search, (newValue) => {
+    if (!newValue || newValue.trim() === ' ') {
+      console.log('Seach cleared, but keeping selection: ', selectedChampion.value?.name)
+    }
+  })
 
   let timeout = -1
   watch(isUpdating, val => {
@@ -411,25 +430,47 @@
       timeout = setTimeout(() => (isUpdating.value = false), 3000)
     }
   })
-
 </script>
 
 <style>
-    .barsettings{
-      font-size: 20px;
-      color: black;
-      font-family: "BeaufortforLOLItalic", sans-serif;
-      border-radius: 10px;
-      border: 3px solid;
-      border-color: #653a1b;
-      background: radial-gradient(
-        50% 50% at 50% 50%,
-        rgba(222, 200, 128, 1) 8%,
-        rgba(222, 197, 118, 1) 35%,
-        rgba(191, 145, 59, 1) 75%,
-        rgba(142, 96, 42, 1) 94%
-      );
-      padding:  20px 30px;
-      }
+  .barsettings{
+    font-size: 20px;
+    color: black;
+    font-family: "BeaufortforLOLItalic", sans-serif;
+    border-radius: 10px;
+    border: 3px solid;
+    border-color: #653a1b;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(222, 200, 128, 1) 8%,
+      rgba(222, 197, 118, 1) 35%,
+      rgba(191, 145, 59, 1) 75%,
+      rgba(142, 96, 42, 1) 94%
+    );
+    padding:  20px 30px;
+    }
 
+  .buttonsettings{
+    font-size: 20px;
+    color: black;
+    font-family: "BeaufortforLOLRegular", sans-serif;
+    border-radius: 10px;
+    border: 3px solid;
+    border-color: #653a1b;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(222, 200, 128, 1) 8%,
+      rgba(222, 197, 118, 1) 35%,
+      rgba(191, 145, 59, 1) 75%,
+      rgba(142, 96, 42, 1) 94%
+    );
+    padding:  20px 32px;
+    width: 200px;
+    height: 100px;
+    }
+
+  .buttonsettings:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 </style>

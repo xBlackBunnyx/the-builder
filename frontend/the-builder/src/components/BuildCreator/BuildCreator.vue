@@ -8,9 +8,17 @@
 
         <v-row no-gutters>
             <v-col cols="3">
-                <v-img
-                    width="350"
-                ></v-img>
+                <div>
+                    <v-img
+                        v-if="currentChampion"
+                        :src="currentChampion.img"
+                        :alt="currentChampion.name"
+                        width="350"
+                        class="framed"
+                    ></v-img>
+                </div>
+                <div v-if="currentChampion"> {{ currentChampion.name }}</div>
+                <div v-else> No champion selected </div>
             </v-col>
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
@@ -34,7 +42,6 @@
             </v-col>
         </v-row>
 
-
         <v-row class="ma-15 pa-10">
             <v-col offset="3">
                 <button @click="$router.go(-1)" class="buttonsettings"> Return to Home </button>
@@ -47,179 +54,234 @@
 </template>
 
 <script setup>
-import {ref, defineProps} from "vue";
+    import {ref, onMounted, watch} from "vue";
+    import { useRoute } from "vue-router";
+import { tr } from "vuetify/locale";
 
-const champions = {
-    1: '/characters-splashart/aatrox.png',
-    2: '/characters-splashart/ahri.png',
-    3: '/characters-splashart/akali.png',
-    4: '/characters-splashart/akshan.png',
-    5: '/characters-splashart/alistar.png',
-    6: '/characters-splashart/amumu.png',
-    7: '/characters-splashart/anivia.png',
-    8: '/characters-splashart/annie.png',
-    9: '/characters-splashart/aphelios.png',
-    10: '/characters-splashart/ashe.png',
-    11: '/characters-splashart/aurelion_sol.png',
-    12: '/characters-splashart/aurora.png',
-    13: '/characters-splashart/azir.png',
-    14: '/characters-splashart/bard.png',
-    15: '/characters-splashart/bel\'veth.png',
-    16: '/characters-splashart/blitzcrank.png',
-    17: "/characters-splashart/brand.png",
-    18: "/characters-splashart/braum.png",
-    19: "/characters-splashart/briar.png",
-    20: "/characters-splashart/caitlyn.png",
-    21: "/characters-splashart/camille.png",
-    22: "/characters-splashart/cassiopeia.png",
-    23: "/characters-splashart/cho'gath.png",
-    24: "/characters-splashart/corki.png",
-    25: "/characters-splashart/darius.png",
-    26: "/characters-splashart/diana.png",
-    27: "/characters-splashart/dr._mundo.png",//_?
-    28: "/characters-splashart/draven.png",
-    29: "/characters-splashart/ekko.png",
-    30: "/characters-splashart/elise.png",
-    31: "/characters-splashart/evelynn.png",
-    32: "/characters-splashart/ezreal.png",
-    33: "/characters-splashart/fiddlesticks.png",
-    34: "/characters-splashart/fiora.png",
-    35: "/characters-splashart/fizz.png",
-    36: "/characters-splashart/galio.png",
-    37: "/characters-splashart/gangplank.png",
-    38: "/characters-splashart/garen.png",
-    39: "/characters-splashart/gnar.png",
-    40: "/characters-splashart/gragas.png",
-    41: "/characters-splashart/graves.png",
-    42: "/characters-splashart/gwen.png",
-    43: "/characters-splashart/hecarim.png",
-    44: "/characters-splashart/heimerdinger.png",
-    45: "/characters-splashart/hwei.png",
-    46: "/characters-splashart/illaoi.png",
-    47: "/characters-splashart/irelia.png",
-    48: "/characters-splashart/ivern.png",
-    49: "/characters-splashart/janna.png",
-    50: "/characters-splashart/jarvan_iv.png",
-    51: "/characters-splashart/jax.png",
-    52: "/characters-splashart/jayce.png",
-    53: "/characters-splashart/jhin.png",
-    54: "/characters-splashart/jinx.png",
-    55: "/characters-splashart/k'sante.png",
-    56: "/characters-splashart/kai'sa.png",
-    57: "/characters-splashart/kalista.png",
-    58: "/characters-splashart/karma.png",
-    59: "/characters-splashart/karthus.png",
-    60: "/characters-splashart/kassadin.png",
-    61: "/characters-splashart/katarina.png",
-    62: "/characters-splashart/kayle.png",
-    63: "/characters-splashart/kayn.png",
-    64: "/characters-splashart/kennen.png",
-    65: "/characters-splashart/kha'zix.png", 
-    66: "/characters-splashart/kindred.png",
-    67: "/characters-splashart/kled.png",
-    68: "/characters-splashart/kog'maw.png",
-    69: "/characters-splashart/leblanc.png",
-    70: "/characters-splashart/lee_sin.png",
-    71: "/characters-splashart/leona.png",
-    72: "/characters-splashart/lillia.png",
-    73: "/characters-splashart/lissandra.png",
-    74: "/characters-splashart/lucian.png",
-    75: "/characters-splashart/lulu.png",
-    76: "/characters-splashart/lux.png",
-    77: "/characters-splashart/malphite.png",
-    78: "/characters-splashart/malzahar.png",
-    79: "/characters-splashart/maokai.png",
-    80: "/characters-splashart/master_yi.png",
-    81: "/characters-splashart/milio.png",
-    82: "/characters-splashart/miss_fortune.png",
-    83: "/characters-splashart/mordekaiser.png",
-    84: "/characters-splashart/morgana.png",
-    85: "/characters-splashart/naafiri.png",
-    86: "/characters-splashart/nami.png",
-    87: "/characters-splashart/nasus.png",
-    88: "/characters-splashart/nautilus.png",
-    89: "/characters-splashart/neeko.png",
-    90: "/characters-splashart/nidalee.png",
-    91: "/characters-splashart/nilah.png",
-    92: "/characters-splashart/nocturne.png",
-    93: "/characters-splashart/nunu_&_willump.png",
-    94: "/characters-splashart/olaf.png",
-    95: "/characters-splashart/orianna.png",
-    96: "/characters-splashart/ornn.png",
-    97: "/characters-splashart/pantheon.png",
-    98: "/characters-splashart/poppy.png",
-    99: "/characters-splashart/pyke.png",
-    100: "/characters-splashart/qiyana.png",
-    101: "/characters-splashart/quinn.png",
-    102: "/characters-splashart/rakan.png",
-    103: "/characters-splashart/rammus.png",
-    104: "/characters-splashart/rek'sai.png",
-    105: "/characters-splashart/rell.png",
-    106: "/characters-splashart/renata_glasc.png",
-    107: "/characters-splashart/renekton.png",
-    108: "/characters-splashart/rengar.png",
-    109: "/characters-splashart/riven.png",
-    110: "/characters-splashart/rumble.png",
-    111: "/characters-splashart/ryze.png",
-    112: "/characters-splashart/samira.png",
-    113: "/characters-splashart/sejuani.png",
-    114: "/characters-splashart/senna.png",
-    115: "/characters-splashart/seraphine.png",
-    116: "/characters-splashart/sett.png",
-    117: "/characters-splashart/shaco.png",
-    118: "/characters-splashart/shen.png",
-    119: "/characters-splashart/shyvana.png",
-    120: "/characters-splashart/singed.png",
-    121: "/characters-splashart/sion.png",
-    122: "/characters-splashart/sivir.png",
-    123: "/characters-splashart/skarner.png",
-    124: "/characters-splashart/smolder.png",
-    125: "/characters-splashart/sona.png",
-    126: "/characters-splashart/soraka.png",
-    127: "/characters-splashart/swain.png",
-    128: "/characters-splashart/sylas.png",
-    129: "/characters-splashart/syndra.png",
-    130: "/characters-splashart/tahm_kench.png",
-    131: "/characters-splashart/taliyah.png",
-    132: "/characters-splashart/talon.png",
-    133: "/characters-splashart/taric.png",
-    134: "/characters-splashart/teemo.png",
-    135: "/characters-splashart/thresh.png",
-    136: "/characters-splashart/tristana.png",
-    137: "/characters-splashart/trundle.png",
-    138: "/characters-splashart/tryndamere.png",
-    139: "/characters-splashart/twisted_fate.png",
-    140: "/characters-splashart/twitch.png",
-    141: "/characters-splashart/udyr.png",
-    142: "/characters-splashart/urgot.png",
-    143: "/characters-splashart/varus.png",
-    144: "/characters-splashart/vayne.png",
-    145: "/characters-splashart/veigar.png",
-    146: "/characters-splashart/vel'koz.png",
-    147: "/characters-splashart/vex.png",
-    148: "/characters-splashart/vi.png",
-    149: "/characters-splashart/viego.png",
-    150: "/characters-splashart/viktor.png",
-    151: "/characters-splashart/vladimir.png",
-    152: "/characters-splashart/volibear.png",
-    153: "/characters-splashart/warwick.png",
-    154: "/characters-splashart/wukong.png",
-    155: "/characters-splashart/xayah.png",
-    156: "/characters-splashart/xerath.png",
-    157: "/characters-splashart/xin_zhao.png",
-    158: "/characters-splashart/yasuo.png",
-    159: "/characters-splashart/yone.png",
-    160: "/characters-splashart/yorick.png",
-    161: "/characters-splashart/yuumi.png",
-    162: "/characters-splashart/zac.png",
-    163: "/characters-splashart/zed.png",
-    164: "/characters-splashart/zeri.png",
-    165: "/characters-splashart/ziggs.png",
-    166: "/characters-splashart/zilean.png",
-    167: "/characters-splashart/zoe.png",
-    168: "/characters-splashart/zyra.png",
-  }
+    const route = useRoute();
 
+    const champions = [
+        {name: "Aatrox", img: '/characters-splashart/aatrox.png'},
+        {name: "Ahri", img:'/characters-splashart/ahri.png'},
+        {name: "Akali", img: '/characters-splashart/akali.png'},
+        {name: "Akshan", img: '/characters-splashart/akshan.png'},
+        {name: "Alistar", img: '/characters-splashart/alistar.png'},
+        {name: "Amumu", img: '/characters-splashart/amumu.png'},
+        {name: "Anivia", img:'/characters-splashart/anivia.png'},
+        {name: "Annie", img: '/characters-splashart/annie.png'},
+        {name: "Aphelios", img: '/characters-splashart/aphelios.png'},
+        {name: "Ashe", img: '/characters-splashart/ashe.png'},
+        {name: "Aurelion Sol", img:'/characters-splashart/aurelion_sol.png'},
+        {name: "Aurora", img: '/characters-splashart/aurora.png'},
+        {name: "Azir", img: '/characters-splashart/azir.png'},
+        {name: "Bard", img:'/characters-splashart/bard.png'},
+        {name: "Bel'Veth", img: '/characters-splashart/bel\'veth.png'},
+        {name: "Blitzcrank", img: '/characters-splashart/blitzcrank.png'},
+        {name: "Brand", img:"/characters-splashart/brand.png"},
+        {name: "Braum", img: "/characters-splashart/braum.png"},
+        {name: "Briar", img: "/characters-splashart/briar.png"},
+        {name: "Caitlyn", img: "/characters-splashart/caitlyn.png"},
+        {name: "Camille", img: "/characters-splashart/camille.png"},
+        {name: "Cassiopeia", img: "/characters-splashart/cassiopeia.png"},
+        {name: "Cho'Gath", img:"/characters-splashart/cho'gath.png"},
+        {name: "Corki", img: "/characters-splashart/corki.png"},
+        {name: "Darius", img:"/characters-splashart/darius.png"},
+        {name: "Diana", img: "/characters-splashart/diana.png"},
+        {name: "Dr. Mundo", img: "/characters-splashart/dr._mundo.png"},
+        {name: "Draven", img:"/characters-splashart/draven.png"},
+        {name: "Ekko", img:"/characters-splashart/ekko.png"},
+        {name: "Elise", img: "/characters-splashart/elise.png"},
+        {name: "Evelynn", img: "/characters-splashart/evelynn.png"},
+        {name: "Ezreal", img: "/characters-splashart/ezreal.png"},
+        {name: "Fiddlesticks", img: "/characters-splashart/fiddlesticks.png"},
+        {name: "Fiora", img:"/characters-splashart/fiora.png"},
+        {name: "Fizz", img: "/characters-splashart/fizz.png"},
+        {name: "Galio", img: "/characters-splashart/galio.png"},
+        {name: "Gangplank", img: "/characters-splashart/gangplank.png"},
+        {name: "Garen", img: "/characters-splashart/garen.png"},
+        {name: "Gnar", img: "/characters-splashart/gnar.png"},
+        {name: "Gragas", img: "/characters-splashart/gragas.png"},
+        {name: "Graves", img: "/characters-splashart/graves.png"},
+        {name: "Gwen", img: "/characters-splashart/gwen.png"},
+        {name: "Hecarim", img: "/characters-splashart/hecarim.png"},
+        {name: "Heimerdinger", img: "/characters-splashart/heimerdinger.png"},
+        {name: "Hwei", img: "/characters-splashart/hwei.png"},
+        {name: "Illaoi", img: "/characters-splashart/illaoi.png"},
+        {name: "Irelia", img: "/characters-splashart/irelia.png"},
+        {name: "Ivern", img: "/characters-splashart/ivern.png"},
+        {name: "Janna", img: "/characters-splashart/janna.png"},
+        {name: "Jarvan IV", img: "/characters-splashart/jarvan_iv.png"},
+        {name: "Jax", img: "/characters-splashart/jax.png"},
+        {name: "Jayce", img: "/characters-splashart/jayce.png"},
+        {name: "Jhin", img: "/characters-splashart/jhin.png"},
+        {name: "Jinx", img: "/characters-splashart/jinx.png"},
+        {name: "K'Sante", img: "/characters-splashart/k'sante.png"},
+        {name: "Kai'Sa", img: "/characters-splashart/kai'sa.png"},
+        {name: "Kalista", img: "/characters-splashart/kalista.png"},
+        {name: "Karma", img: "/characters-splashart/karma.png"},
+        {name: "Karthus", img: "/characters-splashart/karthus.png"},
+        {name: "Kassadin", img: "/characters-splashart/kassadin.png"},
+        {name: "Katarina", img: "/characters-splashart/katarina.png"},
+        {name: "Kayle", img: "/characters-splashart/kayle.png"},
+        {name: "Kayn", img: "/characters-splashart/kayn.png"},
+        {name: "Kennen", img: "/characters-splashart/kennen.png"},
+        {name: "Kha'Zix", img: "/characters-splashart/kha'zix.png"}, 
+        {name: "Kindred", img: "/characters-splashart/kindred.png"},
+        {name: "Kled", img: "/characters-splashart/kled.png"},
+        {name: "Kog'Maw", img: "/characters-splashart/kog'maw.png"},
+        {name: "LeBlanc", img: "/characters-splashart/leblanc.png"},
+        {name: "Lee Sin", img: "/characters-splashart/lee_sin.png"},
+        {name: "Leona", img: "/characters-splashart/leona.png"},
+        {name: "Lillia", img: "/characters-splashart/lillia.png"},
+        {name: "Lissandra", img: "/characters-splashart/lissandra.png"},
+        {name: "Lucian", img: "/characters-splashart/lucian.png"},
+        {name: "Lulu", img: "/characters-splashart/lulu.png"},
+        {name: "Lux", img: "/characters-splashart/lux.png"},
+        {name: "Malphite", img: "/characters-splashart/malphite.png"},
+        {name: "Malzahar", img: "/characters-splashart/malzahar.png"},
+        {name: "Maokai", img: "/characters-splashart/maokai.png"},
+        {name: "Master Yi", img: "/characters-splashart/master_yi.png"},
+        {name: "Milio", img: "/characters-splashart/milio.png"},
+        {name: "Miss Fortune", img: "/characters-splashart/miss_fortune.png"},
+        {name: "Mordekaiser", img: "/characters-splashart/mordekaiser.png"},
+        {name: "Morgana", img: "/characters-splashart/morgana.png"},
+        {name: "Naafiri", img: "/characters-splashart/naafiri.png"},
+        {name: "Nami", img: "/characters-splashart/nami.png"},
+        {name: "Nasus", img: "/characters-splashart/nasus.png"},
+        {name: "Nautilus", img: "/characters-splashart/nautilus.png"},
+        {name: "Neeko", img: "/characters-splashart/neeko.png"},
+        {name: "Nidalee", img: "/characters-splashart/nidalee.png"},
+        {name: "Nilah", img: "/characters-splashart/nilah.png"},
+        {name: "Nocturne", img: "/characters-splashart/nocturne.png"},
+        {name: "Nunu & Willump", img: "/characters-splashart/nunu_&_willump.png"},
+        {name: "Olaf", img: "/characters-splashart/olaf.png"},
+        {name: "Orianna", img: "/characters-splashart/orianna.png"},
+        {name: "Ornn", img: "/characters-splashart/ornn.png"},
+        {name: "Pantheon", img: "/characters-splashart/pantheon.png"},
+        {name: "Poppy", img: "/characters-splashart/poppy.png"},
+        {name: "Pyke", img: "/characters-splashart/pyke.png"},
+        {name: "Qiyana", img: "/characters-splashart/qiyana.png"},
+        {name: "Quinn", img: "/characters-splashart/quinn.png"},
+        {name: "Rakan", img: "/characters-splashart/rakan.png"},
+        {name: "Rammus", img: "/characters-splashart/rammus.png"},
+        {name: "Rek'Sai", img: "/characters-splashart/rek'sai.png"},
+        {name: "Rell", img: "/characters-splashart/rell.png"},
+        {name: "Renata Glasc", img: "/characters-splashart/renata_glasc.png"},
+        {name: "Renekton", img: "/characters-splashart/renekton.png"},
+        {name: "Rengar", img: "/characters-splashart/rengar.png"},
+        {name: "Riven", img: "/characters-splashart/riven.png"},
+        {name: "Rumble", img: "/characters-splashart/rumble.png"},
+        {name: "Ryze", img: "/characters-splashart/ryze.png"},
+        {name: "Samira", img: "/characters-splashart/samira.png"},
+        {name: "Sejuani", img: "/characters-splashart/sejuani.png"},
+        {name: "Senna", img: "/characters-splashart/senna.png"},
+        {name: "Seraphine", img: "/characters-splashart/seraphine.png"},
+        {name: "Sett", img: "/characters-splashart/sett.png"},
+        {name: "Shaco", img: "/characters-splashart/shaco.png"},
+        {name: "Shen", img: "/characters-splashart/shen.png"},
+        {name: "Shyvana", img: "/characters-splashart/shyvana.png"},
+        {name: "Singed", img: "/characters-splashart/singed.png"},
+        {name: "Sion", img: "/characters-splashart/sion.png"},
+        {name: "Sivir", img: "/characters-splashart/sivir.png"},
+        {name: "Skarner", img: "/characters-splashart/skarner.png"},
+        {name: "Smolder", img: "/characters-splashart/smolder.png"},
+        {name: "Sona", img: "/characters-splashart/sona.png"},
+        {name: "Soraka", img: "/characters-splashart/soraka.png"},
+        {name: "Swain", img: "/characters-splashart/swain.png"},
+        {name: "Sylas", img: "/characters-splashart/sylas.png"},
+        {name: "Syndra", img: "/characters-splashart/syndra.png"},
+        {name: "Tahm Kench", img: "/characters-splashart/tahm_kench.png"},
+        {name: "Taliyah", img: "/characters-splashart/taliyah.png"},
+        {name: "Talon", img: "/characters-splashart/talon.png"},
+        {name: "Taric", img: "/characters-splashart/taric.png"},
+        {name: "Teemo", img: "/characters-splashart/teemo.png"},
+        {name: "Thresh", img: "/characters-splashart/thresh.png"},
+        {name: "Tristana", img: "/characters-splashart/tristana.png"},
+        {name: "Trundle", img: "/characters-splashart/trundle.png"},
+        {name: "Tryndamere", img: "/characters-splashart/tryndamere.png"},
+        {name: "Twisted Fate", img: "/characters-splashart/twisted_fate.png"},
+        {name: "Twitch", img: "/characters-splashart/twitch.png"},
+        {name: "Udyr", img: "/characters-splashart/udyr.png"},
+        {name: "Urgot", img: "/characters-splashart/urgot.png"},
+        {name: "Varus", img: "/characters-splashart/varus.png"},
+        {name: "Vayne", img: "/characters-splashart/vayne.png"},
+        {name: "Veigar", img: "/characters-splashart/veigar.png"},
+        {name: "Vel'Koz", img: "/characters-splashart/vel'koz.png"},
+        {name: "Vex", img: "/characters-splashart/vex.png"},
+        {name: "Vi", img: "/characters-splashart/vi.png"},
+        {name: "Viego", img: "/characters-splashart/viego.png"},
+        {name: "Viktor", img: "/characters-splashart/viktor.png"},
+        {name: "Vladimir", img: "/characters-splashart/vladimir.png"},
+        {name: "Volibear", img: "/characters-splashart/volibear.png"},
+        {name: "Warwick", img: "/characters-splashart/warwick.png"},
+        {name: "Wukong", img: "/characters-splashart/wukong.png"},
+        {name: "Xayah", img: "/characters-splashart/xayah.png"},
+        {name: "Xerath", img: "/characters-splashart/xerath.png"},
+        {name: "Xin Zhao", img: "/characters-splashart/xin_zhao.png"},
+        {name: "Yasuo", img: "/characters-splashart/yasuo.png"},
+        {name: "Yone", img: "/characters-splashart/yone.png"},
+        {name: "Yorick", img: "/characters-splashart/yorick.png"},
+        {name: "Yuumi", img: "/characters-splashart/yuumi.png"},
+        {name: "Zac", img: "/characters-splashart/zac.png"},
+        {name: "Zed", img: "/characters-splashart/zed.png"},
+        {name: "Zeri", img: "/characters-splashart/zeri.png"},
+        {name: "Ziggs", img: "/characters-splashart/ziggs.png"},
+        {name: "Zilean", img: "/characters-splashart/zilean.png"},
+        {name: "Zoe", img: "/characters-splashart/zoe.png"},
+        {name: "Zyra", img: "/characters-splashart/zyra.png"  }
+    ]
+
+    const currentChampion = ref(null)
+
+    const findChampionByName = (name) => {
+        if (!name) return null;
+        console.log('Looking for champion: ', name)
+
+        let foundChampion = champions.find(champ =>
+            champ.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if(!foundChampion) {
+            foundChampion = champions.find(champ =>
+                champ.name.toLowerCase().includes(name.toLowerCase()) ||
+                name.toLowerCase().includes(champ.name.toLowerCase())
+            );
+        }
+
+        if (!foundChampion) {
+            const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            foundChampion = champions.find(champ => 
+                champ.name.toLowerCase().replace(/[^a-z0-9]/g, '') === cleanName
+            );
+        }
+        return foundChampion;
+    }
+
+    const updateChampionFromRoute = () => {
+        const championNameFromUrl = route.query.championName
+
+        if (championNameFromUrl) {
+            const foundChampion = findChampionByName(championNameFromUrl)
+
+            if (foundChampion){
+                currentChampion.value = foundChampion
+                console.log('Champion found: ', foundChampion.name)
+            } else {
+                currentChampion.value = null
+                console.log('Champion not found. Available:', champions.map(c => c.name))
+            }
+            
+        } else {
+            currentChampion.value = null
+            console.log('There is no champion')
+        }
+    }
+
+    watch(() => route.query, updateChampionFromRoute, {immediate: true})
+    onMounted(() => {
+        console.log('BuildCreator is working fine')
+        updateChampionFromRoute();
+    })
 
 </script>
 
@@ -240,4 +302,8 @@ const champions = {
       );
       padding:  20px 32px;
       }
+
+    .framed{
+      border: 3px solid #653a1b;
+    }
 </style>

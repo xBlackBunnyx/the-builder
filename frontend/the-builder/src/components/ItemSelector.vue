@@ -177,6 +177,7 @@
   function selectItem(item){
     selectedItem.value = item
     menu.value = false
+    console.log("The item selected is: ", item.name)
   }
 
 </script>

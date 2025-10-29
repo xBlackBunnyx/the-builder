@@ -345,7 +345,7 @@
       if (selectedSecondaryBranch.value?.name === branch.name) {
         selectedSecondaryBranch.value = selectedPrimaryBranch.value;
 
-        const tempRunes = {...selectedRunes.value};
+        // const tempRunes = {...selectedRunes.value};
         selectedRunes.value.primary = {keystone: null, rows: [null, null, null]};
         selectedRunes.value.secondary = [];
       }
@@ -363,8 +363,11 @@
   function selectRune(type, section, runeName, rowIndex){
     if (type === 'primary') {
       if (section === 'keystone') { 
+        console.log("The keystone selected is: ", runeName)
         selectedRunes.value.primary.keystone = runeName;
+
       } else if (section === 'row') {
+        console.log("The rune selected is: ", runeName)
         selectedRunes.value.primary.rows[rowIndex] = runeName;
     } else {
       const newRows = [...selectedRunes.value.primary.rows];
@@ -377,7 +380,8 @@
   function selectSecondaryRune(rune, rowIndex) {
     const currentSelection = selectedRunes.value.secondary;
     const existingIndex = currentSelection.findIndex(selectedRune => 
-      selectedRune.name === rune.name);
+      selectedRune.name === rune.name); 
+    console.log("The secondary rune selected is: ", rune.name)
     if (existingIndex !== -1) {
       selectedRunes.value.secondary.splice(existingIndex, 1);
     } else {

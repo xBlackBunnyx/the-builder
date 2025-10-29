@@ -30,8 +30,8 @@
 
 </template>
 
-<script>
-
+<script setup>
+  import { ScoreCalculator, PlayerBuildImporter } from '../Score-system';
 
 
 </script>

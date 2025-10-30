@@ -5,6 +5,7 @@
     <button
       v-bind="activatorProps"
       class="button-settings justify-center"
+      @click="calculateScore"
     >Get your results!</button>
   </template>
 
@@ -12,7 +13,7 @@
     <v-card class="card-settings">
         <v-card-title class="text-center card-title"> Here is what you scored! </v-card-title>
       <v-card-text>
-        Placeholder para los resultados
+        {{ scoreResult }}
       </v-card-text>
 
       <v-card-actions>
@@ -33,6 +34,12 @@
 <script setup>
   import { ScoreCalculator, PlayerBuildImporter } from '../Score-system';
 
+  let scoreResult = ref();
+
+  function calculateScore()
+  {
+    scoreResult = "Placeholder para los resultados"
+  }
 
 </script>
 

@@ -1,20 +1,24 @@
 //Code to calculate the score of the build
 
 //include (librerias necesarias)
-const fs = require('fs');
-const uc = require("../../../../mongo-connection");
+// const fs = require('fs');
+// import {readFileSync} from 'fs';
+// const uc = require("../../../../mongo-connection");
+import uc from "../../../../mongo-connection";
 //Lectura de documento html
 
 // Aqui va el señor que escucha (aka el listener)
 
 //conexion con el señor mongo
-const { MongoClient, ServerApiVersion } = require('mongodb');
-let uri = uc.uriConnection();
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+// import { ServerApiVersion } from 'mongodb';
+import { MongoClient } from "mongodb";
+let uri = uc();
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
    serverApi: {
-    version: ServerApiVersion.v1,
+    // version: ServerApiVersion.v1,
    strict: true,
     deprecationErrors: true,
   }
@@ -30,7 +34,7 @@ async function run() {
    await client.db("admin").command({ ping: 1 });
    
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    let data = PlayerBuildImporter();
+    // let data = PlayerBuildImporter(); This has to turn into something for client side
 
     let championName = data[0];
     let itemsName = data.slice(1,7);
@@ -135,7 +139,7 @@ async function SavePlayerBuilds(client, newPlayerBuild) {
 
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
 function PlayerBuildImporter(){
-  let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
+  // let result = readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
   return result;
 }
 

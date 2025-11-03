@@ -9,16 +9,15 @@
 
         <v-row no-gutters>
             <v-col cols="3">
-                <v-container class="d-flex flex-column align-center">
-                    <img 
+                <div>
+                    <v-img 
                     v-if="selectedChampion"
                     :src="selectedChampion" 
                     alt="Daily Champion" 
                     style="max-width: 300px; border-radius: 10px;"
                     class="framed"
                     />
-        
-                </v-container>
+                </div>
             </v-col>
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">

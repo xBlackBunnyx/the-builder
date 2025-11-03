@@ -1,7 +1,7 @@
 <template>
       <v-container >
         <v-row  align="center">
-          <v-col>
+          <v-col cols="6">
             <v-autocomplete
               class="barsettings"
               :items="champions"
@@ -27,7 +27,7 @@
               </template>
             </v-autocomplete>
           </v-col>
-          <v-col cols="auto">
+          <v-col cols="6">
             <button 
             @click="goToBuildCreator" 
             class="buttonsettings" 

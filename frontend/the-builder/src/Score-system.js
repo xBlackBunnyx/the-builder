@@ -455,4 +455,5 @@ function ArrayToString(array)
   return result.concat(']');
 }
 
-export {ScoreCalculator, PlayerBuildImporter}
+export {ScoreCalculator, PlayerBuildImporter, ScoreGiver, GetReferenceBuild,
+  StringsToBuild, BuildToStrings, SavePlayerBuilds, CombinedBuildScore, findChamps, findItem, findRunes}

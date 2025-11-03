@@ -56,7 +56,7 @@
 <script setup>
     import {ref, onMounted, watch} from "vue";
     import { useRoute } from "vue-router";
-import { tr } from "vuetify/locale";
+
 
     const route = useRoute();
 

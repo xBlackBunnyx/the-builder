@@ -2,14 +2,24 @@
 
 //include (librerias necesarias)
 const fs = require('fs');
-const uc = require("../../../../mongo-connection");
+// const uc = require("../../../../mongo-connection");
+const source = process.env.ATLAS_CONNECTION
+const express = require('express');
+const cors = require('cors');
 //Lectura de documento html
-
+const app = express();
+app.use(cors());
+app.use(express.json());
+require('dotenv').config();
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+  console.log(`Successfully served on port: ${PORT}`);
+})
 // Aqui va el señor que escucha (aka el listener)
 
 //conexion con el señor mongo
 const { MongoClient, ServerApiVersion } = require('mongodb');
-let uri = uc.uriConnection();
+let uri =source.uriConnection();
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {

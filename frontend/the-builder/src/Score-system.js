@@ -1,6 +1,6 @@
 //Code to calculate the score of the build
 
-//include (librerias necesarias)
+//librerias necesarias (extras para la conexión ccon mongo?)
 const fs = require('fs');
 // const uc = require("../../../../mongo-connection");
 const source = process.env.ATLAS_CONNECTION
@@ -8,17 +8,15 @@ const express = require('express');
 const cors = require('cors');
 //Lectura de documento html
 const app = express();
+require('dotenv').config();
+const PORT = process.env.PORT || 5000;
+
 app.use(cors());
 app.use(express.json());
-require('dotenv').config();
-const PORT = process.env.PORT || 5000
-app.listen(PORT, () => {
-  console.log(`Successfully served on port: ${PORT}`);
-})
-// Aqui va el señor que escucha (aka el listener)
 
 //conexion con el señor mongo
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { build } = require('vite');
 let uri =source.uriConnection();
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -30,6 +28,7 @@ const client = new MongoClient(uri, {
   }
 });
 
+//Conection to Mongo Atlas
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -40,7 +39,8 @@ async function run() {
    await client.db("admin").command({ ping: 1 });
    
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    let data = PlayerBuildImporter();
+
+    let data = PlayerBuildImporter(frontendBuild);
 
     let championName = data[0];
     let itemsName = data.slice(1,7);
@@ -59,7 +59,8 @@ async function run() {
     let refItems = await findItem(client, refBuildItems);
     let refRunes = await findRunes(client, refBuildRunes);
 
-    let finalBuildResult = CombinedBuildScore(StringsToBuild(data), ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
+    let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
+    ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
 
  } finally {
@@ -144,9 +145,24 @@ async function SavePlayerBuilds(client, newPlayerBuild) {
 }
 
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
-function PlayerBuildImporter(){
-  let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
+function PlayerBuildImporter(frontendBuild){
+  // let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
+  let result = frontendBuild.split(' ; ').map(element => element.trim());
   return result;
+}
+
+//Function that transforms what we get from the website to what we used
+function frontendToBackendCodeFormat(frontendData){
+  return [
+    frontendData.champion,
+    ...frontendData.items,
+    frontendData.runes.primary.keystone,
+    frontendData.runes.primary.row1,
+    frontendData.runes.primary.row2,
+    frontendData.runes.primary.row3,
+    frontendData.runes.secondary.row1,
+    frontendData.runes.secondary.row2
+  ].join('; ');
 }
 
 //Aqui va la funcion que traduce de codigo de barras a texto
@@ -465,5 +481,30 @@ function ArrayToString(array)
   return result.concat(']');
 }
 
-export {ScoreCalculator, PlayerBuildImporter, ScoreGiver, GetReferenceBuild,
-  StringsToBuild, BuildToStrings, SavePlayerBuilds, CombinedBuildScore, findChamps, findItem, findRunes}
+//Creation of the routes to be accesible to the frontend
+app.post('api/calculate-score', async(req, res) => {
+  try {
+    const frontendData = req.body;
+    const frontendBuild = frontendToBackendCodeFormat(frontendData);
+    const buildData = PlayerBuildImporter(frontendBuild);
+
+    const score = await run(buildData);
+
+    res.json({
+      success:true,
+      score: score,
+    })
+
+  } catch (error) {
+    res.status(500).json({success: false, error: error.message});
+  }
+});
+
+
+//Start server
+async function startServer(params) {
+  await run();
+  app.listen(PORT, () => {
+  console.log(`Successfully served on port: ${PORT}`);
+})
+}

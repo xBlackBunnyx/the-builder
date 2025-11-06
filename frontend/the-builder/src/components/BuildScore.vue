@@ -1,18 +1,37 @@
 <template>
 
-<v-dialog max-width="500">
+<v-dialog v-model="dialog" max-width="500">
   <template v-slot:activator="{ props: activatorProps }">
     <button
       v-bind="activatorProps"
       class="button-settings justify-center"
-    >Get your results!</button>
+      @click="calculateScoreAndSave"
+      :disabled="loading"
+    >{{ loading ? 'Calculating score please wait...' : 'Get your results!' }}</button>
   </template>
 
   <template v-slot:default="{ isActive }">
     <v-card class="card-settings">
-        <v-card-title class="text-center card-title"> Here is what you scored! </v-card-title>
+        <v-card-title class="text-center card-title"> {{resultTitle }} </v-card-title>
       <v-card-text>
-        Placeholder para los resultados
+        <!-- Loading -->
+         <div v-if="loading" class="text-center">
+            <v-progress-circular indeterminate color="white"></v-progress-circular>
+            <p>Calculating your build score...</p>
+         </div>
+
+         <!-- Results -->
+          <div v-else-if="score !== null" class="text-center">
+            <div class="score-display mb-4">
+              <h2 class="text-h3"> {{ score }}/100</h2>
+            </div>
+            <v-alert v-if="buildSaved" type="success"></v-alert>
+          </div>
+
+          <!-- Everything explodes -->
+           <div v-else-if="error" class="error-message text-center">
+            <v-alert type="error" class="mb-4"> {{ error }} </v-alert>
+           </div>
       </v-card-text>
 
       <v-card-actions>
@@ -20,8 +39,8 @@
 
         <v-btn
         class="card-options"
-          text="Close Dialog"
-          @click="isActive.value = false"
+          text="Close"
+          @click="dialog = false"
         ></v-btn>
       </v-card-actions>
     </v-card>
@@ -31,10 +50,85 @@
 </template>
 
 <script setup>
+import {ref, computed} from 'vue'
+import { calculateScore } from '../api';
+import { tr } from 'vuetify/locale';
+
+const props = defineProps({
+  selectedChampion: Object,
+  selectedItems: Array,
+  selectedRunes: Object
+})
+
+const dialog = ref(false)
+const loading = ref(false)
+const score = ref(null)
+const buildSaved = ref(false)
+const error = ref(null)
+
+const resultTitle = computed(() => {
+  if (loading.value) return 'Calculating...'
+  if (error.value) return 'Calculation Failed'
+  if (score.value !== null) return 'Your build results are in!'
+  return 'Build Results'
+})
+
+const calculateScoreAndSave = async() => {
+  score.value = null
+  buildSaved.value = false
+  error.value = null
+  loading.value = true
+
+  if (!props.selectedChampion) {
+    error.value = 'Please, select a champion'
+    loading.value = false
+    dialog.value = true
+    return
+  }
+  if (!props.selectedItems || props.selectedItems.length !== 6) {
+    error.value = "Please, select all the items"
+    loading.value = false
+    dialog.value = true
+    return
+  }
+  if (!props.selectedRunes) {
+    error.value = 'Please, select the runes'
+    loading.value = false
+    dialog.value = true
+    return
+  }
+
+  try {
+    const frontendData = {
+      champion: props.selectedChampion.name,
+      items: props.selectedItems,
+      runes: props.selectedRunes
+    }
+    console.log('Sending build data: ', frontendData)
+    
+    //Here we call the API
+    const result = await calculateScore(frontendData)
+
+    if (result.success) {
+      score.value = result.score
+      buildSaved.value = true
+      dialog.value = true
+    } else {
+      error.value = result.error
+      dialog.value = true
+    }
+  } catch (err) {
+    console.error('API call failed: ', err)
+    error.value = 'Network error. Please check your connection and try again'
+    dialog.value = true
+  } finally {
+    loading.value = false
+  }
+}
 
 </script>
 
-<style>
+<style scoped>
 
   .button-settings{
       font-size: 21px;
@@ -80,4 +174,19 @@
         font-size: 15px;
     }
 
+    .score-display {
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+.error-message {
+  padding: 10px;
+}
+
+.button-settings:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 </style>

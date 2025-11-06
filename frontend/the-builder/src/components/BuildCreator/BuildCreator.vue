@@ -23,16 +23,16 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector></item-selector>
-                    <item-selector></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector></item-selector>
-                    <item-selector></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector></item-selector>
-                    <item-selector></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
                 </v-col>
                  <v-col cols="9">
                     <rune-selector></rune-selector>
@@ -47,16 +47,20 @@
                 <button @click="$router.go(-1)" class="buttonsettings"> Return to Home </button>
             </v-col>
             <v-col>
-                <build-score></build-score>
+                <build-score
+                    :selected-champion="currentChampion"
+                    :selected-items="selectedItems"
+                    :selected-runes="selectedRunes"
+                ></build-score>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script setup>
-    import {ref, onMounted, watch} from "vue";
+    import {ref, onMounted, watch, computed} from "vue";
     import { useRoute } from "vue-router";
-
+    import BuildScore from "../BuildScore.vue";
 
     const route = useRoute();
 
@@ -232,6 +236,18 @@
     ]
 
     const currentChampion = ref(null)
+    const selectedRunes = ref({})
+    const selectedItems = ref(Array(6).fill(null))
+
+    const updateSelectedItems = (slotData) => {
+        const newItems = [...selectedItems.value]
+        newItems[slotData.slotNumber -1] = slotData.item.name
+        selectedItems.value = newItems
+    }
+
+    const allItemsSelected = computed(() => {
+        return selectedItems.value.every(item => item !== null)
+    })
 
     const findChampionByName = (name) => {
         if (!name) return null;

@@ -237,12 +237,13 @@
 
     const currentChampion = ref(null)
     const selectedRunes = ref({})
-    const selectedItems = ref(Array(6).fill(null))
+    const selectedItems = ref(["","","","","",""])
 
     const updateSelectedItems = (slotData) => {
         const newItems = [...selectedItems.value]
-        newItems[slotData.slotNumber -1] = slotData.item.name
+        newItems[slotData.slotNumber -1] = slotData.item.name || slotData.item
         selectedItems.value = newItems
+        console.log('Updated items array: ', selectedItems.value)
     }
 
     const allItemsSelected = computed(() => {

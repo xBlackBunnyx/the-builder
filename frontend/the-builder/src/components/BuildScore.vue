@@ -52,12 +52,18 @@
 <script setup>
 import {ref, computed} from 'vue'
 import { calculateScore } from '../api';
-import { tr } from 'vuetify/locale';
 
 const props = defineProps({
   selectedChampion: Object,
   selectedItems: Array,
   selectedRunes: Object
+})
+
+//Debug to check if all items are getting stored properly
+console.log('BuildResults props: ', {
+  champion: props.selectedChampion,
+  items: props.selectedItems,
+  runes: selectedRunes
 })
 
 const dialog = ref(false)
@@ -98,11 +104,25 @@ const calculateScoreAndSave = async() => {
     return
   }
 
+  //Checking that none of the items are null/undefined
+  const invalidItems = props.selectedItems.filter(item => !item)
+  if (invalidItems.length > 0) {
+    error.value = `Some items are not selected. Check all slots`
+    loading.value = false
+    dialog.value = true
+    return
+  }
+
   try {
     const frontendData = {
       champion: props.selectedChampion.name,
-      items: props.selectedItems,
-      runes: props.selectedRunes
+      items: props.selectedItems.map(item => {
+        return typeof item === 'string' ? item : item.name || item
+      }),
+      runes: {
+        primary: props.selectedRunes.primary || {},
+        secondary: props.selectedRunes.secondary || {}
+      }
     }
     console.log('Sending build data: ', frontendData)
     
@@ -114,12 +134,16 @@ const calculateScoreAndSave = async() => {
       buildSaved.value = true
       dialog.value = true
     } else {
-      error.value = result.error
+      error.value = result.error || `Failed to calculate score`
       dialog.value = true
     }
   } catch (err) {
     console.error('API call failed: ', err)
-    error.value = 'Network error. Please check your connection and try again'
+    if (err.code === 'ECONNREFUSED')   {
+      error.value = 'Backend server is not running.'
+    } else {
+      error.value = 'Network error. Please check your connection and try again'
+    }
     dialog.value = true
   } finally {
     loading.value = false

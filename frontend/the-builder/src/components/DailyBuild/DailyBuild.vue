@@ -22,16 +22,16 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector></item-selector>
-                    <item-selector></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector></item-selector>
-                    <item-selector></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector></item-selector>
-                    <item-selector></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"></item-selector>
                 </v-col>
                  <v-col cols="9">
                     <rune-selector></rune-selector>
@@ -47,14 +47,18 @@
                 <button @click="$router.go(-1)" class="buttonsettings"> Return to Home </button>
             </v-col>
             <v-col>
-                <build-score></build-score>
+                <build-score
+                    :selected-champion="selectedChampion"
+                    :selected-items="selectedItems"
+                    :selected-runes="selectedRunes"
+                ></build-score>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
-
+    import BuildScore from '../BuildScore.vue';
     export default {
         data () {
             return {
@@ -228,6 +232,8 @@
             "/characters-splashart/zoe.png",
             "/characters-splashart/zyra.png",
             ],
+                selectedRunes: ({}),
+                selectedItems: (Array(6).fill(null)),
                 selectedChampion: "",
                 debugMode: false, 
                 usedCount: 0,
@@ -246,13 +252,13 @@
                 console.log('Error reading localStorage, initializing empty array');
                 return [];
             }
-        },
+            },
         
-        updateCounts() {
+            updateCounts() {
             const usedChampions = this.getUsedChampions();
             this.usedCount = usedChampions.length;
             this.availableCount = this.champions.length - this.usedCount;
-        },
+            },
 
             selectedDailyChampion(){
                 if (!this.debugMode){
@@ -305,6 +311,12 @@
                 console.log('Selected champion:', selectedChamp);
                 console.log('All used champions:', usedChampions);
                 console.log('Remaining available:', this.champions.filter(champ => !usedChampions.includes(champ)));
+            },
+
+            updateSelectedItems(slotData) {
+                const newItems = [...selectedItems.value]
+                newItems[slotData.slotNumber -1] = slotData.item
+                selectedItems.value = newItems
             },
         }
     }

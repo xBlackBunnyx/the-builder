@@ -4,7 +4,7 @@
 // const fs = require('fs');
 import fs from 'fs';
 // const uc = require("../../../../mongo-connection");
-const source = process.env.ATLAS_CONNECTION
+
 // const express = require('express');
 import express from 'express';
 // const cors = require('cors');
@@ -12,7 +12,8 @@ import cors from 'cors';
 //Lectura de documento html
 const app = express();
 // require('dotenv').config();
-import {config} from 'dotenv';
+import dotenv from 'dotenv';
+dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
@@ -22,6 +23,7 @@ app.use(express.json());
 import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
 // const { build } = require('vite');
 import { build } from 'vite';
+const source = process.env.ATLAS_CONNECTION
 let uri =source.uriConnection();
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {

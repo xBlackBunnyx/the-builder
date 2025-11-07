@@ -52,6 +52,7 @@
 <script setup>
 import {ref, computed} from 'vue'
 import { calculateScore } from '../api';
+import axios from 'axios';
 
 const props = defineProps({
   selectedChampion: Object,
@@ -63,7 +64,7 @@ const props = defineProps({
 console.log('BuildResults props: ', {
   champion: props.selectedChampion,
   items: props.selectedItems,
-  runes: selectedRunes
+  runes: props.selectedRunes
 })
 
 const dialog = ref(false)
@@ -107,7 +108,7 @@ const calculateScoreAndSave = async() => {
   //Checking that none of the items are null/undefined
   const invalidItems = props.selectedItems.filter(item => !item)
   if (invalidItems.length > 0) {
-    error.value = `Some items are not selected. Check all slots`
+    error.value = `Some items are not selected, or some items incompatible. Check all slots`
     loading.value = false
     dialog.value = true
     return

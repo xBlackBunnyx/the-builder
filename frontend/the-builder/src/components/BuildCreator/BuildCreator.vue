@@ -23,7 +23,7 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="updateSelectedItems"</item-selector>
                     <item-selector @item-selected="updateSelectedItems"></item-selector>
                 </v-col>
                 <v-col>

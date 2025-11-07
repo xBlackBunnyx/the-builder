@@ -26,7 +26,6 @@ import { build } from 'vite';
 
 const source = process.env.ATLAS_CONNECTION;
 let uri =source;
-console.log("uri is " + source);
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
    serverApi: {
@@ -37,7 +36,7 @@ const client = new MongoClient(uri, {
 });
 
 //Conection to Mongo Atlas
-async function run() {
+async function run(frontendBuild) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     //Here is where we have to put all the functions related to getting something from the database
@@ -76,7 +75,6 @@ async function run() {
    await client.close();
   }
 }
-run().catch(console.dir);
 
 // code is in string format, the three digits that dictate which champion is it. Code format
 async function GetReferenceBuild(client, code)
@@ -510,9 +508,10 @@ app.post('api/calculate-score', async(req, res) => {
 
 
 //Start server
-async function startServer(params) {
-  await run();
+async function startServer() {
   app.listen(PORT, () => {
   console.log(`Successfully served on port: ${PORT}`);
 })
 }
+
+startServer();

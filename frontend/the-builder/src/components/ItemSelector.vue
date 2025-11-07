@@ -41,8 +41,8 @@
             <div class="tooltip-content">
               <strong class="tooltip-title">{{ item.name }}</strong>
               <ul class="tooltip-stats">
-                <li v-for="(value, stat) in item.stats" :key="stat">
-                  <strong>{{ stat }}</strong> {{ value }}
+                <li v-for="(value, stats) in item.stats" :key="stats">
+                  <strong>{{ stats }}</strong> {{ value }}
                 </li>
               </ul>
             </div>
@@ -140,36 +140,36 @@
     {name: "Rod of Ages", img: "/items-picture/Rod_Ages.png", stats: {"Ability Power":"+45", "Health":"+350", "Mana":"+400"}},
     {name: "Runaan's Hurricane", img: "/items-picture/Runaan_Hurricane.png", stats: {"Attack Speed":"+40%", "Critical Strike Chance":"+25%", "Movement Speed":"+4%"}},
     {name: "Rylai's Crystal Scepter", img: "/items-picture/Rylai_Crystal_Scepter.png", stats: {"Ability Power":"+65", "Health":"+400"}},
-    {name: "Serpent's Fang", img: "/items-picture/Serpent_Fang.png", stat: {"Attack Damage":"+55", "Lethality":"15"}},
+    {name: "Serpent's Fang", img: "/items-picture/Serpent_Fang.png", stats: {"Attack Damage":"+55", "Lethality":"15"}},
     {name: "Serylda's Grudge", img: "/items-picture/Serylda_Grudge.png", stats: {"Attack Damage":"+45", "Ability Haste":"+20", "Armor Penetration":"+30%"}},
-    {name: "Shadowflame", img: "/items-picture/Shadowflame.png", stat: {"Ability Power":"+110", "Magic Penetration":"+15"}},
-    {name: "Shurelya's Battlesong", img: "/items-picture/Shurelya_Battlesong.png", stat: {"Ability Power":"+50", "Ability Haste":"+15", "Mana Regeneration":"+125%", "Movement Speed":"+4%"}},
-    {name: "Spear of Shojin", img: "/items-picture/Spear_Shojin.png", stat: {"Attack Damage":"+45", "Health":"+450"}},
-    {name: "Spirit Visage", img: "/items-picture/Spirit_Visage.png", stat: {"Ability Haste":"+10", "Health":"+400", "Health Regeneration":"+100%", "Magic Resistance":"+50"}},
-    {name: "Staff of Flowing Water", img: "/items-picture/Staff_Flowing_Water.png", stat: {"Ability Power":"+35", "Ability Haste":"+15", "Mana Regeneration":"+125%", "Heal & Shield Power":"+10%"}},
-    {name: "Statikk Shiv", img: "/items-picture/Statikk_Shiv.png", stat: {"Attack Damage":"+45", "Attack Speed":"+30%", "Movement Speed":"+4%"}},
-    {name: "Sterak's Gage", img: "/items-picture/Sterak_Gage.png", stat: {"Health":"+400", "Tenacity":"+20%"}},
-    {name: "Stormsurge", img: "/items-picture/Stormsurge.png", stat: {"Ability Power":"+90", "Movement Speed":"+4%", "Magic Penetration":"+15"}},
-    {name: "Stridebreaker", img: "/items-picture/Stridebreaker.png", stat: {"Attack Damage":"+40", "Attack Speed":"+25%", "Health":"+450"}},
-    {name: "Sundered Sky", img: "/items-picture/Sundered_Sky.png", stat: {"Attack Damage":"+40", "Ability Haste":"+10", "Health":"+400"}},
-    {name: "Sunfire Aegis", img: "/items-picture/Sunfire_Aegis.png", stat: {"Ability Haste":"+10", "Health":"+350", "Armor":"+50"}},
-    {name: "Terminus", img: "/items-picture/Terminus.png", stat: {"Attack Damage":"+30", "Attack Speed":"+35%"}},
-    {name: "The Collector", img: "/items-picture/The_Collector.png", stat: {"Attack Damage":"+50", "Critical Strike Chance":"+25%", "Lethality":"+10"}},
-    {name: "Thornmail", img: "/items-picture/Thornmail.png", stat: {"Health":"+150", "Armor":"+75"}},
-    {name: "Titanic Hydra", img: "/items-picture/Titanic_Hydra.png", stat: {"Attack Damage":"+40", "Health":"+600"}},
-    {name: "Trailblazer", img: "/items-picture/Trailblazer.png", stat: {"Health":"+250", "Armor":"+40", "Movement Speed":"+4%"}},
-    {name: "Trinity Force", img: "/items-picture/Trinity_Force.png", stat: {"Attack Damage":"+36", "Ability Haste":"+15", "Attack Speed":"+30%", "Health":"+333"}},
-    {name: "Umbral Glaive", img: "/items-picture/Umbral_Glaive.png", stat: {"Attack Damage":"+50", "Ability Haste":"+10", "Lethality":"+15"}},
-    {name: "Unending Despair", img: "/items-picture/Unending_Despair.png", stat: {"Ability Haste":"+10", "Health":"+400", "Armor":"+25", "Magic Resistance":"+25"}},
-    {name: "Vigilant Wardstone", img: "/items-picture/Vigilant_Wardstone.png", stat: {"Ability Haste":"+20", "Health":"+250", "Armor":"+25", "Magic Resistance":"+30"}},
-    {name: "Void Staff", img: "/items-picture/Void_Staff.png", stat: {"Ability Power":"+95", "Magic Penetration":"+40%"}},
-    {name: "Voltaic Cyclosword", img: "/items-picture/Voltaic_Cyclosword.png", stat: {"Attack Damage":"+55", "Ability Haste":"+10", "Lethality":"+18"}},
-    {name: "Warmog's Armor", img: "/items-picture/Warmog_Armor.png", stat: {"Health":"+1000", "Health Regeneration":"+100%", "Movement Speed":"+4%"}},
-    {name: "Wit's End", img: "/items-picture/Wit_End.png", stat: {"Attack Speed":"+50%", "Magic Resistance":"+45", "Tenacity":"+20%"}},
-    {name: "Youmuu's Ghostblade", img: "/items-picture/Youmuu_Ghostblade.png", stat: {"Attack Damage":"+55", "Movement Speed":"+4%", "Lethality":"+18"}},
-    {name: "Yun Tal Wildarrows", img: "/items-picture/Yun_Tal_Wildarrows.png", stat: {"Attack Damage":"+55", "Attack Speed":"+35%"}},
-    {name: "Zeke's Convergence", img: "/items-picture/Zeke_Convergence.png", stat: {"Ability Haste":"+10", "Health":"+300", "Armor":"+25", "Magic Resistance":"+25"}},
-    {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stat: {"Ability Power":"+105", "Armor":"+50"}},
+    {name: "Shadowflame", img: "/items-picture/Shadowflame.png", stats: {"Ability Power":"+110", "Magic Penetration":"+15"}},
+    {name: "Shurelya's Battlesong", img: "/items-picture/Shurelya_Battlesong.png", stats: {"Ability Power":"+50", "Ability Haste":"+15", "Mana Regeneration":"+125%", "Movement Speed":"+4%"}},
+    {name: "Spear of Shojin", img: "/items-picture/Spear_Shojin.png", stats: {"Attack Damage":"+45", "Health":"+450"}},
+    {name: "Spirit Visage", img: "/items-picture/Spirit_Visage.png", stats: {"Ability Haste":"+10", "Health":"+400", "Health Regeneration":"+100%", "Magic Resistance":"+50"}},
+    {name: "Staff of Flowing Water", img: "/items-picture/Staff_Flowing_Water.png", stats: {"Ability Power":"+35", "Ability Haste":"+15", "Mana Regeneration":"+125%", "Heal & Shield Power":"+10%"}},
+    {name: "Statikk Shiv", img: "/items-picture/Statikk_Shiv.png", stats: {"Attack Damage":"+45", "Attack Speed":"+30%", "Movement Speed":"+4%"}},
+    {name: "Sterak's Gage", img: "/items-picture/Sterak_Gage.png", stats: {"Health":"+400", "Tenacity":"+20%"}},
+    {name: "Stormsurge", img: "/items-picture/Stormsurge.png", stats: {"Ability Power":"+90", "Movement Speed":"+4%", "Magic Penetration":"+15"}},
+    {name: "Stridebreaker", img: "/items-picture/Stridebreaker.png", stats: {"Attack Damage":"+40", "Attack Speed":"+25%", "Health":"+450"}},
+    {name: "Sundered Sky", img: "/items-picture/Sundered_Sky.png", stats: {"Attack Damage":"+40", "Ability Haste":"+10", "Health":"+400"}},
+    {name: "Sunfire Aegis", img: "/items-picture/Sunfire_Aegis.png", stats: {"Ability Haste":"+10", "Health":"+350", "Armor":"+50"}},
+    {name: "Terminus", img: "/items-picture/Terminus.png", stats: {"Attack Damage":"+30", "Attack Speed":"+35%"}},
+    {name: "The Collector", img: "/items-picture/The_Collector.png", stats: {"Attack Damage":"+50", "Critical Strike Chance":"+25%", "Lethality":"+10"}},
+    {name: "Thornmail", img: "/items-picture/Thornmail.png", stats: {"Health":"+150", "Armor":"+75"}},
+    {name: "Titanic Hydra", img: "/items-picture/Titanic_Hydra.png", stats: {"Attack Damage":"+40", "Health":"+600"}},
+    {name: "Trailblazer", img: "/items-picture/Trailblazer.png", stats: {"Health":"+250", "Armor":"+40", "Movement Speed":"+4%"}},
+    {name: "Trinity Force", img: "/items-picture/Trinity_Force.png", stats: {"Attack Damage":"+36", "Ability Haste":"+15", "Attack Speed":"+30%", "Health":"+333"}},
+    {name: "Umbral Glaive", img: "/items-picture/Umbral_Glaive.png", stats: {"Attack Damage":"+50", "Ability Haste":"+10", "Lethality":"+15"}},
+    {name: "Unending Despair", img: "/items-picture/Unending_Despair.png", stats: {"Ability Haste":"+10", "Health":"+400", "Armor":"+25", "Magic Resistance":"+25"}},
+    {name: "Vigilant Wardstone", img: "/items-picture/Vigilant_Wardstone.png", stats: {"Ability Haste":"+20", "Health":"+250", "Armor":"+25", "Magic Resistance":"+30"}},
+    {name: "Void Staff", img: "/items-picture/Void_Staff.png", stats: {"Ability Power":"+95", "Magic Penetration":"+40%"}},
+    {name: "Voltaic Cyclosword", img: "/items-picture/Voltaic_Cyclosword.png", stats: {"Attack Damage":"+55", "Ability Haste":"+10", "Lethality":"+18"}},
+    {name: "Warmog's Armor", img: "/items-picture/Warmog_Armor.png", stats: {"Health":"+1000", "Health Regeneration":"+100%", "Movement Speed":"+4%"}},
+    {name: "Wit's End", img: "/items-picture/Wit_End.png", stats: {"Attack Speed":"+50%", "Magic Resistance":"+45", "Tenacity":"+20%"}},
+    {name: "Youmuu's Ghostblade", img: "/items-picture/Youmuu_Ghostblade.png", stats: {"Attack Damage":"+55", "Movement Speed":"+4%", "Lethality":"+18"}},
+    {name: "Yun Tal Wildarrows", img: "/items-picture/Yun_Tal_Wildarrows.png", stats: {"Attack Damage":"+55", "Attack Speed":"+35%"}},
+    {name: "Zeke's Convergence", img: "/items-picture/Zeke_Convergence.png", stats: {"Ability Haste":"+10", "Health":"+300", "Armor":"+25", "Magic Resistance":"+25"}},
+    {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}},
   ]
 
   const selectedItem = ref(null)

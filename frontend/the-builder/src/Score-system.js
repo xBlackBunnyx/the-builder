@@ -1,24 +1,28 @@
 //Code to calculate the score of the build
 
 //librerias necesarias (extras para la conexión ccon mongo?)
-const fs = require('fs');
+// const fs = require('fs');
+import fs from 'fs';
 // const uc = require("../../../../mongo-connection");
 const source = process.env.ATLAS_CONNECTION
-const express = require('express');
-const cors = require('cors');
+// const express = require('express');
+import express from 'express';
+// const cors = require('cors');
+import cors from 'cors';
 //Lectura de documento html
 const app = express();
-require('dotenv').config();
+// require('dotenv').config();
+import {config} from 'dotenv';
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
 //conexion con el señor mongo
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const { build } = require('vite');
+import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
+// const { build } = require('vite');
+import { build } from 'vite';
 let uri =source.uriConnection();
-
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
    serverApi: {

@@ -174,18 +174,14 @@
 
   const selectedItem = ref(null)
 
-  const props = defineProps({
-    slotNumber: Number
-  })
-
   const emit = defineEmits(['item-selected'])
   
   function selectItem(item){
     selectedItem.value = item
+    let itemName = item.name;
     menu.value = false
     emit('item-selected', {
-      slotNumber: props.slotNumber,
-      item: items.name
+      item: itemName
     })
     console.log("The item selected is: ", item.name)
   }

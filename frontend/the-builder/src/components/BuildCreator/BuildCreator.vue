@@ -23,16 +23,16 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector @item-selected="updateSelectedItems"</item-selector>
-                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 1)"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="updateSelectedItems"></item-selector>
-                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 2)"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 3)"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="updateSelectedItems"></item-selector>
-                    <item-selector @item-selected="updateSelectedItems"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 4)"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)"></item-selector>
                 </v-col>
                  <v-col cols="9">
                     <rune-selector></rune-selector>
@@ -239,11 +239,12 @@
     const selectedRunes = ref({})
     const selectedItems = ref(["","","","","",""])
 
-    const updateSelectedItems = (slotData) => {
-        const newItems = [...selectedItems.value]
-        newItems[slotData.slotNumber -1] = slotData.item.name || slotData.item
-        selectedItems.value = newItems
-        console.log('Updated items array: ', selectedItems.value)
+    const updateSelectedItems = (slotData, position) => {
+      // const newItems = selectedItems.value;
+      // newItems[slotData.slotNumber -1] = slotData.item;
+      console.log("Slot data index is " + position);
+      selectedItems.value[position] = slotData.item;
+      console.log('Updated items array: ', selectedItems.value);
     }
 
     const allItemsSelected = computed(() => {

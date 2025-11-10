@@ -34,7 +34,7 @@
                     <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)"></item-selector>
                 </v-col>
                  <v-col cols="9">
-                    <rune-selector></rune-selector>
+                    <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
                 </v-col>
             </v-row>
 
@@ -59,6 +59,8 @@
 
 <script>
     import BuildScore from '../BuildScore.vue';
+    import {ref} from "vue";
+
     export default {
         data () {
             return {
@@ -232,8 +234,14 @@
             "/characters-splashart/zoe.png",
             "/characters-splashart/zyra.png",
             ],
-                selectedRunes: ({}),
-                selectedItems: (["","","","","",""]),
+                selectedRunes: ref({
+                    primary: {
+                        keystone: null,
+                        rows: [null, null, null]
+                    },
+                    secondary: []
+                }),
+                selectedItems: ref(["","","","","",""]),
                 selectedChampion: "",
                 debugMode: false, 
                 usedCount: 0,
@@ -314,7 +322,11 @@
             },
 
             updateSelectedItems(slotData, position) {
-              selectedItems.value[position] = slotData.item;
+              this.selectedItems.value[position] = slotData.item;
+            },
+
+            updateSelectedRunes(runesData) {
+                this.selectedRunes.value = {...runesData}
             },
         }
     }

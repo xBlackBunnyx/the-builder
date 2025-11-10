@@ -190,7 +190,7 @@
 
 <script setup>
 
-  import { ref, computed} from 'vue'
+  import { ref, computed, watch} from 'vue'
 
   const showPrimaryDialog = ref(false);
   const showSecondaryDialog = ref(false);
@@ -332,6 +332,8 @@
     secondary:[],
   });
 
+  const emit = defineEmits(['runes-selected'])
+
   const availableSecondaryBranches = computed(() => {
     if (!selectedPrimaryBranch.value) {
       return runeBranches;
@@ -405,6 +407,10 @@
       }
     }
   }
+
+  watch(selectedRunes, (newRunes) => {
+    emit('runes-selected', newRunes)
+  }, {deep: true})
 
 </script>
 

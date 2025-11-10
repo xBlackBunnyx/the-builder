@@ -35,7 +35,7 @@
                     <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)"></item-selector>
                 </v-col>
                  <v-col cols="9">
-                    <rune-selector></rune-selector>
+                    <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
                 </v-col>
             </v-row>
 
@@ -236,8 +236,19 @@
     ]
 
     const currentChampion = ref(null)
-    const selectedRunes = ref({})
     const selectedItems = ref(["","","","","",""])
+    const selectedRunes = ref({
+        primary: {
+            keystone: null,
+            rows: [null, null, null]
+        },
+        secondary: []
+    })
+
+    const updateSelectedRunes = (runesData) => {
+        selectedRunes.value = {...runesData}
+        console.log('Updates runes: ', selectedRunes.value)
+    }
 
     const updateSelectedItems = (slotData, position) => {
       // const newItems = selectedItems.value;

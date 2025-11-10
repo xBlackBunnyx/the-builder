@@ -322,7 +322,8 @@
             },
 
             updateSelectedItems(slotData, position) {
-              this.selectedItems.value[position] = slotData.item;
+              this.selectedItems[position] = slotData.item;
+            //    console.log('Updated items array: ', this.selectedItems);
             },
 
             updateSelectedRunes(runesData) {

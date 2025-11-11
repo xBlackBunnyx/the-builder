@@ -55,7 +55,7 @@ import { calculateScore } from '../api';
 import axios from 'axios';
 
 const props = defineProps({
-  selectedChampion: Object,
+  selectedChampion: String,
   selectedItems: Array,
   selectedRunes: Object
 })

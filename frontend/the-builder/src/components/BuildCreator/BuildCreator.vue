@@ -48,7 +48,7 @@
             </v-col>
             <v-col>
                 <build-score
-                    :selected-champion="JSON.stringify(currentChampion.name)"
+                    :selected-champion="JSON.stringify(currentChampion.name).slice(1, -1)"
                     :selected-items="selectedItems"
                     :selected-runes="selectedRunes"
                 ></build-score>
@@ -247,8 +247,7 @@
 
     function escapeDoubleQuotes(str) {
         console.log("The string is: ", str)
-        console.log("What i'm doing is: ", str.substring(1, str.length -2))
-        return str.substring(1, str.length -2);
+        return str.replace('\\"','');
     }
 
     const updateSelectedRunes = (runesData) => {

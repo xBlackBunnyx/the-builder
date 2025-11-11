@@ -48,7 +48,7 @@
             </v-col>
             <v-col>
                 <build-score
-                    :selected-champion="selectedChampion"
+                    :selected-champion = "selectedChampion"
                     :selected-items="selectedItems"
                     :selected-runes="selectedRunes"
                 ></build-score>
@@ -65,7 +65,7 @@
         data () {
             return {
                 champions: [
-            '/characters-splashart/aatrox.png',
+            '/characters-splashart/aatrox.png', 
             '/characters-splashart/ahri.png',
             '/characters-splashart/akali.png',
             '/characters-splashart/akshan.png',
@@ -242,7 +242,7 @@
                     secondary: []
                 }),
                 selectedItems: ref(["","","","","",""]),
-                selectedChampion: "",
+                selectedChampion: ref(""),
                 debugMode: false, 
                 usedCount: 0,
                 availableCount: 0
@@ -251,6 +251,7 @@
         created () {
             this.selectedDailyChampion();
             this.updateCounts();
+
         },
         methods: {
             getUsedChampions() {
@@ -314,11 +315,6 @@
             } catch (error) {
                 console.log('error saving to localStorage: ', error);
             }
-                //Debug log
-                console.log('=== FINAL STATE ===');
-                console.log('Selected champion:', selectedChamp);
-                console.log('All used champions:', usedChampions);
-                console.log('Remaining available:', this.champions.filter(champ => !usedChampions.includes(champ)));
             },
 
             updateSelectedItems(slotData, position) {
@@ -327,8 +323,50 @@
             },
 
             updateSelectedRunes(runesData) {
-                this.selectedRunes.value = {...runesData}
+                this.selectedRunes = {...runesData}
+                // console.log('Updates runes: ', this.selectedRunes)
             },
+
+            theExtractorChampionName(routeString) {
+                let champName = routeString.substring(22, -4);
+                let no_ChampName = champName.replace("\_", " ");
+                return this.theCapitalizer(no_ChampName);
+            },
+
+            theCapitalizer(theString) {
+                let DioName = theString; // The orginal Name is also TheOName but if you spell it faster enough it turns out Dio (It's me! Dio!)
+                theString = String(theString).charAt(0).toUpperCase() + String(theString).slice(1);
+                let spaceIndex = theString.search(" ");
+                if (spaceIndex != -1) {
+                    theString = this.theCharReplacer(theString, String(Number(theString.at(spaceIndex + 1) + 46)), 
+                        spaceIndex + 1);
+                    spaceIndex = theString.search(" ");
+                    if (spaceIndex != -1) {
+                    theString = this.theCharReplacer(theString, String(Number(theString.at(spaceIndex + 1) + 46)), 
+                        spaceIndex + 1);
+                    }
+                }
+                let singleQuoteIndex = theString.search('\'');  //'
+                if ( singleQuoteIndex != -1) {
+                    theString = this.theCharReplacer(theString, String(Number(theString.at(singleQuoteIndex + 1) + 46)), 
+                        spaceIndex + 1)
+                }
+                if (DioName === "jarvan_iv") {
+                    theString = this.theCharReplacer(theString, "V",  theString.length - 1);
+                }
+
+                if (DioName === "nunu_&_willump") {
+                    theString = this.theCharReplacer(theString, "&",  5);
+                }
+            },
+
+            theCharReplacer(origString, replaceChar, index) {
+                let firstPart = origString.substr(0, index);
+                let lastPart = origString.substr(index + 1);
+                let newString =
+                    firstPart + replaceChar + lastPart;
+                return newString;
+            }
         }
     }
 

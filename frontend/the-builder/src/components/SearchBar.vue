@@ -396,22 +396,20 @@
   }
 
     const goToBuildCreator = () => {
-      console.log('===== Button activated, function summoned =======')
-      console.log('The champion we chose to sacrifice is: ', selectedChampion.value?.name)
 
       if (!selectedChampion.value){
         console.error("No champion selected")
         return
       }
       const championName = selectedChampion.value.name
-      console.log("Let's see if we can travel together: ", championName)
+      // console.log("Let's see if we can travel together: ", championName)
 
       try {
         router.push({
           name: "BuildCreator",
           query:{ championName: championName}
         }) 
-        console.log("We are leaving roger, let's fucking go")
+        // console.log("We are leaving roger, let's fucking go")
       } catch (error) {
         console.error("The world is an awful place because of the error: ", error)
       }

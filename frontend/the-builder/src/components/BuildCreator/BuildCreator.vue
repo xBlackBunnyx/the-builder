@@ -17,7 +17,7 @@
                         class="framed"
                     ></v-img>
                 </div>
-                <div v-if="currentChampion"> {{ currentChampion.name }}</div>
+                <div v-if="currentChampion" class="text-center mt-3"> {{ currentChampion.name }}</div>
                 <div v-else> No champion selected </div>
             </v-col>
             <v-col>
@@ -48,7 +48,7 @@
             </v-col>
             <v-col>
                 <build-score
-                    :selected-champion="currentChampion"
+                    :selected-champion="JSON.stringify(currentChampion.name)"
                     :selected-items="selectedItems"
                     :selected-runes="selectedRunes"
                 ></build-score>
@@ -244,6 +244,12 @@
         },
         secondary: []
     })
+
+    function escapeDoubleQuotes(str) {
+        console.log("The string is: ", str)
+        console.log("What i'm doing is: ", str.substring(1, str.length -2))
+        return str.substring(1, str.length -2);
+    }
 
     const updateSelectedRunes = (runesData) => {
         selectedRunes.value = {...runesData}

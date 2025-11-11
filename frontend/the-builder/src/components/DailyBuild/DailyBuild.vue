@@ -18,6 +18,7 @@
                     class="framed"
                     />
                 </div>
+                <div v-if = "selectedChampion" class="text-center mt-3"> {{  this.theExtractorChampionName(selectedChampion)}}</div>
             </v-col>
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
@@ -48,7 +49,7 @@
             </v-col>
             <v-col>
                 <build-score
-                    :selected-champion = "selectedChampion"
+                    :selected-champion = "this.theExtractorChampionName(selectedChampion)"
                     :selected-items="selectedItems"
                     :selected-runes="selectedRunes"
                 ></build-score>
@@ -251,7 +252,7 @@
         created () {
             this.selectedDailyChampion();
             this.updateCounts();
-
+            this.theExtractorChampionName(this.selectedChampion);
         },
         methods: {
             getUsedChampions() {
@@ -328,8 +329,9 @@
             },
 
             theExtractorChampionName(routeString) {
-                let champName = routeString.substring(22, -4);
-                let no_ChampName = champName.replace("\_", " ");
+                let champName = routeString.substring(22, routeString.length -4);
+                let no_ChampName = champName.replace(/(_)/, " ");
+                // console.log("It's the final result (panananaaaa): ", this.theCapitalizer(no_ChampName));
                 return this.theCapitalizer(no_ChampName);
             },
 
@@ -337,27 +339,30 @@
                 let DioName = theString; // The orginal Name is also TheOName but if you spell it faster enough it turns out Dio (It's me! Dio!)
                 theString = String(theString).charAt(0).toUpperCase() + String(theString).slice(1);
                 let spaceIndex = theString.search(" ");
+
                 if (spaceIndex != -1) {
-                    theString = this.theCharReplacer(theString, String(Number(theString.at(spaceIndex + 1) + 46)), 
+                    theString = this.theCharReplacer(theString, String.fromCharCode((theString[spaceIndex + 1] ).charCodeAt(0)-32), 
                         spaceIndex + 1);
                     spaceIndex = theString.search(" ");
-                    if (spaceIndex != -1) {
-                    theString = this.theCharReplacer(theString, String(Number(theString.at(spaceIndex + 1) + 46)), 
-                        spaceIndex + 1);
-                    }
                 }
+
                 let singleQuoteIndex = theString.search('\'');  //'
                 if ( singleQuoteIndex != -1) {
-                    theString = this.theCharReplacer(theString, String(Number(theString.at(singleQuoteIndex + 1) + 46)), 
-                        spaceIndex + 1)
+                    theString = this.theCharReplacer(theString, String.fromCharCode((theString[singleQuoteIndex + 1] ).charCodeAt(0)-32), 
+                        singleQuoteIndex + 1)
                 }
-                if (DioName === "jarvan_iv") {
+
+                if (DioName === "jarvan iv") {
                     theString = this.theCharReplacer(theString, "V",  theString.length - 1);
                 }
 
-                if (DioName === "nunu_&_willump") {
+                if (DioName === "nunu &_willump") {
                     theString = this.theCharReplacer(theString, "&",  5);
+                    theString = theString.replace(/(_)/, " ");
+                    theString = theString.replace("w", "W");
                 }
+                // console.log("Is the final result (pananana): ", theString);
+                return theString;
             },
 
             theCharReplacer(origString, replaceChar, index) {

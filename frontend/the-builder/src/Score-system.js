@@ -4,23 +4,18 @@
 import dotenv from 'dotenv';
 dotenv.config({path: 'src/.env'});
 import fs from 'fs';
-// const express = require('express');
 import express from 'express';
-// const cors = require('cors');
 import cors from 'cors';
-const app = express();
-// require('dotenv').config();
 
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
+// conexion con el señor mongo
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
-//conexion con el señor mongo
-import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
-
-import { build } from 'vite';
 let uri =process.env.ATLAS_CONNECTION;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -31,13 +26,14 @@ const client = new MongoClient(uri, {
   }
 });
 
-//Conection to Mongo Atlas
+// Conection to Mongo Atlas
 async function run(frontendBuild) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     //Here is where we have to put all the functions related to getting something from the database
+    console.log("We are inside the run function");
   await client.connect();
-    const db = client.db("Builder");
+  const db = client.db("Builder");
    // Send a ping to confirm a successful connection
    await client.db("admin").command({ ping: 1 });
    
@@ -147,7 +143,9 @@ async function SavePlayerBuilds(client, newPlayerBuild) {
 }
 
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
-function PlayerBuildImporter(frontendBuild){
+function PlayerBuildImporter(){
+  let frontendBuild = frontendToBackendCodeFormat(frontendData);
+  console.log("The insides of frontendBuild", frontendBuild);
   // let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
   let result = frontendBuild.split(' ; ').map(element => element.trim());
   return result;
@@ -155,6 +153,7 @@ function PlayerBuildImporter(frontendBuild){
 
 //Function that transforms what we get from the website to what we used
 function frontendToBackendCodeFormat(frontendData){
+  console.log("The insides of frontendData are ", frontendData);
   return [
     frontendData.champion,
     ...frontendData.items,
@@ -488,8 +487,8 @@ app.post('api/calculate-score', async(req, res) => {
   try {
     const frontendData = req.body;
     const frontendBuild = frontendToBackendCodeFormat(frontendData);
+    
     const buildData = PlayerBuildImporter(frontendBuild);
-
     const score = await run(buildData);
 
     res.json({
@@ -502,9 +501,9 @@ app.post('api/calculate-score', async(req, res) => {
   }
 });
 
-
 //Start server
 async function startServer() {
+  await run();
   app.listen(PORT, () => {
   console.log(`Successfully served on port: ${PORT}`);
 })

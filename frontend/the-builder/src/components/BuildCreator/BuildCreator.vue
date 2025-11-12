@@ -242,7 +242,7 @@
             keystone: null,
             rows: [null, null, null]
         },
-        secondary: []
+        secondary: [null, null]
     })
 
     function escapeDoubleQuotes(str) {

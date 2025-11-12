@@ -332,6 +332,7 @@
     secondary:[],
   });
 
+
   const emit = defineEmits(['runes-selected'])
 
   const availableSecondaryBranches = computed(() => {
@@ -371,6 +372,7 @@
       } else if (section === 'row') {
         console.log("The rune selected is: ", runeName)
         selectedRunes.value.primary.rows[rowIndex] = runeName;
+
     } else {
       const newRows = [...selectedRunes.value.primary.rows];
       newRows[rowIndex] = runeName;
@@ -396,7 +398,9 @@
         img: rune.img,
         stat: rune.stat,
         rowIndex: rowIndex
-      });
+      },
+    );
+
       } else if (currentSelection.length < 2) {
         selectedRunes.value.secondary.push({
         name: rune.name,

@@ -12,7 +12,7 @@
     
     function axiosPost() {
         console.log("button clicked");
-        axios.post('http://localhost:3000/submitMessage', {
+        axios.post('http://localhost:3001/submitMessage', {
         message: "sample message",
         }).then(response => {
             console.log(response);

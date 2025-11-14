@@ -483,7 +483,7 @@ function ArrayToString(array)
 }
 
 //Creation of the routes to be accesible to the frontend
-app.post('api/calculate-score', async(req, res) => {
+app.post('/api/calculate-score', async(req, res) => {
   console.log("We are inside Score-system");
   try {
     console.log("We are trying to do something");

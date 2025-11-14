@@ -53,10 +53,6 @@
 import {ref, computed} from 'vue'
 import { calculateScore } from '../api';
 import axios from 'axios';
-// import Score-system from '../Score-system.js';
-// import {add, pi} from '../testing'
-// console.log(add(2,3));
-// console.log(pi);
 
 const props = defineProps({
   selectedChampion: String,

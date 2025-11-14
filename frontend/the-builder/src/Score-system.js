@@ -1,6 +1,6 @@
 //Code to calculate the score of the build
 
-//librerias necesarias (extras para la conexión ccon mongo?)
+//librerias necesarias (extras para la conexión con mongo)
 import dotenv from 'dotenv';
 dotenv.config({path: 'src/.env'});
 import fs from 'fs';
@@ -15,19 +15,19 @@ app.use(express.json());
 
 // conexion con el señor mongo
 import { MongoClient, ServerApiVersion } from 'mongodb';
-
 let uri =process.env.ATLAS_CONNECTION;
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
    serverApi: {
     version: ServerApiVersion.v1,
-   strict: true,
+    strict: true,
     deprecationErrors: true,
   }
 });
 
 // Conection to Mongo Atlas
-async function run(frontendBuild) {
+async function run(frontendData) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     //Here is where we have to put all the functions related to getting something from the database
@@ -39,7 +39,7 @@ async function run(frontendBuild) {
    
   console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-    let data = PlayerBuildImporter(frontendBuild);
+    let data = PlayerBuildImporter(frontendData);
 
     let championName = data[0];
     let itemsName = data.slice(1,7);
@@ -60,8 +60,8 @@ async function run(frontendBuild) {
 
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
     ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
-    await SavePlayerBuilds(client, finalBuildResult);
-    return finalBuildResult;
+    return await SavePlayerBuilds(client, finalBuildResult);
+    
  } finally {
     // Ensures that the client will close when you finish/error
    await client.close();
@@ -484,12 +484,11 @@ function ArrayToString(array)
 
 //Creation of the routes to be accesible to the frontend
 app.post('api/calculate-score', async(req, res) => {
+  console.log("We are inside Score-system");
   try {
+    console.log("We are trying to do something");
     const frontendData = req.body;
-    const frontendBuild = frontendToBackendCodeFormat(frontendData);
-    
-    const buildData = PlayerBuildImporter(frontendBuild);
-    const score = await run(buildData);
+    const score = await run(frontendData);
 
     res.json({
       success:true,

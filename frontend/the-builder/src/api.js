@@ -9,7 +9,9 @@ const api = axios.create({
 
 //Exportar las funciones que vamos a necesitar en frontend
 export const calculateScore = async (frontendData) => {
+    console.log("We are inside the api.js");
     try {
+        console.log("we are trying to connect things")
         const response = await api.post('/calculate-score', frontendData);
         return response.data;
     } catch (error) {

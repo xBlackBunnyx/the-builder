@@ -6,11 +6,9 @@ const port = 3001;
 import path from 'path';
 import cors from 'cors';
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/index.html'))
-});
-
-
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname + '/index.html'))
+// });
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
@@ -44,7 +42,6 @@ async function run() {
    await client.close();
   }
 }
-
 
 
 app.post('/submitMessage', async function(request, response){

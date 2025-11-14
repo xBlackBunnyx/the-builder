@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'http://localhost:3001/api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -21,7 +21,7 @@ export const calculateScore = async (frontendData) => {
 export const theTest = async () => {
     try {
         console.log("PONG");
-        axios({method:'post', url: API_BASE_URL + '/api/testing'});
+        axios({method:'post', url: API_BASE_URL + '/testing'});
         // await api.post('/api/testing');
     } catch (error) {
         console.error('Error calculating score: ', error);

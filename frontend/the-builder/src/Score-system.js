@@ -8,7 +8,7 @@ import express from 'express';
 import cors from 'cors';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
@@ -61,7 +61,7 @@ async function run(frontendBuild) {
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
     ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
-
+    return finalBuildResult;
  } finally {
     // Ensures that the client will close when you finish/error
    await client.close();
@@ -143,7 +143,7 @@ async function SavePlayerBuilds(client, newPlayerBuild) {
 }
 
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
-function PlayerBuildImporter(){
+function PlayerBuildImporter(frontendData){
   let frontendBuild = frontendToBackendCodeFormat(frontendData);
   console.log("The insides of frontendBuild", frontendBuild);
   // let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
@@ -441,7 +441,7 @@ function ScoreCalculator(referenceBuild, playerBuild)
   //Reference build score
   let referenceRunesScore = referenceBuild[1];
   let referenceItemsScore = referenceBuild[0];
-  //Player build score
+  //F build score
   let playerRunesScore = playerBuild[1];
   let playerItemsScore = playerBuild[0];
 
@@ -503,7 +503,6 @@ app.post('api/calculate-score', async(req, res) => {
 
 //Start server
 async function startServer() {
-  await run();
   app.listen(PORT, () => {
   console.log(`Successfully served on port: ${PORT}`);
 })

@@ -51,116 +51,114 @@
 
 <script setup>
 import {ref, computed} from 'vue'
-import { calculateScore, theTest } from '../api';
+import { calculateScore } from '../api';
 import axios from 'axios';
 // import Score-system from '../Score-system.js';
 // import {add, pi} from '../testing'
 // console.log(add(2,3));
 // console.log(pi);
 
-theTest();
+const props = defineProps({
+  selectedChampion: String,
+  selectedItems: Array,
+  selectedRunes: Object
+})
 
-// const props = defineProps({
-//   selectedChampion: String,
-//   selectedItems: Array,
-//   selectedRunes: Object
-// })
+//Debug to check if all items are getting stored properly
+console.log('BuildResults props: ', {
+  champion: props.selectedChampion,
+  items: props.selectedItems,
+  runes: props.selectedRunes
+})
 
-// //Debug to check if all items are getting stored properly
-// console.log('BuildResults props: ', {
-//   champion: props.selectedChampion,
-//   items: props.selectedItems,
-//   runes: props.selectedRunes
-// })
+const dialog = ref(false)
+const loading = ref(false)
+const score = ref(null)
+const buildSaved = ref(false)
+const error = ref(null)
 
-// const dialog = ref(false)
-// const loading = ref(false)
-// const score = ref(null)
-// const buildSaved = ref(false)
-// const error = ref(null)
+const resultTitle = computed(() => {
+  if (loading.value) return 'Calculating...'
+  if (error.value) return 'Calculation Failed'
+  if (score.value !== null) return 'Your build results are in!'
+  return 'Build Results'
+})
 
-// const resultTitle = computed(() => {
-//   if (loading.value) return 'Calculating...'
-//   if (error.value) return 'Calculation Failed'
-//   if (score.value !== null) return 'Your build results are in!'
-//   return 'Build Results'
-// })
-
-// const calculateScoreAndSave = async() => {
-//   score.value = null
-//   buildSaved.value = false
-//   error.value = null
-//   loading.value = true
+const calculateScoreAndSave = async() => {
+  score.value = null
+  buildSaved.value = false
+  error.value = null
+  loading.value = true
   
-//   //Check that everything has a value
-//   if (!props.selectedChampion) {
-//     error.value = 'Please, select a champion'
-//     loading.value = false
-//     dialog.value = true
-//     return
-//   }
-//   if (!props.selectedItems || props.selectedItems.length !== 6) {
-//     error.value = "Please, select all the items"
-//     loading.value = false
-//     dialog.value = true
-//     return
-//   }
-//   if (!props.selectedRunes) {
-//     error.value = 'Please, select the runes'
-//     loading.value = false
-//     dialog.value = true
-//     return
-//   }
+  //Check that everything has a value
+  if (!props.selectedChampion) {
+    error.value = 'Please, select a champion'
+    loading.value = false
+    dialog.value = true
+    return
+  }
+  if (!props.selectedItems || props.selectedItems.length !== 6) {
+    error.value = "Please, select all the items"
+    loading.value = false
+    dialog.value = true
+    return
+  }
+  if (!props.selectedRunes) {
+    error.value = 'Please, select the runes'
+    loading.value = false
+    dialog.value = true
+    return
+  }
 
-//   //Checking that none of the items are null/undefined
-//   const invalidItems = props.selectedItems.filter(item => !item)
-//   if (invalidItems.length > 0) {
-//     error.value = `Some items are not selected, or some items incompatible. Check all slots`
-//     loading.value = false
-//     dialog.value = true
-//     return
-//   }
+  //Checking that none of the items are null/undefined
+  const invalidItems = props.selectedItems.filter(item => !item)
+  if (invalidItems.length > 0) {
+    error.value = `Some items are not selected, or some items incompatible. Check all slots`
+    loading.value = false
+    dialog.value = true
+    return
+  }
 
-//   let newSecondaryRunes = ["",""];
-//   newSecondaryRunes[0] = props.selectedRunes.secondary[0].name;
-//   newSecondaryRunes[1] = props.selectedRunes.secondary[1].name;
+  let newSecondaryRunes = ["",""];
+  newSecondaryRunes[0] = props.selectedRunes.secondary[0].name;
+  newSecondaryRunes[1] = props.selectedRunes.secondary[1].name;
 
-//   try {
-//     const frontendData = {
-//       champion: props.selectedChampion,
-//       items: props.selectedItems.map(item => {
-//         return typeof item === 'string' ? item : item.name || item
-//       }),
-//       runes: {
-//         primary: props.selectedRunes.primary || {},
-//         secondary: newSecondaryRunes || {}
-//       }
-//     }
-//     console.log('Sending build data: ', frontendData)
+  try {
+    const frontendData = {
+      champion: props.selectedChampion,
+      items: props.selectedItems.map(item => {
+        return typeof item === 'string' ? item : item.name || item
+      }),
+      runes: {
+        primary: props.selectedRunes.primary || {},
+        secondary: newSecondaryRunes || {}
+      }
+    }
+    console.log('Sending build data: ', frontendData)
     
-//     //Here we call the API
-//     const result = await calculateScore(frontendData)
-
-//     if (result.success) {
-//       score.value = result.score
-//       buildSaved.value = true
-//       dialog.value = true
-//     } else {
-//       error.value = result.error || `Failed to calculate score`
-//       dialog.value = true
-//     }
-//   } catch (err) {
-//     console.error('API call failed: ', err)
-//     if (err.code === 'ECONNREFUSED')   {
-//       error.value = 'Backend server is not running.'
-//     } else {
-//       error.value = 'Network error. Please check your connection and try again'
-//     }
-//     dialog.value = true
-//   } finally {
-//     loading.value = false
-//   }
-// }
+    //Here we call the API
+    const result = await calculateScore(frontendData)
+    console.log("+++++++SCORE IS " + result.score);
+    if (result.success) {
+      score.value = result.score
+      buildSaved.value = true
+      dialog.value = true
+    } else {
+      error.value = result.error || `Failed to calculate score`
+      dialog.value = true
+    }
+  } catch (err) {
+    console.error('API call failed: ', err)
+    if (err.code === 'ECONNREFUSED')   {
+      error.value = 'Backend server is not running.'
+    } else {
+      error.value = 'Network error. Please check your connection and try again'
+    }
+    dialog.value = true
+  } finally {
+    loading.value = false
+  }
+}
 
 </script>
 

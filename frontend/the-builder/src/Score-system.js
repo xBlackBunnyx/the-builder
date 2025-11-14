@@ -147,7 +147,7 @@ function PlayerBuildImporter(frontendData){
   let frontendBuild = frontendToBackendCodeFormat(frontendData);
   console.log("The insides of frontendBuild", frontendBuild);
   // let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
-  let result = frontendBuild.split(' ; ').map(element => element.trim());
+  let result = frontendBuild.split('; ').map(element => element.trim());
   return result;
 }
 
@@ -158,11 +158,8 @@ function frontendToBackendCodeFormat(frontendData){
     frontendData.champion,
     ...frontendData.items,
     frontendData.runes.primary.keystone,
-    frontendData.runes.primary.row1,
-    frontendData.runes.primary.row2,
-    frontendData.runes.primary.row3,
-    frontendData.runes.secondary.row1,
-    frontendData.runes.secondary.row2
+    ...frontendData.runes.primary.rows,
+    ...frontendData.runes.secondary
   ].join('; ');
 }
 

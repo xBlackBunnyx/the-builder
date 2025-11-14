@@ -25,7 +25,6 @@
             <div class="score-display mb-4">
               <h2 class="text-h3"> {{ score }}/100</h2>
             </div>
-            <v-alert v-if="buildSaved" type="success"></v-alert>
           </div>
 
           <!-- Everything explodes -->

@@ -60,7 +60,9 @@ async function run(frontendData) {
 
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
     ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
-    return await SavePlayerBuilds(client, finalBuildResult);
+    await SavePlayerBuilds(client, finalBuildResult);
+
+    return await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
     
  } finally {
     // Ensures that the client will close when you finish/error
@@ -354,7 +356,6 @@ function ScoreGiver(champ, items, runes) {
     }
     runeScore += currentRuneScore;
   }
-  console.log("RuneSection score is " + runeScore);
 
 for(let i = 0; i < itemSection.length; ++i){
   let currentItemScore = 0;
@@ -417,7 +418,6 @@ for(let i = 0; i < itemSection.length; ++i){
     }
   }
   itemScore += currentItemScore;
-  console.log("The final item score is " + itemScore);
 }
 
   return [itemScore, runeScore]; 
@@ -442,21 +442,20 @@ function ScoreCalculator(referenceBuild, playerBuild)
   let playerRunesScore = playerBuild[1];
   let playerItemsScore = playerBuild[0];
 
-
   //Calculate the minimum value possible
   const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 
+
   //Calculate the reference total value
   let referenceScore = 1 + (itemWeight * referenceItemsScore) + (runeWeight * referenceRunesScore);
-  // console.log("The reference score is " + referenceScore);
+
   //Calculate the player total value
   let playerScore = 1 + (itemWeight * playerItemsScore) + (runeWeight * playerRunesScore);
-  // console.log("The total value for the player build is " + playerScore);
+
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 
   // console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
-    //Llamada para que devuelva el resultado a la página web (KIWI MALE SABE, KIWI MALE ES MUY LISTO)
 }
 
 // Helper function to debug arrays
@@ -485,6 +484,7 @@ app.post('/api/calculate-score', async(req, res) => {
   try {
     console.log("We are trying to do something");
     const frontendData = req.body;
+    
     const score = await run(frontendData);
 
     res.json({

@@ -64,6 +64,7 @@
 
     const route = useRoute();
 
+    //All the champions and their images
     const champions = [
         {name: "Aatrox", img: '/characters-splashart/aatrox.png'},
         {name: "Ahri", img:'/characters-splashart/ahri.png'},
@@ -245,32 +246,16 @@
         secondary: [null, null]
     })
 
-    function escapeDoubleQuotes(str) {
-        console.log("The string is: ", str)
-        return str.replace('\\"','');
-    }
-
     const updateSelectedRunes = (runesData) => {
         selectedRunes.value = {...runesData}
-        console.log('Updates runes: ', selectedRunes.value)
     }
 
     const updateSelectedItems = (slotData, position) => {
-      // const newItems = selectedItems.value;
-      // newItems[slotData.slotNumber -1] = slotData.item;
-      console.log("Slot data index is " + position);
       selectedItems.value[position] = slotData.item;
-      console.log('Updated items array: ', selectedItems.value);
     }
-
-    const allItemsSelected = computed(() => {
-        return selectedItems.value.every(item => item !== null)
-    })
 
     const findChampionByName = (name) => {
         if (!name) return null;
-        console.log('Looking for champion: ', name)
-
         let foundChampion = champions.find(champ =>
             champ.name.toLowerCase() === name.toLowerCase()
         );
@@ -299,7 +284,7 @@
 
             if (foundChampion){
                 currentChampion.value = foundChampion
-                console.log('Champion found: ', foundChampion.name)
+                // console.log('Champion found: ', foundChampion.name)
             } else {
                 currentChampion.value = null
                 console.log('Champion not found. Available:', champions.map(c => c.name))
@@ -313,7 +298,6 @@
 
     watch(() => route.query, updateChampionFromRoute, {immediate: true})
     onMounted(() => {
-        console.log('BuildCreator is working fine')
         updateChampionFromRoute();
     })
 

@@ -1,57 +1,55 @@
 <template>
+  <v-dialog v-model="dialog" max-width="500">
+    <template v-slot:activator="{ props: activatorProps }">
+      <button
+        v-bind="activatorProps"
+        class="button-settings justify-center"
+        @click="calculateScoreAndSave"
+        :disabled="loading"
+      >{{ loading ? 'Calculating score please wait...' : 'Get your results!' }}</button>
+    </template>
 
-<v-dialog v-model="dialog" max-width="500">
-  <template v-slot:activator="{ props: activatorProps }">
-    <button
-      v-bind="activatorProps"
-      class="button-settings justify-center"
-      @click="calculateScoreAndSave"
-      :disabled="loading"
-    >{{ loading ? 'Calculating score please wait...' : 'Get your results!' }}</button>
-  </template>
-
-  <template v-slot:default="{ isActive }">
-    <v-card class="card-settings">
-        <v-card-title class="text-center card-title"> {{resultTitle }} </v-card-title>
-      <v-card-text>
-        <!-- Loading -->
-         <div v-if="loading" class="text-center">
-            <v-progress-circular indeterminate color="white"></v-progress-circular>
-            <p>Calculating your build score...</p>
-         </div>
-
-         <!-- Results -->
-          <div v-else-if="score !== null" class="text-center">
-            <div class="score-display mb-4">
-              <h2 class="text-h3"> {{ score }}/100</h2>
-            </div>
+    <template v-slot:default="{ isActive }">
+      <v-card class="card-settings">
+          <v-card-title class="text-center card-title"> {{resultTitle }} </v-card-title>
+        <v-card-text>
+          <!-- Loading effect-->
+          <div v-if="loading" class="text-center">
+              <v-progress-circular indeterminate color="white"></v-progress-circular>
+              <p>Calculating your build score...</p>
           </div>
 
-          <!-- Everything explodes -->
-           <div v-else-if="error" class="error-message text-center">
-            <v-alert type="error" class="mb-4"> {{ error }} </v-alert>
-           </div>
-      </v-card-text>
+          <!-- Results -->
+            <div v-else-if="score !== null" class="text-center">
+              <div class="score-display mb-4">
+                <h2 class="text-h3"> {{ score }}/100</h2>
+              </div>
+            </div>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
+            <!-- In case of errors -->
+            <div v-else-if="error" class="error-message text-center">
+              <v-alert type="error" class="mb-4"> {{ error }} </v-alert>
+            </div>
+        </v-card-text>
 
-        <v-btn
-        class="card-options"
-          text="Close"
-          @click="dialog = false"
-        ></v-btn>
-      </v-card-actions>
-    </v-card>
-  </template>
-</v-dialog>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+          class="card-options"
+            text="Close"
+            @click="dialog = false"
+          ></v-btn>
+        </v-card-actions>
+      </v-card>
+    </template>
+  </v-dialog>
 
 </template>
 
 <script setup>
 import {ref, computed} from 'vue'
 import { calculateScore } from '../api';
-import axios from 'axios';
 
 const props = defineProps({
   selectedChampion: String,
@@ -60,11 +58,11 @@ const props = defineProps({
 })
 
 //Debug to check if all items are getting stored properly
-console.log('BuildResults props: ', {
-  champion: props.selectedChampion,
-  items: props.selectedItems,
-  runes: props.selectedRunes
-})
+// console.log('BuildResults props: ', {
+//   champion: props.selectedChampion,
+//   items: props.selectedItems,
+//   runes: props.selectedRunes
+// })
 
 const dialog = ref(false)
 const loading = ref(false)
@@ -133,7 +131,6 @@ const calculateScoreAndSave = async() => {
     
     //Here we call the API
     const result = await calculateScore(frontendData)
-    console.log("+++++++SCORE IS " + result.score);
     if (result.success) {
       score.value = result.score
       buildSaved.value = true

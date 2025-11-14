@@ -31,7 +31,7 @@ const app = createApp(App)
 
 registerPlugins(app)
 
-// Here we should only import  the global components, if it's not global, we should import it locally
+// Global components
 app.component("button-daily", DailyButton);
 app.component("search-bar", SearchBar);
 app.component("item-selector", ItemSelector);

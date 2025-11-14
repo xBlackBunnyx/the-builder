@@ -25,9 +25,6 @@
   function goToDailyBuild(){
       return router.push({name: "DailyBuild"});
   }
-  function goToBuildCreator(){
-      router.push({name: "BuildCreator"});
-  }
 </script>
 
 <style>

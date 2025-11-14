@@ -1,14 +1,8 @@
 <template>
   <v-container class="d-flex justify-center">
-    <v-menu
-      v-model="menu"
-      transition="scale-transition"
-    >
+    <v-menu v-model="menu" transition="scale-transition">
       <template v-slot:activator="{ props }">
-        <button
-          class="selectorstyle pa-3"
-          v-bind="props"
-        >
+        <button class="selectorstyle pa-3" v-bind="props" >
           <div class="buton-content">
             <img
             v-if="selectedItem"
@@ -24,18 +18,18 @@
 
         <v-list class="d-flex flex-wrap selectorstyle" style="max-width: 400px;">
           <v-list-item
-          v-for="item in items"
-          :key="item.name"
-          class="ma-1 pa-0"
+            v-for="item in items"
+            :key="item.name"
+            class="ma-1 pa-0"
           >
           <v-tooltip location="top left" class="golden-tooltip" :open-delay="100">
             <template #activator="{props}">
               <v-img 
-              v-bind="props"
-              :src="item.img"
-              class="cursor-pointer item-image"
-              alt="Item"
-              @click="selectItem(item)"
+                v-bind="props"
+                :src="item.img"
+                class="cursor-pointer item-image"
+                alt="Item"
+                @click="selectItem(item)"
               />
             </template>
             <div class="tooltip-content">
@@ -60,6 +54,7 @@
 
   const menu = ref(false)
 
+  //All the items, their image and stats
   const items = [
     {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"},},
     {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}},
@@ -183,7 +178,6 @@
     emit('item-selected', {
       item: itemName
     })
-    console.log("The item selected is: ", item.name)
   }
 
 </script>

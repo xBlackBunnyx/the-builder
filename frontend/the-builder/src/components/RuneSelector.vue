@@ -2,7 +2,6 @@
   <v-container class="pa-4 text-center">
 
     <!-- Primary runes -->
-
     <v-row class="justify-center mb-2">
       <v-col cols="auto">
         <button class="selector-style ma-2" @click="showPrimaryDialog = true">
@@ -19,12 +18,12 @@
       <v-col v-if="selectedPrimaryBranch?.name" cols="4" class="text-center">
         <v-row class="justify-center">
           <v-col
-          v-for="keystone in selectedPrimaryBranch.keystones"
-          :key="keystone.name"
-          cols="auto"
+            v-for="keystone in selectedPrimaryBranch.keystones"
+            :key="keystone.name"
+            cols="auto"
           >
             <v-tooltip
-            class="golden-tooltip rune-row"
+              class="golden-tooltip rune-row"
               :text="keystone.stat"
               location="top left"
               open-delay="100"
@@ -50,9 +49,9 @@
         </v-row>
 
         <v-row
-          v-for="(row, rowIndex) in selectedPrimaryBranch.rows"
-          :key="rowIndex"
-          class="justify-center"
+            v-for="(row, rowIndex) in selectedPrimaryBranch.rows"
+            :key="rowIndex"
+            class="justify-center"
         >
           <v-col 
             v-for="rowrune in row"
@@ -87,7 +86,6 @@
       </v-col>
 
     <!-- Secondary runes -->
-
       <v-col cols="auto">
         <button class="selector-style ma-2" @click="showSecondaryDialog = true">
           <v-img
@@ -112,7 +110,7 @@
             cols="auto"
           >
             <v-tooltip
-            class="golden-tooltip rune-row"
+              class="golden-tooltip rune-row"
               :text="rowrune.stat"
               location="top left"
               open-delay="100"
@@ -122,10 +120,10 @@
                   v-bind="props"
                   class="rune"
                   :class="{ selected : selectedRunes.secondary.some(selectedRune =>
-                    selectedRune.name === rowrune.name
-                  ), 'rune-disabled': selectedRunes.secondary.length >=2 &&
-                  !selectedRunes.secondary.some(selectedRune => selectedRune.name ===rowrune.name) &&
-                  !selectedRunes.secondary.some(selectedRune => selectedRune.rowIndex === rowIndex)}"
+                      selectedRune.name === rowrune.name
+                      ), 'rune-disabled': selectedRunes.secondary.length >=2 &&
+                      !selectedRunes.secondary.some(selectedRune => selectedRune.name ===rowrune.name) &&
+                      !selectedRunes.secondary.some(selectedRune => selectedRune.rowIndex === rowIndex)}"
                   @click.stop="selectSecondaryRune(rowrune, rowIndex)"
                 >
                   <v-img
@@ -143,6 +141,7 @@
       </v-col>
     </v-row>
 
+    <!-- Dialogs for the primary and secondary runes -->
     <v-dialog v-model="showPrimaryDialog" max-width="500">
       <v-card>
         <v-card-title> Select Primary Path </v-card-title>
@@ -195,6 +194,7 @@
   const showPrimaryDialog = ref(false);
   const showSecondaryDialog = ref(false);
 
+  //All the information about the runes like the image, stats and such
   const runeBranches = [
   {
     name: "Precision", img: "/runes-picture/Precision.png", stat: "Become a legend",
@@ -342,13 +342,11 @@
     return runeBranches.filter(branch => branch.name !== selectedPrimaryBranch.value.name);
   })
 
-
   function selectBranch(type, branch) {
     if (type === 'primary') {
       if (selectedSecondaryBranch.value?.name === branch.name) {
         selectedSecondaryBranch.value = selectedPrimaryBranch.value;
 
-        // const tempRunes = {...selectedRunes.value};
         selectedRunes.value.primary = {keystone: null, rows: [null, null, null]};
         selectedRunes.value.secondary = [];
       }
@@ -366,11 +364,9 @@
   function selectRune(type, section, runeName, rowIndex){
     if (type === 'primary') {
       if (section === 'keystone') { 
-        console.log("The keystone selected is: ", runeName)
         selectedRunes.value.primary.keystone = runeName;
 
       } else if (section === 'row') {
-        console.log("The rune selected is: ", runeName)
         selectedRunes.value.primary.rows[rowIndex] = runeName;
 
     } else {
@@ -385,13 +381,14 @@
     const currentSelection = selectedRunes.value.secondary;
     const existingIndex = currentSelection.findIndex(selectedRune => 
       selectedRune.name === rune.name); 
-    console.log("The secondary rune selected is: ", rune.name)
+
     if (existingIndex !== -1) {
       selectedRunes.value.secondary.splice(existingIndex, 1);
     } else {
       const existingRowIndex = currentSelection.findIndex(selectedRune =>
         selectedRune.rowIndex === rowIndex
       );
+      
       if (existingRowIndex !== -1) {
         selectedRunes.value.secondary.splice(existingRowIndex, 1, {
         name: rune.name,

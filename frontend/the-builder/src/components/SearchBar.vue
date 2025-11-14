@@ -14,11 +14,7 @@
               return-object
             >
               <template v-slot:item="{ props, item }">
-                <v-list-item
-                  v-bind="props"
-                  :prepend-avatar="item.raw.avatar"
-                  :title="item.raw.name"
-                ></v-list-item>
+                <v-list-item v-bind="props" :prepend-avatar="item.raw.avatar" :title="item.raw.name"></v-list-item>
               </template>
               <template v-slot:selection="{item}">
                 <v-list-item>
@@ -28,10 +24,7 @@
             </v-autocomplete>
           </v-col>
           <v-col cols="6">
-            <button 
-            @click="goToBuildCreator" 
-            class="buttonsettings" 
-            :disabled="!selectedChampion"> 
+            <button @click="goToBuildCreator" class="buttonsettings" :disabled="!selectedChampion"> 
               Create your build 
             </button>
           </v-col>
@@ -45,6 +38,7 @@
 
   const router = useRouter();
 
+  //Images for all the champions
   const srcs = {
     1: '/characters-picture/aatrox.png',
     2: '/characters-picture/ahri.png',
@@ -216,6 +210,7 @@
     168: "/characters-picture/zyra.png",
   }
 
+  //Name of the champion and its corresponding image
   const champions = [
     { name: 'Aatrox', avatar: srcs[1] },
     { name: 'Ahri', avatar: srcs[2] },
@@ -402,14 +397,12 @@
         return
       }
       const championName = selectedChampion.value.name
-      // console.log("Let's see if we can travel together: ", championName)
 
       try {
         router.push({
           name: "BuildCreator",
           query:{ championName: championName}
         }) 
-        // console.log("We are leaving roger, let's fucking go")
       } catch (error) {
         console.error("The world is an awful place because of the error: ", error)
       }

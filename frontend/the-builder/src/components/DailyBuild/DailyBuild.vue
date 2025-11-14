@@ -325,13 +325,11 @@
 
             updateSelectedRunes(runesData) {
                 this.selectedRunes = {...runesData}
-                // console.log('Updates runes: ', this.selectedRunes)
             },
 
             theExtractorChampionName(routeString) {
                 let champName = routeString.substring(22, routeString.length -4);
                 let no_ChampName = champName.replace(/(_)/, " ");
-                // console.log("It's the final result (panananaaaa): ", this.theCapitalizer(no_ChampName));
                 return this.theCapitalizer(no_ChampName);
             },
 
@@ -361,7 +359,6 @@
                     theString = theString.replace(/(_)/, " ");
                     theString = theString.replace("w", "W");
                 }
-                // console.log("Is the final result (pananana): ", theString);
                 return theString;
             },
 

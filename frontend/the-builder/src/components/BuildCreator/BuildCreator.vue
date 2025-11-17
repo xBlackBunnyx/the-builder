@@ -117,7 +117,7 @@
         {name: "Janna", img: "/characters-splashart/janna.png", tag: "ranged"},
         {name: "Jarvan IV", img: "/characters-splashart/jarvan_iv.png", tag: "melee"},
         {name: "Jax", img: "/characters-splashart/jax.png", tag: "melee"},
-        {name: "Jayce", img: "/characters-splashart/jayce.png", tag: "melee"},
+        {name: "Jayce", img: "/characters-splashart/jayce.png", tag: "ranged"}, // he's ranged in-game, because he can buy Runaan's
         {name: "Jhin", img: "/characters-splashart/jhin.png", tag: "ranged"},
         {name: "Jinx", img: "/characters-splashart/jinx.png", tag: "ranged"},
         {name: "K'Sante", img: "/characters-splashart/k'sante.png", tag: "melee"},
@@ -127,7 +127,7 @@
         {name: "Karthus", img: "/characters-splashart/karthus.png", tag: "ranged"},
         {name: "Kassadin", img: "/characters-splashart/kassadin.png", tag: "melee"},
         {name: "Katarina", img: "/characters-splashart/katarina.png", tag: "melee"},
-        {name: "Kayle", img: "/characters-splashart/kayle.png", tag: "melee"},
+        {name: "Kayle", img: "/characters-splashart/kayle.png", tag: "ranged"}, // can buy Runaan's post lvl6, so she counts as ranged
         {name: "Kayn", img: "/characters-splashart/kayn.png", tag: "melee"},
         {name: "Kennen", img: "/characters-splashart/kennen.png", tag: "ranged"},
         {name: "Kha'Zix", img: "/characters-splashart/kha'zix.png", tag: "melee"}, 

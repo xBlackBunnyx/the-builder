@@ -246,12 +246,16 @@
         secondary: [null, null]
     })
 
+    const slots = [0,1,2,3,4,5];
+
     const updateSelectedRunes = (runesData) => {
         selectedRunes.value = {...runesData}
     }
 
     const updateSelectedItems = (slotData, position) => {
       selectedItems.value[position] = slotData.item;
+      theItemEnabler(position, item.tag);
+      theItemDisabler(position, item.tag);
     }
 
     //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
@@ -259,13 +263,29 @@
     // de slots exceptuando el suyo propio
     //En caso de que el objeto haya sido reemplazado por otro, se comunica con todos los items selectors 
     // para hacer que los objetos tengan las tags que contiene este objeto sean seleccionables
-
+    const theItemEnabler = (slot, tag) => {
+        for (slot in slots) {
+            if (item.position == slot) {
+                continue;
+            } else {
+                item.enabled(tag)
+            }
+        }
+    }
     //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
     //Selecciona item (1º vez) -> bloquea el resto
     // Reemplaza por otro -> permite escoger "todos" aka los disponibles en su slot por tags
     //Te permite cambiar por otro de su mismo tipo y si cambia a un tipo distinto, se desbloquea en el resto de slots
     // Selecciona el item (2º vez) -> vuelve a bloquearlo para todo el mundo
-
+    const theItemDisabler = (slot, tag) => {
+        for (slot in slots) {
+            if (item.position == slot) {
+                continue;
+            } else {
+                item.disabled(tag)
+            }
+        }
+    }
 
     const findChampionByName = (name) => {
         if (!name) return null;
@@ -312,6 +332,12 @@
     watch(() => route.query, updateChampionFromRoute, {immediate: true})
     onMounted(() => {
         updateChampionFromRoute();
+        if (champions.tag == "melee") {
+            theItemDisabler(slot, "Ranged");
+        }
+        if (champions.name == "Cassiopeia") {
+            theItemDisabler(slot, "Boots");
+        }
     })
 
 </script>

@@ -423,6 +423,7 @@
             this.selectedDailyChampion();
             this.updateCounts();
             this.theExtractorChampionName(this.selectedChampion);
+            // this.theExceptions(); //We'll add this when the item selection works
         },
         methods: {
 
@@ -517,7 +518,8 @@
             },
 
             theCapitalizer(theString) {
-                let DioName = theString; // The orginal Name is also TheOName but if you spell it faster enough it turns out Dio (It's me! Dio!)
+                // The orginal Name is also TheOName but if you spell it faster enough it turns out Dio (It's me! Dio!)
+                let DioName = theString; 
                 theString = String(theString).charAt(0).toUpperCase() + String(theString).slice(1);
                 let spaceIndex = theString.search(" ");
 
@@ -551,6 +553,15 @@
                 let newString =
                     firstPart + replaceChar + lastPart;
                 return newString;
+            },
+                
+            theExceptions() {
+                if (champions.tag == "melee") {
+                    theItemDisabler(slot, "Ranged");
+                }
+                if (champions.name == "Cassiopeia") {
+                    theItemDisabler(slot, "Boots");
+                }
             }
         }
     }

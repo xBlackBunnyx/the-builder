@@ -49,7 +49,6 @@
 </template>
 
 <script setup>
-
   import { ref } from 'vue'
 
   const menu = ref(false)
@@ -173,15 +172,34 @@
   const emit = defineEmits(['item-selected'])
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
+  function theEnabler(tag) {
+    for (item in items) {
+      if (item.tag == tag){
+        item.enabled = true;
+      }
+    }
+  }
 
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
+    function theDisabler(tag) {
+    for (item in items) {
+      if (item.tag == tag){
+        item.enabled = false;
+      }
+    }
+  }
 
+  //Function that select the items
   function selectItem(item){
-    selectedItem.value = item
+    selectedItem.value = item;
     let itemName = item.name;
+    let itemTag = item.tag;
+    let isEnabled = item.enabled
     menu.value = false
     emit('item-selected', {
-      item: itemName
+      item: itemName,
+      tag: itemTag,
+      enabled: isEnabled
     })
   }
 

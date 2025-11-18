@@ -23,7 +23,7 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)" ref="item0"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)" ref="item0" id="HEY"></item-selector>
                     <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 1)" ref="item1"></item-selector>
                 </v-col>
                 <v-col>
@@ -61,9 +61,10 @@
 </template>
 
 <script setup>
-    import {ref, onMounted, watch, computed} from "vue";
+    import {ref, onMounted, watch, computed, useTemplateRef} from "vue";
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
+    import ItemSelector from "../ItemSelector.vue";
 
     const route = useRoute();
 
@@ -261,13 +262,17 @@
       theItemDisabler(slotData, slotData.item.tag);
     }
 
+    let item0 = ref(null);
+
     //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
     //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 
     // de slots exceptuando el suyo propio
     //En caso de que el objeto haya sido reemplazado por otro, se comunica con todos los items selectors 
     // para hacer que los objetos tengan las tags que contiene este objeto sean seleccionables
     const theItemEnabler = (slot, tag) => {
-      slot.theEnabler(tag);
+      let element = useTemplateRef('item0');
+      element.sayHi;
+      element.theEnabler(tag);
     }
     //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
     //Selecciona item (1º vez) -> bloquea el resto

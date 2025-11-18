@@ -169,9 +169,24 @@
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
   ]
 
+  defineExpose({
+    sayHi
+  })
+
+  function sayHi() { console.log("Hi"); }
+
   const selectedItem = ref(null)
 
   const emit = defineEmits(['item-selected'])
+
+  const theEnablerFunction = ref((tag) => {
+    console.log("The enabler called");
+    for (item in items) {
+      if (item.tag == tag){
+        item.enabled = true;
+      }
+    }
+  });
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
   function theEnabler(tag) {

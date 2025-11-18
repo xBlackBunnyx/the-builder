@@ -24,16 +24,14 @@
           >
           <v-tooltip location="top left" class="golden-tooltip" :open-delay="100">
             <template #activator="{props}">
-              <div
-                v-bind="props"
-                :class="{ 'item-image' : true, 'item-disabled' : !isItemEnabled(item)}"
-                @click.stop="selectItem(item)"
-              >
               <v-img 
+                v-bind="props"
                 :src="item.img"
-                :alt="Item"
+                alt="Item"
+                class="item-image"
+                :class="{ 'item-selected' : isItemSelected(item), 'item-disabled' : !isItemEnabled(item)}"
+                @click.stop="selectItem(item)"
               />
-              </div>
             </template>
             <div class="tooltip-content">
               <strong class="tooltip-title">{{ item.name }}</strong>
@@ -174,20 +172,22 @@
   const emit = defineEmits(['item-selected'])
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
-  function theEnabler(tag) {
+  function theEnabler(item) {
     console.log("The enabler called");
-    for (item in items) {
-      if (item.tag == tag){
+    for (var i=0; i < items.length; ++i) {
+      if (item.tag != items[i].tag){
         item.enabled = true;
       }
     }
   }
 
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
-  function theDisabler(tag) {
-    for (item in items) {
-      if (item.tag == tag){
-        item.enabled = false;
+  function theDisabler(item) {
+    for (var i=0; i < items.length; ++i) {
+      if ( item.tag == items[i].tag){
+        console.log("Checking the conditional statement")
+        items[i].enabled = false;
+        console.log("the items that matches tags are: ", items[i]);
       }
     }
   }
@@ -202,12 +202,17 @@
     }
   }
 
+  function isItemSelected (item) {
+    return selectedItem.value && selectedItem.value.name === item.name
+  }
+
   //Function that select the items
   function selectItem(item){
     selectedItem.value = item;
     let itemName = item.name;
     let itemTag = item.tag;
-    let isEnabled = item.enabled
+    let isEnabled = item.enabled;
+    theDisabler(item);
     menu.value = false
     emit('item-selected', {
       item: itemName,
@@ -255,7 +260,6 @@
       height: 48px;
       object-fit: contain;
       cursor: pointer;
-      border: 3px solid #653a1b;
     }
 
     .placeholder-text {
@@ -314,5 +318,10 @@
       opacity: 0.4;
       cursor: not-allowed;
       pointer-events: none;
+    }
+
+    .item-selected {
+      border: 3px solid #653a1b;
+      cursor: pointer;
     }
 </style>

@@ -23,16 +23,16 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 1)"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)" ref="item0"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 1)" ref="item1"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 2)"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 3)"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 2)" ref="item2"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 3)" ref="item3"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 4)"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 4)" ref="item4"></item-selector>
+                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)" ref="item5"></item-selector>
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
@@ -55,6 +55,9 @@
             </v-col>
         </v-row>
     </v-container>
+    <div @click="theItemEnabler(0, 'Boots')">
+      <button> Enable that thing </button>
+    </div>
 </template>
 
 <script setup>
@@ -254,8 +257,8 @@
 
     const updateSelectedItems = (slotData, position) => {
       selectedItems.value[position] = slotData.item;
-      theItemEnabler(position, item.tag);
-      theItemDisabler(position, item.tag);
+      theItemEnabler(slotData, slotData.item.tag);
+      theItemDisabler(slotData, slotData.item.tag);
     }
 
     //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
@@ -264,13 +267,7 @@
     //En caso de que el objeto haya sido reemplazado por otro, se comunica con todos los items selectors 
     // para hacer que los objetos tengan las tags que contiene este objeto sean seleccionables
     const theItemEnabler = (slot, tag) => {
-        for (slot in slots) {
-            if (item.position == slot) {
-                continue;
-            } else {
-                item.enabled(tag)
-            }
-        }
+      slot.theEnabler(tag);
     }
     //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
     //Selecciona item (1º vez) -> bloquea el resto
@@ -278,13 +275,13 @@
     //Te permite cambiar por otro de su mismo tipo y si cambia a un tipo distinto, se desbloquea en el resto de slots
     // Selecciona el item (2º vez) -> vuelve a bloquearlo para todo el mundo
     const theItemDisabler = (slot, tag) => {
-        for (slot in slots) {
-            if (item.position == slot) {
-                continue;
-            } else {
-                item.disabled(tag)
-            }
+      for (slot in slots) {
+        if (item.position == slot) {
+          continue;
+        } else {
+          item.disabled(tag)
         }
+      }
     }
 
     const findChampionByName = (name) => {

@@ -26,7 +26,7 @@
             <template #activator="{props}">
               <div
                 v-bind="props"
-                :class="{ 'item-image' : true, 'item-disabled' : !items.indexOf(item).enabled}"
+                :class="{ 'item-image' : true, 'item-disabled' : !isItemEnabled(item)}"
                 @click.stop="selectItem(item)"
               >
               <v-img 
@@ -55,10 +55,9 @@
   import { ref } from 'vue'
 
   const menu = ref(false)
-
-  //All the items, their image and stats
+  //All the items, their images, stats, and whether they're enabled or not
   const items = [               
-    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},
+    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:false},
     {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:true},
     {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png", stats: {"Ability Haste": "+10", "Movement Speed" : "+45"}, tag: ["Boots"], enabled:true},
     {name: "Mercury's Treads", img: "/items-picture/Mercury_Treads.png", stats: {"Magic Resistance": "+20", "Movement Speed": "+45", "Tenacity": "+30%"}, tag: ["Boots"], enabled:true},
@@ -170,14 +169,13 @@
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
   ]
 
-  let disabledItems = [];
-
   const selectedItem = ref(null)
 
   const emit = defineEmits(['item-selected'])
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
   function theEnabler(tag) {
+    console.log("The enabler called");
     for (item in items) {
       if (item.tag == tag){
         item.enabled = true;
@@ -190,6 +188,16 @@
     for (item in items) {
       if (item.tag == tag){
         item.enabled = false;
+      }
+    }
+  }
+
+  function isItemEnabled(item) {
+    // console.log("Checking item " + item.name);
+    for (let i = 0; i < items.length; ++i) {
+      if (item.name == items[i].name) {
+        // console.log("Item found, the enabled value is " + items[i].enabled);
+        return items[i].enabled;
       }
     }
   }

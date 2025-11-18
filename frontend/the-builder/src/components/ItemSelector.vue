@@ -3,7 +3,7 @@
     <v-menu v-model="menu" transition="scale-transition">
       <template v-slot:activator="{ props }">
         <button class="selectorstyle pa-3" v-bind="props" >
-          <div class="buton-content">
+          <div class="button-content">
             <img
             v-if="selectedItem"
             :src="selectedItem.img"
@@ -24,13 +24,16 @@
           >
           <v-tooltip location="top left" class="golden-tooltip" :open-delay="100">
             <template #activator="{props}">
-              <v-img 
+              <div
                 v-bind="props"
+                :class="{ 'item-image' : true, 'item-disabled' : !items.indexOf(item).enabled}"
+                @click.stop="selectItem(item)"
+              >
+              <v-img 
                 :src="item.img"
-                class="cursor-pointer item-image"
-                alt="Item"
-                @click="selectItem(item)"
+                :alt="Item"
               />
+              </div>
             </template>
             <div class="tooltip-content">
               <strong class="tooltip-title">{{ item.name }}</strong>
@@ -167,6 +170,8 @@
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
   ]
 
+  let disabledItems = [];
+
   const selectedItem = ref(null)
 
   const emit = defineEmits(['item-selected'])
@@ -181,7 +186,7 @@
   }
 
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
-    function theDisabler(tag) {
+  function theDisabler(tag) {
     for (item in items) {
       if (item.tag == tag){
         item.enabled = false;
@@ -241,6 +246,8 @@
       width: 48px;
       height: 48px;
       object-fit: contain;
+      cursor: pointer;
+      border: 3px solid #653a1b;
     }
 
     .placeholder-text {
@@ -249,10 +256,10 @@
       text-align: center;
     }
   
-    .cursor-pointer {
+    /* .cursor-pointer {
       cursor: pointer;
     }
-
+ */
   .golden-tooltip :deep(.v-overlay__content) {
     background-color: #653a1b !important; /* gold background */
     color: #1a1a1a !important; /* dark text */
@@ -293,5 +300,11 @@
       padding: 0;
       margin: 0 0 6px 0;
       font-size: 0.85rem;
+    }
+
+    .item-disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 </style>

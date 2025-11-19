@@ -173,13 +173,26 @@
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
   function theEnabler(item) {
-    console.log("The enabler called");
+    // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
     for (let i=0; i < items.length; ++i) {
-      if (item.tag != items[i].tag){
-        items[i].enabled = true;
+      for (let j = 0; j < items[i].tag.length; ++j) {
+        // console.log("tE: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+        if (item.tag == items[i].tag[j]){
+          // console.log("tE: |||| That one fits the tag " + item.tag);
+          items[i].enabled = true;
+        }
       }
     }
   }
+
+  // function theEnablerAll() {
+  //   for (let i = 0; i < items.length; ++i) {
+  //     if (!items[i].enabled) {
+  //       console.log("tEA: Calling theEnabler with item " + items[i].name);
+  //       theEnabler(items[i]);
+  //     }
+  //   }
+  // }
 
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
   function theDisabler(item) {

@@ -141,7 +141,7 @@ function CombinedBuildScore(codedBuild, finalScore){
 //Funcion para que se suban los resultados a mongo
 async function SavePlayerBuilds(client, newPlayerBuild) {
   await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
-  // console.log(`New listing created with the following id: ${scoreBuild.insertedId}`);
+  console.log(`New listing created with the following id: ${scoreBuild.insertedId}`); //do not delete
 }
 
 //Aquí va la build que ha hecho el jugador y se recoge de la página web
@@ -459,7 +459,7 @@ function ScoreCalculator(referenceBuild, playerBuild)
 }
 
 // Helper function to debug arrays
-function ArrayToString(array)
+export function ArrayToString(array)
 {
   if (typeof array != "object")
   {

@@ -82,7 +82,9 @@ const calculateScoreAndSave = async() => {
   buildSaved.value = false
   error.value = null
   loading.value = true
-  
+
+  console.log("cSAS: Checking items: " + (!props.selectedItems || props.selectedItems.length !== 6));
+  console.log("cSAS: Runes: " + !props.selectedRunes);
   //Check that everything has a value
   if (!props.selectedChampion) {
     error.value = 'Please, select a champion'

@@ -174,21 +174,24 @@
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
   function theEnabler(item) {
     console.log("The enabler called");
-    for (var i=0; i < items.length; ++i) {
+    for (let i=0; i < items.length; ++i) {
       if (item.tag != items[i].tag){
-        item.enabled = true;
+        items[i].enabled = true;
       }
     }
   }
 
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
   function theDisabler(item) {
-    for (var i=0; i < items.length; ++i) {
-      if ( item.tag == items[i].tag){
-        console.log("Checking the conditional statement")
-        items[i].enabled = false;
-        console.log("the items that matches tags are: ", items[i]);
-      }
+    // console.log("tD: LOOKING FOR TAG(S) " + item.tag);
+    for (let i=0; i < items.length; ++i) {
+      // console.log("tD: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+        for (let j = 0; j < items[i].tag.length; ++j) {
+          if (item.tag == items[i].tag[j]){
+            // console.log("tD: |||| That one fits the tag " + item.tag);
+            items[i].enabled = false;
+          }
+        }
     }
   }
 

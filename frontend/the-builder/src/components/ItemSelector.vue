@@ -55,8 +55,8 @@
   const menu = ref(false)
   //All the items, their images, stats, and whether they're enabled or not
   const items = [               
-    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:false},
-    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:true},
+    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},
+    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:false},
     {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png", stats: {"Ability Haste": "+10", "Movement Speed" : "+45"}, tag: ["Boots"], enabled:true},
     {name: "Mercury's Treads", img: "/items-picture/Mercury_Treads.png", stats: {"Magic Resistance": "+20", "Movement Speed": "+45", "Tenacity": "+30%"}, tag: ["Boots"], enabled:true},
     {name: "Plated Steelcaps", img: "/items-picture/Plated_Steelcaps.png", stats: {"Armor": "+25", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},

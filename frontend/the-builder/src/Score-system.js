@@ -188,12 +188,18 @@ function BuildToStrings(build) {
       break; 
     }
   }
-  if (nonZeroSpot == -1) {
+  let champIndex = 0;
+  if (nonZeroSpot != -1) {
     console.log("Champion part of the build was wrong");
-    return;
+    champIndex = build.slice(nonZeroSpot, 3);
   }
-  let champIndex = build.slice(nonZeroSpot, 3);
   result.push(champList[champIndex]);
+  // if (nonZeroSpot == -1) {
+  //   console.log("Champion part of the build was wrong");
+  //   return;
+  // }
+  // let champIndex = build.slice(nonZeroSpot, 3);
+  // result.push(champList[champIndex]);
 
   // Item part
   for (let i = 3; i < 21; i += 3) {
@@ -437,11 +443,11 @@ function ScoreCalculator(referenceBuild, playerBuild)
   //Reference build score
   let referenceRunesScore = referenceBuild[1];
   let referenceItemsScore = referenceBuild[0];
-  console.log("The reference scores for the runes and items are ", referenceRunesScore, " and ", referenceItemsScore)
-  //F build score
+
+  //Frontend build score
   let playerRunesScore = playerBuild[1];
   let playerItemsScore = playerBuild[0];
-  console.log("The player scores for the runes and the items are ", playerRunesScore, " and ", playerItemsScore);
+
   //Calculate the minimum value possible
   const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 
 
@@ -454,7 +460,7 @@ function ScoreCalculator(referenceBuild, playerBuild)
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 
-  console.log("the normalizedResult is " + normalizedResult);
+  // console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
 }
 

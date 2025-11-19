@@ -57,12 +57,12 @@ const props = defineProps({
   selectedRunes: Object
 })
 
-//Debug to check if all items are getting stored properly
-// console.log('BuildResults props: ', {
-//   champion: props.selectedChampion,
-//   items: props.selectedItems,
-//   runes: props.selectedRunes
-// })
+// Debug to check if all items are getting stored properly
+console.log('BuildResults props: ', {
+  champion: props.selectedChampion,
+  items: props.selectedItems,
+  runes: props.selectedRunes
+})
 
 const dialog = ref(false)
 const loading = ref(false)

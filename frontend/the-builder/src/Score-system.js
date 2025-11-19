@@ -1,19 +1,20 @@
 //Code to calculate the score of the build
 
-//librerias necesarias (extras para la conexión con mongo)
+//Instalation of needed libraries
 import dotenv from 'dotenv';
 dotenv.config({path: 'src/.env'});
 import fs from 'fs';
 import express from 'express';
 import cors from 'cors';
 
+// Setting Middleware
 const app = express();
 const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
 
-// conexion con el señor mongo
+// Connection with Mongo Atlas
 import { MongoClient, ServerApiVersion } from 'mongodb';
 let uri =process.env.ATLAS_CONNECTION;
 
@@ -26,17 +27,14 @@ const client = new MongoClient(uri, {
   }
 });
 
-// Conection to Mongo Atlas
 async function run(frontendData) {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    //Here is where we have to put all the functions related to getting something from the database
-    // console.log("We are inside the run function");
+    //Here we have to put all the functions related to getting something from the database
+    console.log("We are inside the run function");
   await client.connect();
   const db = client.db("Builder");
    // Send a ping to confirm a successful connection
    await client.db("admin").command({ ping: 1 });
-   
   // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     let data = PlayerBuildImporter(frontendData);
@@ -62,6 +60,7 @@ async function run(frontendData) {
     ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
 
+    //Final result that will be sent to the frontend
     return await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
     
  } finally {
@@ -70,7 +69,7 @@ async function run(frontendData) {
   }
 }
 
-// code is in string format, the three digits that dictate which champion is it. Code format
+// code is in string format, the three digits that dictate which champion is it
 async function GetReferenceBuild(client, code)
 {
   let cursor = await client.db("builder").collection("PlayerBuilds").find({score: 100});
@@ -85,13 +84,12 @@ async function GetReferenceBuild(client, code)
         // console.log("GRB-Debug: Ref build " + buildCode.slice(0,3) + " != " + code);
       }
   } 
-  // console.log("GRB: Couldn't find reference build with champion code " + code);
+  console.log("GRB: Couldn't find reference build with champion code " + code);
 }
 
-//Function to return a specific champion 
+//Function that returns an specific champion 
 async function findChamps(client, nameOfChampion) {
   let championCharacteristics = await client.db("builder").collection("Characters").findOne({champion:nameOfChampion});
-  // console.log("championCharacteristics is " + championCharacteristics);
   if (championCharacteristics){
     return championCharacteristics;
   } else {
@@ -99,7 +97,7 @@ async function findChamps(client, nameOfChampion) {
   }
 }
 
-//Function to return the items
+//Function that returns the items
 async function findItem(client, namesOfItems) {
   if (typeof namesOfItems === "string") namesOfItems = [namesOfItems];
   let cursor = await client.db("builder").collection("Items").find({item:{$in:namesOfItems}});
@@ -114,7 +112,7 @@ async function findItem(client, namesOfItems) {
   }
 }
 
-//Function to return the runes
+//Function that returns the runes
 async function findRunes(client, namesOfRunes) {
    if (typeof namesOfRunes === "string") namesOfRunes = [namesOfRunes];
   let cursor = await client.db("builder").collection("Runes").find({rune:{$in:namesOfRunes}});
@@ -128,27 +126,26 @@ async function findRunes(client, namesOfRunes) {
   }
 }
 
-//Funcion que combina la build codificada con la puntuación
+//Function that combines the codified build with the score
 function CombinedBuildScore(codedBuild, finalScore){
   let buildCodified = codedBuild;
-  // console.log("The codified build is " + buildCodified);
+  console.log("The codified build is " + buildCodified);
   let buildScore = finalScore * 100;
-  // console.log("The build score is " + buildScore);
+  console.log("The build score is " + buildScore);
   let completeBuild = {build: buildCodified, score: buildScore};
   return completeBuild;
 }
 
-//Funcion para que se suban los resultados a mongo
+//Function that uploads the build into Mongo Atlas
 async function SavePlayerBuilds(client, newPlayerBuild) {
-  await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
-  console.log(`New listing created with the following id: ${scoreBuild.insertedId}`); //do not delete
+  let scoreBuild = await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
+  console.log(`New listing created with the following id: ${scoreBuild.insertedId}`);
 }
 
-//Aquí va la build que ha hecho el jugador y se recoge de la página web
+//Function that get the refined imformation from the frontend
 function PlayerBuildImporter(frontendData){
   let frontendBuild = frontendToBackendCodeFormat(frontendData);
-  console.log("The insides of frontendBuild", frontendBuild);
-  // let result = fs.readFileSync('./build-test.txt', {encoding: 'utf8', flag: 'r'}).split(";").map(s => s.trim()).filter(Boolean);
+  // console.log("The insides of frontendBuild", frontendBuild);
   let result = frontendBuild.split('; ').map(element => element.trim());
   return result;
 }
@@ -165,7 +162,7 @@ function frontendToBackendCodeFormat(frontendData){
   ].join('; ');
 }
 
-//Aqui va la funcion que traduce de codigo de barras a texto
+//Function that converts the build we have into a codified version
 function BuildToStrings(build) { 
   let result = [];
   // Code extraction
@@ -238,6 +235,7 @@ function BuildToStrings(build) {
   return result;
 }
 
+// Arrays that have all the information related to the champions, items and runes that are available in the database and website
 let champList = ["Aphelios", "Ashe", "Caitlyn", "Draven", "Ezreal", "Jhin", "Jinx", "Kai'Sa", "Kalista", "Karthus", "Kog'Maw", "Lucian", "Miss Fortune", "Nilah", "Samira", "Senna", "Seraphine", "Sivir", "Smolder", "Tristana", "Twisted Fate", "Twitch", "Varus", "Vayne", "Xayah", "Yasuo", "Zeri", "Ziggs", "Alistar", "Amumu", "Anivia", "Annie", "Bard", "Blitzcrank", "Brand", "Braum", "Camille", "Fiddlesticks", "Galio", "Heimerdinger", "Ivern", "Janna", "Karma", "Leona", "Lulu", "Lux", "Malphite", "Maokai", "Milio", "Morgana", "Nami", "Nautilus", "Neeko", "Pantheon", "Pyke", "Rakan", "Rell", "Renata Glasc", "Shaco", "Shen", "Sona", "Soraka", "Swain", "Tahm Kench", "Taric", "Teemo", "Thresh", "Veigar", "Vel'Koz", "Xerath", "Yuumi", "Zac", "Zilean", "Zyra", "Ahri", "Akali", "Aurelion Sol", "Aurora", "Azir", "Cassiopeia", "Corki", "Diana", "Ekko", "Fizz", "Gragas", "Hwei", "Irelia", "Jayce", "Kassadin", "Katarina", "LeBlanc", "Lissandra", "Naafiri", "Orianna", "Qiyana", "Rumble", "Ryze", "Sylas", "Syndra", "Taliyah", "Talon", "Vex", "Viktor", "Vladimir", "Yone", "Zed", "Zoe", "Bel'Veth", "Briar", "Elise", "Evelynn", "Graves", "Hecarim", "BLANK", "Jarvan IV", "Jax", "Kayn", "Kha'Zix", "Kindred", "Lee Sin", "Lillia", "Master Yi", "Nidalee", "Nocturne", "Nunu & Willump", "Poppy", "Rammus", "Rek'Sai", "Rengar", "Sejuani", "Shyvana", "Skarner", "Trundle", "Udyr", "Vi", "Viego", "Volibear", "Warwick", "Wukong", "Xin Zhao", "Aatrox", "Cho'Gath", "Darius", "Dr. Mundo", "Fiora", "Gangplank", "Garen", "Gnar", "Gwen", "Illaoi", "K'Sante", "Kayle", "Kennen", "Kled", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Quinn", "Renekton", "Riven", "Sett", "Singed", "Sion", "Tryndamere", "Urgot", "Yorick", "Malzahar", "Akshan"];
 let itemList = ["Berserker's Greaves", 'Boots of Swiftness', 'Ionian Boots of Lucidity', "Mercury's Treads", 'Plated Steelcaps',  "Sorcerer's Shoes",  'Abyssal Mask',  "Bloodletter's Curse",  'Cryptbloom', 'Abyssal Mask', 'Terminus', 'Void Staff',  'Black Cleaver', "Lord Dominik's Regards", 'Mortal Reminder', "Serylda's Grudge",  "Banshee's Veil", 'Edge of Night', "Dead Man's Plate", 'Trailblazer', 'Hollow Radiance',  'Sunfire Aegis', 'Iceborn Gauntlet', 'Lich Bane', 'Trinity Force', 'Immortal Shieldbow', 'Maw of Malmortius', "Sterak's Gage",  "Seraph's Embrace", 'Muramana', 'Fimbulwinter', 'Profane Hydra', 'Ravenous Hydra',  'Titanic Hydra',  'Stridebreaker', 'Celestial Opposition', 'Bloodsong', 'Dream Maker', 'Solstice Sleigh', "Zaz'Zak's Realmspike", 'Ardent Censer', 'Axiom Arc', 'Blackfire Torch', 'Blade of the Ruined King', 'Bloodthirster', 'Chempunk Chainsword',  'Cosmic Drive', 'Dawncore', "Death's Dance", 'Echoes of Helia',  'Eclipse', 'Essence Reaver', 'Experimental Hexplate', 'Force of Nature', 'Frozen Heart', 'Guardian Angel', "Guinsoo's Rageblade", 'Heartsteel', 'Hextech Rocketbelt', 'Horizon Focus', 'Hubris', 'Hullbreaker', 'Imperial Mandate', 'Infinity Edge', "Jak'Sho, The Protean", 'Kaenic Rookern', "Knight's Vow", 'Kraken Slayer', "Liandry's Torment", 'Locket of the Iron Solari', "Luden's Companion", 'Malignance', "Mejai's Soulstealer", 'Mercurial Scimitar', "Mikael's Blessing", 'Moonstone Renewer', 'Morellonomicon', "Nashor's Tooth", 'Navori Flickerblade', 'Opportunity', "Overlord's Bloodmail", 'Phantom Dancer', "Rabadon's Deathcap", "Randuin's Omen", 'Rapid Firecannon', 'Redemption', 'Riftmaker', 'Rod of Ages', "Runaan's Hurricane", "Rylai's Crystal Scepter", "Serpent's Fang", 'Shadowflame', "Shurelya's Battlesong", 'Spear of Shojin', 'Spirit Visage', 'Staff of Flowing Water', 'Statikk Shiv', 'Stormsurge', 'Sundered Sky', 'The Collector', 'Thornmail', 'Umbral Glaive', 'Unending Despair', 'Vigilant Wardstone', 'Voltaic Cyclosword', "Warmog's Armor", "Wit's End", "Youmuu's Ghostblade", 'Yun Tal Wildarrows', "Zeke's Convergence", "Zhonya's Hourglass" ];
 let runeList = [ 'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conqueror', 'Absorb Life', 'Triumph', 'Presence of Mind', 'Alacrity', 'Haste', 'Bloodline', 'Coup de Grace', 'Cut Down', 'Last Stand', 'Electrocute', 'Dark Harvest', 'Hail of Blades', 'Cheap Shot', 'Taste of Blood', 'Sudden Impact', 'Sixth Sense', 'Grisly Mementos', 'Deep Ward', 'Treasure Hunter', 'Relentless Hunter', 'Ultimate Hunter', 'Summon Aery', 'Arcane Comet', 'Phase Rush', 'Axiom Arcanist', 'Manaflow Band', 'Nimbus Cloak', 'Transcendence', 'Celerity', 'Absolute Focus', 'Scorch', 'Waterwalking', 'Gathering Storm', 'Grasp of the Undying', 'Aftershock', 'Guardian', 'Demolish', 'Font of Life', 'Shield Bash', 'Conditioning', 'Second Wind', 'Bone Plating', 'Overgrowth', 'Revitalize', 'Unflinching', 'Glacial Augment', 'Unsealed Spellbook', 'First Strike', 'Hextech Flashtraption', 'Magical Footwear', 'Cash Back', 'Triple Tonic', 'Time Warp Tonic', 'Biscuit Delivery', 'Cosmic Insight', 'Approach Velocity', 'Jack of All Trades'];
@@ -245,11 +243,10 @@ let runeList = [ 'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conquero
 
 // Function that convert the strings into code
 function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING (data variable)
-  // console.log("Champion name is " + strings[0]);
+  //champion
   const champIdx = champList.findIndex(c => c === strings[0]);
-  // console.log("The champion is " + champIdx);
+  console.log("The champion is " + champIdx);
   if (champIdx === -1) {
-    // console.log("S2B: Champion not found: " + strings[0]);
     return "999";
   }
   let result = String(champIdx).padStart(3, "0");
@@ -259,24 +256,25 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
     const buildItem = strings[i];
     const j = itemList.findIndex(it => it === buildItem);
     if (j === -1) {
-      // console.log("S2B: Item not found: " + buildItem);
+      console.log("S2B: Item not found: " + buildItem);
       result += "999";
     } else {
       let padded = String(j).padStart(3, "0");
-      // console.log("S2B: Found item " + buildItem + " at position " + j);
+      console.log("S2B: Found item " + buildItem + " at position " + j);
       result += padded;
     }
   } 
   
+  //runes
   for (let i = 7; i < 13; i++) {
     const buildRune = strings[i];
     const j = runeList.findIndex(ru => ru === buildRune);
     if (j === -1) {
-      // console.log("S2B: Rune not found: " + buildRune);
+      console.log("S2B: Rune not found: " + buildRune);
       result += "999";
     } else {
       let padded = String(j).padStart(2, "0");
-      // console.log("S2B: Found rune " + buildRune + " at position " + j);
+      console.log("S2B: Found rune " + buildRune + " at position " + j);
       result += padded;
     }
   } 
@@ -285,7 +283,6 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
 
 // Function that Scores the Build
 function ScoreGiver(champ, items, runes) {
-  //No son arrays, son objetos
   let championName = champ;
   let runeSection = runes;
   let itemSection = items;
@@ -294,6 +291,7 @@ function ScoreGiver(champ, items, runes) {
   let runeScore = 0;
   let itemScore = 0;
 
+  //Relationships between the roles 
   const roleRuneRelationship = {
     Resolve:["TANK", "Bruiser", "Support"],
     Precision:["TANK", "Bruiser", "DPS", "Assassin"],
@@ -311,7 +309,7 @@ function ScoreGiver(champ, items, runes) {
     Support:["Heal & shield power", "Health", "Magic Resistance", "Armor", "Tenacity", "Health regen.", "Mana", "Mana regen.", "Attack damage", "Ability power", "Armor pen.", "Magic pen.", "Attack speed", "Ability haste", "Movement speed"]
   };
 
-  //Incredible long ass loop for the runes
+  //runes
   let champRoles;
   for (let i = 0; i < runeSection.length; ++i)
   {
@@ -357,73 +355,74 @@ function ScoreGiver(champ, items, runes) {
     runeScore += currentRuneScore;
   }
 
-for(let i = 0; i < itemSection.length; ++i){
-  let currentItemScore = 0;
-  let commonRoles = itemSection[i].common_role.split(", ");
-  for(let j = 0; j < commonRoles.length; ++j){
-    let champRoles = champ.role.split(", ");
-    for(let k = 0; k < champRoles.length; ++k){
-      if(champRoles[k] == commonRoles[j]){
-        currentItemScore += 10;
-        break;
-      } 
-      if (k == champRoles.length -1){
-        currentItemScore += 1;
+  //items
+  for(let i = 0; i < itemSection.length; ++i){
+    let currentItemScore = 0;
+    let commonRoles = itemSection[i].common_role.split(", ");
+    for(let j = 0; j < commonRoles.length; ++j){
+      let champRoles = champ.role.split(", ");
+      for(let k = 0; k < champRoles.length; ++k){
+        if(champRoles[k] == commonRoles[j]){
+          currentItemScore += 10;
+          break;
+        } 
+        if (k == champRoles.length -1){
+          currentItemScore += 1;
+        }
       }
     }
-  }
-  let abilityType = itemSection[i].ability_type.split(", ");
-  for(let j = 0; j < abilityType.length; ++j){
-    let champRoles = champ.role.split(", ");
-    for(let k = 0; k < champRoles.length; ++k){
-      if (champRoles[k] == abilityType[j]){
-        currentItemScore += 5;
-        break;
-      } 
-      if ( k == champRoles.length -1){
-        currentItemScore += 1;
+    let abilityType = itemSection[i].ability_type.split(", ");
+    for(let j = 0; j < abilityType.length; ++j){
+      let champRoles = champ.role.split(", ");
+      for(let k = 0; k < champRoles.length; ++k){
+        if (champRoles[k] == abilityType[j]){
+          currentItemScore += 5;
+          break;
+        } 
+        if ( k == champRoles.length -1){
+          currentItemScore += 1;
+        }
       }
     }
-  }
-  let itemLimitation = itemSection[i].limitations;
-  if(itemLimitation == "Boots"){
-    currentItemScore += 20;      
-  }
+    let itemLimitation = itemSection[i].limitations;
+    if(itemLimitation == "Boots"){
+      currentItemScore += 20;      
+    }
 
-  for (let j = 0; j < commonRoles.length; j++){
-    let champRoles = champ.role.split(", ");
-    for (let k = 0; k < champRoles.length; k++){
-      if(champRoles[k] == commonRoles[j]){
-        let stats = roleItemStatRelationship[champRoles[k]];
-          let item = itemSection[i];
-          let itemStats = item.stats_given.split(", ");
-          let addedExtra = false;
-          let someStatMatched = false;
-          for(let m = 0; m < stats.length; m++){
-            if (itemStats.includes(stats[m])){
-              currentItemScore +=5;
-              someStatMatched = true;
-              if (itemStats.length < 3 && !addedExtra) {
-                currentItemScore += 15;
-                addedExtra = true;
-              } else {
-                // console.log("Item " + item.item + " itemStats length is " + itemStats.length + " and addedExtra is " + addedExtra + ", so it in full cognitive function"); 
+    for (let j = 0; j < commonRoles.length; j++){
+      let champRoles = champ.role.split(", ");
+      for (let k = 0; k < champRoles.length; k++){
+        if(champRoles[k] == commonRoles[j]){
+          let stats = roleItemStatRelationship[champRoles[k]];
+            let item = itemSection[i];
+            let itemStats = item.stats_given.split(", ");
+            let addedExtra = false;
+            let someStatMatched = false;
+            for(let m = 0; m < stats.length; m++){
+              if (itemStats.includes(stats[m])){
+                currentItemScore +=5;
+                someStatMatched = true;
+                if (itemStats.length < 3 && !addedExtra) {
+                  currentItemScore += 15;
+                  addedExtra = true;
+                } else {
+                  // console.log("Item " + item.item + " itemStats length is " + itemStats.length + " and addedExtra is " + addedExtra + ", so it in full cognitive function"); 
+                }
+              }
+              if(m == stats.length -1 && !someStatMatched){
+                currentItemScore +=1;
               }
             }
-            if(m == stats.length -1 && !someStatMatched){
-              currentItemScore +=1;
-            }
-          }
-      } 
+        } 
+      }
     }
+    itemScore += currentItemScore;
   }
-  itemScore += currentItemScore;
+
+    return [itemScore, runeScore]; 
 }
 
-  return [itemScore, runeScore]; 
-}
-
-//Aqui va todo el codigo para calcular las puntuaciones
+//Function that compares the player build with the reference
 function ScoreCalculator(referenceBuild, playerBuild)
 {
   //Weight of the Items
@@ -438,32 +437,33 @@ function ScoreCalculator(referenceBuild, playerBuild)
   //Reference build score
   let referenceRunesScore = referenceBuild[1];
   let referenceItemsScore = referenceBuild[0];
+  console.log("The reference scores for the runes and items are ", referenceRunesScore, " and ", referenceItemsScore)
   //F build score
   let playerRunesScore = playerBuild[1];
   let playerItemsScore = playerBuild[0];
-
+  console.log("The player scores for the runes and the items are ", playerRunesScore, " and ", playerItemsScore);
   //Calculate the minimum value possible
   const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 
 
   //Calculate the reference total value
   let referenceScore = 1 + (itemWeight * referenceItemsScore) + (runeWeight * referenceRunesScore);
-
+  console.log("The reference score is ", referenceScore)
   //Calculate the player total value
   let playerScore = 1 + (itemWeight * playerItemsScore) + (runeWeight * playerRunesScore);
-
+  console.log("The player Score is ", playerScore);
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 
-  // console.log("the normalizedResult is " + normalizedResult);
+  console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
 }
 
 // Helper function to debug arrays
-export function ArrayToString(array)
+function ArrayToString(array)
 {
   if (typeof array != "object")
   {
-    console.log("A2S: Param is not a damn array, it's a " + typeof array);
+    console.log("Param is not a damn array, it's a " + typeof array);
     return "";
   }
   if (array.length == 0){
@@ -480,11 +480,8 @@ export function ArrayToString(array)
 
 //Creation of the routes to be accesible to the frontend
 app.post('/api/calculate-score', async(req, res) => {
-  // console.log("We are inside Score-system");
   try {
-    // console.log("We are trying to do something");
     const frontendData = req.body;
-    
     const score = await run(frontendData);
 
     res.json({

@@ -24,16 +24,14 @@
           >
           <v-tooltip location="top left" class="golden-tooltip" :open-delay="100">
             <template #activator="{props}">
-              <div
-                v-bind="props"
-                :class="{ 'item-image' : true, 'item-disabled' : !isItemEnabled(item)}"
-                @click.stop="selectItem(item)"
-              >
               <v-img 
+                v-bind="props"
                 :src="item.img"
-                :alt="Item"
+                alt="Item"
+                class="item-image"
+                :class="{ 'item-selected' : isItemSelected(item), 'item-disabled' : !isItemEnabled(item)}"
+                @click.stop="selectItem(item)"
               />
-              </div>
             </template>
             <div class="tooltip-content">
               <strong class="tooltip-title">{{ item.name }}</strong>
@@ -189,21 +187,39 @@
   });
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
-  function theEnabler(tag) {
-    console.log("The enabler called");
-    for (item in items) {
-      if (item.tag == tag){
-        item.enabled = true;
+  function theEnabler(item) {
+    // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
+    for (let i=0; i < items.length; ++i) {
+      for (let j = 0; j < items[i].tag.length; ++j) {
+        // console.log("tE: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+        if (item.tag == items[i].tag[j]){
+          // console.log("tE: |||| That one fits the tag " + item.tag);
+          items[i].enabled = true;
+        }
       }
     }
   }
 
+  // function theEnablerAll() {
+  //   for (let i = 0; i < items.length; ++i) {
+  //     if (!items[i].enabled) {
+  //       console.log("tEA: Calling theEnabler with item " + items[i].name);
+  //       theEnabler(items[i]);
+  //     }
+  //   }
+  // }
+
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
-  function theDisabler(tag) {
-    for (item in items) {
-      if (item.tag == tag){
-        item.enabled = false;
-      }
+  function theDisabler(item) {
+    // console.log("tD: LOOKING FOR TAG(S) " + item.tag);
+    for (let i=0; i < items.length; ++i) {
+      // console.log("tD: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+        for (let j = 0; j < items[i].tag.length; ++j) {
+          if (item.tag == items[i].tag[j]){
+            // console.log("tD: |||| That one fits the tag " + item.tag);
+            items[i].enabled = false;
+          }
+        }
     }
   }
 
@@ -217,12 +233,17 @@
     }
   }
 
+  function isItemSelected (item) {
+    return selectedItem.value && selectedItem.value.name === item.name
+  }
+
   //Function that select the items
   function selectItem(item){
     selectedItem.value = item;
     let itemName = item.name;
     let itemTag = item.tag;
-    let isEnabled = item.enabled
+    let isEnabled = item.enabled;
+    theDisabler(item);
     menu.value = false
     emit('item-selected', {
       item: itemName,
@@ -270,7 +291,6 @@
       height: 48px;
       object-fit: contain;
       cursor: pointer;
-      border: 3px solid #653a1b;
     }
 
     .placeholder-text {
@@ -329,5 +349,10 @@
       opacity: 0.4;
       cursor: not-allowed;
       pointer-events: none;
+    }
+
+    .item-selected {
+      border: 3px solid #653a1b;
+      cursor: pointer;
     }
 </style>

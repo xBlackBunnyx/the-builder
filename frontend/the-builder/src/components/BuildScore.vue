@@ -57,12 +57,12 @@ const props = defineProps({
   selectedRunes: Object
 })
 
-//Debug to check if all items are getting stored properly
-// console.log('BuildResults props: ', {
-//   champion: props.selectedChampion,
-//   items: props.selectedItems,
-//   runes: props.selectedRunes
-// })
+// Debug to check if all items are getting stored properly
+console.log('BuildResults props: ', {
+  champion: props.selectedChampion,
+  items: props.selectedItems,
+  runes: props.selectedRunes
+})
 
 const dialog = ref(false)
 const loading = ref(false)
@@ -82,7 +82,9 @@ const calculateScoreAndSave = async() => {
   buildSaved.value = false
   error.value = null
   loading.value = true
-  
+
+  console.log("cSAS: Checking items: " + (!props.selectedItems || props.selectedItems.length !== 6));
+  console.log("cSAS: Runes: " + !props.selectedRunes);
   //Check that everything has a value
   if (!props.selectedChampion) {
     error.value = 'Please, select a champion'

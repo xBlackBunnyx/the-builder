@@ -28,6 +28,6 @@
 
 <script setup>
     import ContactUs from './ContactUs.vue';
-    import SearchBar from '../SearchBar.vue';
+    import SearchBar from '../SearchBar.vue';   
 
 </script>

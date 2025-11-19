@@ -387,7 +387,7 @@
   const isUpdating = ref(false)
 
   const onSearchUpdate = (searchValue) => {
-    console.log('Search updated: ', searchValue)
+    // console.log('Search updated: ', searchValue)
   }
 
     const goToBuildCreator = () => {
@@ -409,9 +409,9 @@
     }
 
   watch(search, (newValue) => {
-    if (!newValue || newValue.trim() === ' ') {
-      console.log('Seach cleared, but keeping selection: ', selectedChampion.value?.name)
-    }
+    // if (!newValue || newValue.trim() === ' ') {
+    //   console.log('Seach cleared, but keeping selection: ', selectedChampion.value?.name)
+    // }
   })
 
   let timeout = -1

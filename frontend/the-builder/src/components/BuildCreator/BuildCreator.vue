@@ -55,8 +55,8 @@
             </v-col>
         </v-row>
     </v-container>
-    <div @click="theItemEnabler(0, 'Boots')">
-      <button> Enable that thing </button>
+    <div >
+      <button @click="theItemEnabler(0, 'Boots')"> Enable that thing </button>
     </div>
 </template>
 
@@ -262,7 +262,14 @@
       theItemDisabler(slotData, slotData.item.tag);
     }
 
-    let item0 = ref(null);
+    const theEnabler = (tag) => {
+        console.log("The enabler called");
+        for (item in items) {
+        if (item.tag == tag){
+            item.enabled = true;
+        }
+        }
+    }
 
     //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
     //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 
@@ -274,6 +281,7 @@
       element.sayHi;
       element.theEnabler(tag);
     }
+
     //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
     //Selecciona item (1º vez) -> bloquea el resto
     // Reemplaza por otro -> permite escoger "todos" aka los disponibles en su slot por tags

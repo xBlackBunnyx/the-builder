@@ -262,15 +262,6 @@
       theItemDisabler(slotData, slotData.item.tag);
     }
 
-    const theEnabler = (tag) => {
-        console.log("The enabler called");
-        for (item in items) {
-        if (item.tag == tag){
-            item.enabled = true;
-        }
-        }
-    }
-
     //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
     //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 
     // de slots exceptuando el suyo propio
@@ -278,8 +269,8 @@
     // para hacer que los objetos tengan las tags que contiene este objeto sean seleccionables
     const theItemEnabler = (slot, tag) => {
       let element = useTemplateRef('item0');
-      element.sayHi;
-      element.theEnabler(tag);
+      element.sayHiButVariable();
+      // element.theEnabler(tag);
     }
 
     //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
@@ -288,13 +279,13 @@
     //Te permite cambiar por otro de su mismo tipo y si cambia a un tipo distinto, se desbloquea en el resto de slots
     // Selecciona el item (2º vez) -> vuelve a bloquearlo para todo el mundo
     const theItemDisabler = (slot, tag) => {
-      for (slot in slots) {
-        if (item.position == slot) {
-          continue;
-        } else {
-          item.disabled(tag)
-        }
-      }
+      // for (slot in slots) {
+      //   if (item.position == slot) {
+      //     continue;
+      //   } else {
+      //     item.disabled(tag)
+      //   }
+      // }
     }
 
     const findChampionByName = (name) => {

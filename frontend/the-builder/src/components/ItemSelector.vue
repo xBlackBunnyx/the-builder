@@ -167,11 +167,15 @@
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
   ]
 
+  const sayHiButVariable = () => { console.log("Hi Var"); }
+
   defineExpose({
-    sayHi
+    sayHi,
+    sayHiButVariable
   })
 
   function sayHi() { console.log("Hi"); }
+
 
   const selectedItem = ref(null)
 

@@ -48,6 +48,7 @@ async function run(frontendData) {
     let runes = await findRunes(client, runesName);
     console.log("We are testing the limits");
     let codedReferenceBuild = await GetReferenceBuild(client, StringsToBuild(data));
+    console.log("The insides of codedReferenceBuild is " , codedReferenceBuild);
     console.log("PING");
     let refBuildChampion = BuildToStrings(codedReferenceBuild)[0];
     console.log("PONG");
@@ -62,7 +63,7 @@ async function run(frontendData) {
       console.log("POLO");
 
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
-    ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
+        ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
 
     //Final result that will be sent to the frontend
@@ -190,7 +191,7 @@ function BuildToStrings(build) {
   }
   // Champ section
   // Get rid of the pad
-  let nonZeroSpot = -1;
+  let nonZeroSpot = 2;
   for (let i = 0; i < 3; ++i)
   {
     if (build[i] != '0') {
@@ -198,11 +199,11 @@ function BuildToStrings(build) {
       break; 
     }
   }
-  let champIndex = 0;
-  if (nonZeroSpot != -1) {
-    champIndex = build.slice(nonZeroSpot, 3);
-  }
-  // console.log("We are trying to push");
+  // let champIndex = 0;
+  // if (nonZeroSpot != -1) {
+  //   champIndex = build.slice(nonZeroSpot, 3);
+  // }
+  let champIndex = build.slice(nonZeroSpot, 3);
   // console.log("The champ index is ", champIndex, " and the champion is ", champList[champIndex]);
   result.push(champList[champIndex]);
   // if (nonZeroSpot == -1) {
@@ -212,35 +213,28 @@ function BuildToStrings(build) {
   // let champIndex = build.slice(nonZeroSpot, 3);
   // result.push(champList[champIndex]);
   // console.log("I'm strong, i've done a lot of push ups");
+
   // Item part
   for (let i = 3; i < 21; i += 3) {
-      let nonZeroSpot = -1;
+      let nonZeroSpot = i +2;
     for (let j = i; j < i+3; ++j)
     {
-      console.log("NADIE SABE QUE ESTA PASANDO AAHH!!");
       if (build[j] != '0') {
         nonZeroSpot = j;
         break; 
       }
     }
-    console.log("brujeria is happening");
-    if (nonZeroSpot == -1) {
-      console.log("Item part of the build was wrong at index " + j);
-      return;
-    }
-    console.log("es cosa mia o ahora lo que esta debajo se acaba justo de activar");
+    // console.log("checking the zeros and nons |", nonZeroSpot, "|");
     let itemIndex = Number(build.slice(nonZeroSpot, i+3));
-    console.log("la magia del enter activa cosas es increible");
     let itemName = itemList[itemIndex];
-      console.log("We are trying to push");
-    console.log("The item index is ", itemIndex, " and the item is ", itemList[itemIndex]);
+    // console.log("The item index is ", itemIndex, " and the item is ", itemList[itemIndex]);
     result.push(itemName);
-    console.log("I'm strong, i've done a lot of push ups");
   }
   
   // Rune part
   for (let i = 21; i < build.length-1; i+=2)
   {
+    let nonZeroSpot = i + 2;
     for (let j = i; j < i+2; ++j)
     {
       if (build[j] != '0') {
@@ -248,15 +242,12 @@ function BuildToStrings(build) {
         break; 
       }
     }
-    if (nonZeroSpot == -1) {
-      console.log("Rune part of the build was wrong at index " + j);
-      return;
-    }
+    // if (nonZeroSpot == -1) {
+    //   console.log("Rune part of the build was wrong at index " + j);
+    //   return;
+    // }
     let runeIndex = Number(build.slice(nonZeroSpot, i+2));
-          console.log("We are trying to push");
-    console.log("The rune index is ", runeIndex, " and the rune is ", runeList[runeIndex]);
     result.push(runeList[runeIndex]);
-    console.log("I'm EXTRA strong, i've done ALL THE push ups");
   }
 
   return result;
@@ -458,16 +449,20 @@ function ScoreCalculator(referenceBuild, playerBuild)
   const runeWeight = 0.25;
 
   //Minimum build score
-  const minimumItemsScore = 30;
+  const minimumItemsScore = 10;
   const minimumRunesScore = 30;
 
   //Reference build score
   let referenceRunesScore = referenceBuild[1];
+  console.log("The score for the runes of the referenece is ", referenceRunesScore);
   let referenceItemsScore = referenceBuild[0];
+   console.log("The score for the items of the reference is ", referenceItemsScore);
 
   //Frontend build score
   let playerRunesScore = playerBuild[1];
+  console.log("The score for the runes of the player is ", playerRunesScore);
   let playerItemsScore = playerBuild[0];
+    console.log("The score for the items of the player is ", playerItemsScore);
 
   //Calculate the minimum value possible
   const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 

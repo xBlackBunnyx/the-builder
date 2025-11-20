@@ -30,7 +30,7 @@ const client = new MongoClient(uri, {
 async function run(frontendData) {
   try {
     //Here we have to put all the functions related to getting something from the database
-    console.log("We are inside the run function");
+    // console.log("We are inside the run function");
   await client.connect();
   const db = client.db("Builder");
    // Send a ping to confirm a successful connection
@@ -46,16 +46,15 @@ async function run(frontendData) {
     let champ = await findChamps(client, championName);
     let items = await findItem(client, itemsName);
     let runes = await findRunes(client, runesName);
-    console.log("We are testing the limits");
+
     let codedReferenceBuild = await GetReferenceBuild(client, StringsToBuild(data));
-    console.log("The insides of codedReferenceBuild is " , codedReferenceBuild);
-    console.log("PING");
+
     let refBuildChampion = BuildToStrings(codedReferenceBuild)[0];
-    console.log("PONG");
+
     let refBuildItems = BuildToStrings(codedReferenceBuild).slice(1,7);
-    console.log("PUNG");
+
     let refBuildRunes = BuildToStrings(codedReferenceBuild).slice(7);
-      console.log("MARCO");
+
     let refChamp = await findChamps(client, refBuildChampion);
     let refItems = await findItem(client, refBuildItems);
     let refRunes = await findRunes(client, refBuildRunes);
@@ -199,20 +198,10 @@ function BuildToStrings(build) {
       break; 
     }
   }
-  // let champIndex = 0;
-  // if (nonZeroSpot != -1) {
-  //   champIndex = build.slice(nonZeroSpot, 3);
-  // }
+
   let champIndex = build.slice(nonZeroSpot, 3);
   // console.log("The champ index is ", champIndex, " and the champion is ", champList[champIndex]);
   result.push(champList[champIndex]);
-  // if (nonZeroSpot == -1) {
-  //   console.log("Champion part of the build was wrong");
-  //   return;
-  // }
-  // let champIndex = build.slice(nonZeroSpot, 3);
-  // result.push(champList[champIndex]);
-  // console.log("I'm strong, i've done a lot of push ups");
 
   // Item part
   for (let i = 3; i < 21; i += 3) {
@@ -242,10 +231,7 @@ function BuildToStrings(build) {
         break; 
       }
     }
-    // if (nonZeroSpot == -1) {
-    //   console.log("Rune part of the build was wrong at index " + j);
-    //   return;
-    // }
+
     let runeIndex = Number(build.slice(nonZeroSpot, i+2));
     result.push(runeList[runeIndex]);
   }
@@ -454,15 +440,11 @@ function ScoreCalculator(referenceBuild, playerBuild)
 
   //Reference build score
   let referenceRunesScore = referenceBuild[1];
-  console.log("The score for the runes of the referenece is ", referenceRunesScore);
   let referenceItemsScore = referenceBuild[0];
-   console.log("The score for the items of the reference is ", referenceItemsScore);
 
   //Frontend build score
   let playerRunesScore = playerBuild[1];
-  console.log("The score for the runes of the player is ", playerRunesScore);
   let playerItemsScore = playerBuild[0];
-    console.log("The score for the items of the player is ", playerItemsScore);
 
   //Calculate the minimum value possible
   const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 

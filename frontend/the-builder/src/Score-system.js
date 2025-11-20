@@ -468,9 +468,9 @@ function ScoreCalculator(referenceBuild, playerBuild)
   console.log("The player Score is ", playerScore);
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
-  console.log("Don't you start with your shit again");
-  if (normalizedResult > 1) { playernormalizedResultScore = 1; } // cap it, just in case
-  console.log("Normalized score is " + normalizedResult);
+  if (normalizedResult > 1) { 
+    normalizedResult = 1;// cap it, just in case
+  }
   // console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
 }

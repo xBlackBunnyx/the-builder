@@ -38,30 +38,40 @@ async function run(frontendData) {
   // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     let data = PlayerBuildImporter(frontendData);
-
+    
     let championName = data[0];
     let itemsName = data.slice(1,7);
     let runesName = data.slice(7);
-
+    
     let champ = await findChamps(client, championName);
     let items = await findItem(client, itemsName);
     let runes = await findRunes(client, runesName);
-
+    console.log("We are testing the limits");
     let codedReferenceBuild = await GetReferenceBuild(client, StringsToBuild(data));
+    console.log("PING");
     let refBuildChampion = BuildToStrings(codedReferenceBuild)[0];
+    console.log("PONG");
     let refBuildItems = BuildToStrings(codedReferenceBuild).slice(1,7);
+    console.log("PUNG");
     let refBuildRunes = BuildToStrings(codedReferenceBuild).slice(7);
-
+      console.log("MARCO");
     let refChamp = await findChamps(client, refBuildChampion);
     let refItems = await findItem(client, refBuildItems);
     let refRunes = await findRunes(client, refBuildRunes);
+
+      console.log("POLO");
 
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
     ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
 
     //Final result that will be sent to the frontend
-    return await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
+    let theResult = await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
+    if (theResult > 100){
+      theResult = 100;
+    }
+
+    return theResult;
     
  } finally {
     // Ensures that the client will close when you finish/error
@@ -190,9 +200,10 @@ function BuildToStrings(build) {
   }
   let champIndex = 0;
   if (nonZeroSpot != -1) {
-    console.log("Champion part of the build was wrong");
     champIndex = build.slice(nonZeroSpot, 3);
   }
+  // console.log("We are trying to push");
+  // console.log("The champ index is ", champIndex, " and the champion is ", champList[champIndex]);
   result.push(champList[champIndex]);
   // if (nonZeroSpot == -1) {
   //   console.log("Champion part of the build was wrong");
@@ -200,24 +211,31 @@ function BuildToStrings(build) {
   // }
   // let champIndex = build.slice(nonZeroSpot, 3);
   // result.push(champList[champIndex]);
-
+  // console.log("I'm strong, i've done a lot of push ups");
   // Item part
   for (let i = 3; i < 21; i += 3) {
       let nonZeroSpot = -1;
     for (let j = i; j < i+3; ++j)
     {
+      console.log("NADIE SABE QUE ESTA PASANDO AAHH!!");
       if (build[j] != '0') {
         nonZeroSpot = j;
         break; 
       }
     }
+    console.log("brujeria is happening");
     if (nonZeroSpot == -1) {
       console.log("Item part of the build was wrong at index " + j);
       return;
     }
+    console.log("es cosa mia o ahora lo que esta debajo se acaba justo de activar");
     let itemIndex = Number(build.slice(nonZeroSpot, i+3));
+    console.log("la magia del enter activa cosas es increible");
     let itemName = itemList[itemIndex];
+      console.log("We are trying to push");
+    console.log("The item index is ", itemIndex, " and the item is ", itemList[itemIndex]);
     result.push(itemName);
+    console.log("I'm strong, i've done a lot of push ups");
   }
   
   // Rune part
@@ -235,7 +253,10 @@ function BuildToStrings(build) {
       return;
     }
     let runeIndex = Number(build.slice(nonZeroSpot, i+2));
+          console.log("We are trying to push");
+    console.log("The rune index is ", runeIndex, " and the rune is ", runeList[runeIndex]);
     result.push(runeList[runeIndex]);
+    console.log("I'm EXTRA strong, i've done ALL THE push ups");
   }
 
   return result;

@@ -30,7 +30,7 @@ const client = new MongoClient(uri, {
 async function run(frontendData) {
   try {
     //Here we have to put all the functions related to getting something from the database
-    console.log("We are inside the run function");
+    // console.log("We are inside the run function");
   await client.connect();
   const db = client.db("Builder");
    // Send a ping to confirm a successful connection
@@ -38,30 +38,40 @@ async function run(frontendData) {
   // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     let data = PlayerBuildImporter(frontendData);
-
+    
     let championName = data[0];
     let itemsName = data.slice(1,7);
     let runesName = data.slice(7);
-
+    
     let champ = await findChamps(client, championName);
     let items = await findItem(client, itemsName);
     let runes = await findRunes(client, runesName);
 
     let codedReferenceBuild = await GetReferenceBuild(client, StringsToBuild(data));
+
     let refBuildChampion = BuildToStrings(codedReferenceBuild)[0];
+
     let refBuildItems = BuildToStrings(codedReferenceBuild).slice(1,7);
+
     let refBuildRunes = BuildToStrings(codedReferenceBuild).slice(7);
 
     let refChamp = await findChamps(client, refBuildChampion);
     let refItems = await findItem(client, refBuildItems);
     let refRunes = await findRunes(client, refBuildRunes);
 
+      console.log("POLO");
+
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
-    ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
+        ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
 
     //Final result that will be sent to the frontend
-    return await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
+    let theResult = await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
+    if (theResult > 100){
+      theResult = 100;
+    }
+
+    return theResult;
     
  } finally {
     // Ensures that the client will close when you finish/error
@@ -180,7 +190,7 @@ function BuildToStrings(build) {
   }
   // Champ section
   // Get rid of the pad
-  let nonZeroSpot = -1;
+  let nonZeroSpot = 2;
   for (let i = 0; i < 3; ++i)
   {
     if (build[i] != '0') {
@@ -188,16 +198,14 @@ function BuildToStrings(build) {
       break; 
     }
   }
-  if (nonZeroSpot == -1) {
-    console.log("Champion part of the build was wrong");
-    return;
-  }
+
   let champIndex = build.slice(nonZeroSpot, 3);
+  // console.log("The champ index is ", champIndex, " and the champion is ", champList[champIndex]);
   result.push(champList[champIndex]);
 
   // Item part
   for (let i = 3; i < 21; i += 3) {
-      let nonZeroSpot = -1;
+      let nonZeroSpot = i +2;
     for (let j = i; j < i+3; ++j)
     {
       if (build[j] != '0') {
@@ -205,18 +213,17 @@ function BuildToStrings(build) {
         break; 
       }
     }
-    if (nonZeroSpot == -1) {
-      console.log("Item part of the build was wrong at index " + j);
-      return;
-    }
+    // console.log("checking the zeros and nons |", nonZeroSpot, "|");
     let itemIndex = Number(build.slice(nonZeroSpot, i+3));
     let itemName = itemList[itemIndex];
+    // console.log("The item index is ", itemIndex, " and the item is ", itemList[itemIndex]);
     result.push(itemName);
   }
   
   // Rune part
   for (let i = 21; i < build.length-1; i+=2)
   {
+    let nonZeroSpot = i + 2;
     for (let j = i; j < i+2; ++j)
     {
       if (build[j] != '0') {
@@ -224,10 +231,7 @@ function BuildToStrings(build) {
         break; 
       }
     }
-    if (nonZeroSpot == -1) {
-      console.log("Rune part of the build was wrong at index " + j);
-      return;
-    }
+
     let runeIndex = Number(build.slice(nonZeroSpot, i+2));
     result.push(runeList[runeIndex]);
   }
@@ -431,17 +435,17 @@ function ScoreCalculator(referenceBuild, playerBuild)
   const runeWeight = 0.25;
 
   //Minimum build score
-  const minimumItemsScore = 30;
+  const minimumItemsScore = 10;
   const minimumRunesScore = 30;
 
   //Reference build score
   let referenceRunesScore = referenceBuild[1];
   let referenceItemsScore = referenceBuild[0];
-  console.log("The reference scores for the runes and items are ", referenceRunesScore, " and ", referenceItemsScore)
-  //F build score
+
+  //Frontend build score
   let playerRunesScore = playerBuild[1];
   let playerItemsScore = playerBuild[0];
-  console.log("The player scores for the runes and the items are ", playerRunesScore, " and ", playerItemsScore);
+
   //Calculate the minimum value possible
   const minimumScore = 1 + (itemWeight * minimumItemsScore) + (runeWeight * minimumRunesScore); 
 
@@ -454,7 +458,7 @@ function ScoreCalculator(referenceBuild, playerBuild)
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
 
-  console.log("the normalizedResult is " + normalizedResult);
+  // console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
 }
 

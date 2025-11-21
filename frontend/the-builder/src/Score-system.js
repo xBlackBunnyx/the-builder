@@ -59,19 +59,14 @@ async function run(frontendData) {
     let refItems = await findItem(client, refBuildItems);
     let refRunes = await findRunes(client, refBuildRunes);
 
-      console.log("POLO");
+      // console.log("POLO");
 
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
         ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
 
     //Final result that will be sent to the frontend
-    let theResult = await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
-    if (theResult > 100){
-      theResult = 100;
-    }
-
-    return theResult;
+    return await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
     
  } finally {
     // Ensures that the client will close when you finish/error
@@ -399,7 +394,7 @@ function ScoreGiver(champ, items, runes) {
       if (itemLimitation == "Support" && champRoles[k] == "Support" && !extraSuppPointsAwardedFlag) {
         currentItemScore += 15;
         extraSuppPointsAwardedFlag = true;
-        console.log("SG: Support item detected in Support character, awarding extra points");
+        // console.log("SG: Support item detected in Support character, awarding extra points");
         break;
       }
     }

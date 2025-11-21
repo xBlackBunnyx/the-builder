@@ -2,7 +2,6 @@
   <v-container class="d-flex justify-center">
     <v-menu v-model="menu" transition="scale-transition">
       <template v-slot:activator="{ props }">
-        <div v-for="slot in slots" :key="slot">
         <button class="selectorstyle pa-3" v-bind="props" >
           <div class="button-content">
             <img
@@ -15,7 +14,6 @@
             <span v-else class="placeholder-text"> Item</span>
           </div>
         </button>
-        </div>
       </template>
 
         <v-list class="d-flex flex-wrap selectorstyle" style="max-width: 400px;">
@@ -31,8 +29,8 @@
                 :src="item.img"
                 alt="Item"
                 class="item-image"
-                :class="{ 'item-selected' : isItemSelected(item), 'item-disabled' : !isItemEnabled(item)}"
-                @click.stop="selectItem(item)"
+                :class="{ 'item-selected' : this.isItemSelected(item), 'item-disabled' : !this.isItemEnabled(item)}"
+                @click="selectItem(item)"
               />
             </template>
             <div class="tooltip-content">
@@ -51,12 +49,14 @@
   </v-container>
 </template>
 
-<script setup>
+<script>
   import { ref } from 'vue'
 
-  const menu = ref(false)
-  //All the items, their images, stats, and whether they're enabled or not
-  const items = [               
+  export default{
+    data () {
+      return {
+          //All the items, their images, stats, and whether they're enabled or not
+        items: [               
     {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},
     {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:false},
     {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png", stats: {"Ability Haste": "+10", "Movement Speed" : "+45"}, tag: ["Boots"], enabled:true},
@@ -167,82 +167,75 @@
     {name: "Yun Tal Wildarrows", img: "/items-picture/Yun_Tal_Wildarrows.png", stats: {"Attack Damage":"+55", "Attack Speed":"+35%"}, tag: ["Yun Tal Wildarrows"], enabled:true},
     {name: "Zeke's Convergence", img: "/items-picture/Zeke_Convergence.png", stats: {"Ability Haste":"+10", "Health":"+300", "Armor":"+25", "Magic Resistance":"+25"}, tag: ["Zeke's Convergence"], enabled:true},
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
-  ]
-
-  const slots = [0,1,2,3,4,5];
-
-  const sayHiButVariable = () => { console.log("Hi Var"); }
-
-  defineExpose({
-    sayHi,
-    sayHiButVariable
-  })
-
-  function sayHi() { console.log("Hi"); }
-
-
-  const selectedItem = ref(null)
-
-  const emit = defineEmits(['item-selected'])
-
-    function isItemEnabled(item) {
-    // console.log("Checking item " + item.name);
-    for (let i = 0; i < items.length; ++i) {
-      if (item.name == items[i].name) {
-        // console.log("Item found, the enabled value is " + items[i].enabled);
-        return items[i].enabled;
+          ],
+        menu: ref(false),
+        selectedItem: ref(null),
+        // emit: defineEmits(['item-selected']),
       }
-    }
-  }
-  
+    },
+    created () {
+      //Here we put all the functions that we want to be executed at the loading of the page
+      // defineEmits(['item-selected'])
+    }, 
+    methods: {
+
+      isItemEnabled(item) {
+      // console.log("Checking item " + item.name);
+      for (let i = 0; i < this.items.length; ++i) {
+        if (item.name == this.items[i].name) {
+          // console.log("Item found, the enabled value is " + items[i].enabled);
+          return this.items[i].enabled;
+        }
+      }
+    },
 
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
-  function theEnabler(item) {
-    // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
-    for (let i=0; i < items.length; ++i) {
-      for (let j = 0; j < items[i].tag.length; ++j) {
-        // console.log("tE: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
-        if (item.tag == items[i].tag[j]){
-          // console.log("tE: |||| That one fits the tag " + item.tag);
-          items[i].enabled = true;
-        }
-      }
-    }
-  }
-
-
-  //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
-  function theDisabler(item) {
-    // console.log("tD: LOOKING FOR TAG(S) " + item.tag);
-    for (let i=0; i < items.length; ++i) {
-      // console.log("tD: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+    theEnabler(item) {
+      // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
+      for (let i=0; i < this.items.length; ++i) {
         for (let j = 0; j < items[i].tag.length; ++j) {
-          if (item.tag == items[i].tag[j]){
-            // console.log("tD: |||| That one fits the tag " + item.tag);
-            items[i].enabled = false;
+          // console.log("tE: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+          if (item.tag == this.items[i].tag[j]){
+            // console.log("tE: |||| That one fits the tag " + item.tag);
+            this.items[i].enabled = true;
           }
         }
+      }
+    },
+
+      //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
+      theDisabler(item) {
+        // console.log("tD: LOOKING FOR TAG(S) " + item.tag);
+        for (let i=0; i < this.items.length; ++i) {
+          // console.log("tD: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+            for (let j = 0; j < this.items[i].tag.length; ++j) {
+              if (item.tag == this.items[i].tag[j]){
+                // console.log("tD: |||| That one fits the tag " + item.tag);
+                this.items[i].enabled = false;
+              }
+            }
+        }
+      },
+      isItemSelected (item) {
+        return this.selectedItem && this.selectedItem.name === item.name
+      },
+
+      //Function that select the items
+      selectItem(item){
+        this.selectedItem = item;
+        let itemName = item.name;
+        let itemTag = item.tag;
+        let isEnabled = item.enabled;
+        this.theDisabler(item);
+        this.menu = false
+        this.emit('item-selected', {
+          item: itemName,
+          // tag: itemTag,
+          // enabled: isEnabled
+        })
+      },
+
     }
-  }
-
-
-  function isItemSelected (item) {
-    return selectedItem.value && selectedItem.value.name === item.name
-  }
-
-  //Function that select the items
-  function selectItem(item){
-    selectedItem.value = item;
-    let itemName = item.name;
-    let itemTag = item.tag;
-    let isEnabled = item.enabled;
-    theDisabler(item);
-    menu.value = false
-    emit('item-selected', {
-      item: itemName,
-      // tag: itemTag,
-      // enabled: isEnabled
-    })
   }
 
 </script>

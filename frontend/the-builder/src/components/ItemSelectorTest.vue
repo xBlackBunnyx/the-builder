@@ -2,6 +2,7 @@
   <v-container class="d-flex justify-center">
     <v-menu v-model="menu" transition="scale-transition">
       <template v-slot:activator="{ props }">
+        <div v-for="slot in slots" :key="slot">
         <button class="selectorstyle pa-3" v-bind="props" >
           <div class="button-content">
             <img
@@ -14,6 +15,7 @@
             <span v-else class="placeholder-text"> Item</span>
           </div>
         </button>
+        </div>
       </template>
 
         <v-list class="d-flex flex-wrap selectorstyle" style="max-width: 400px;">
@@ -166,6 +168,8 @@
     {name: "Zeke's Convergence", img: "/items-picture/Zeke_Convergence.png", stats: {"Ability Haste":"+10", "Health":"+300", "Armor":"+25", "Magic Resistance":"+25"}, tag: ["Zeke's Convergence"], enabled:true},
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
   ]
+
+  const slots = [0,1,2,3,4,5];
 
   const sayHiButVariable = () => { console.log("Hi Var"); }
 

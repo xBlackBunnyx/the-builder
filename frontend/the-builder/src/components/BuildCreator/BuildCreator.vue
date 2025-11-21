@@ -262,14 +262,6 @@
       theItemDisabler(slotData, slotData.item.tag);
     }
 
-    const theEnabler = (tag) => {
-        console.log("The enabler called");
-        for (item in items) {
-        if (item.tag == tag){
-            item.enabled = true;
-        }
-        }
-    }
 
     //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
     //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 

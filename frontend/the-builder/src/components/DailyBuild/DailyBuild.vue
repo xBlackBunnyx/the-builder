@@ -556,10 +556,10 @@
             },
                 
             theExceptions() {
-                if (champions.tag == "melee") {
+                if (this.champions.tag == "melee") {
                     theItemDisabler(slot, "Ranged");
                 }
-                if (champions.name == "Cassiopeia") {
+                if (this.champions.name == "Cassiopeia") {
                     theItemDisabler(slot, "Boots");
                 }
             }

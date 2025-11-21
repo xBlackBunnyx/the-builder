@@ -50,8 +50,8 @@
 </template>
 
 <script>
-  import { emit } from 'process';
-import { ref } from 'vue'
+  // import { emit } from 'process';
+  import { ref } from 'vue'
 
   export default{
     emits: ['item-selected'],
@@ -180,7 +180,7 @@ import { ref } from 'vue'
     },
     created () {
       //Here we put all the functions that we want to be executed at the loading of the page
-      // defineEmits(['item-selected'])
+
     }, 
     methods: {
 
@@ -233,7 +233,7 @@ import { ref } from 'vue'
         let isEnabled = item.enabled;
         this.theDisabler(item);
         this.menu = false
-        this.emit('item-selected', {
+        emit('item-selected', {
           item: itemName,
           // tag: itemTag,
           // enabled: isEnabled

@@ -225,15 +225,6 @@
     }
   }
 
-  function isItemEnabled(item) {
-    // console.log("Checking item " + item.name);
-    for (let i = 0; i < items.length; ++i) {
-      if (item.name == items[i].name) {
-        // console.log("Item found, the enabled value is " + items[i].enabled);
-        return items[i].enabled;
-      }
-    }
-  }
 
   function isItemSelected (item) {
     return selectedItem.value && selectedItem.value.name === item.name

@@ -64,7 +64,7 @@
     import {ref, onMounted, watch, computed, useTemplateRef} from "vue";
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
-    import ItemSelector from "../ItemSelector.vue";
+    // import ItemSelector from "../ItemSelector.vue";
 
     const route = useRoute();
 

@@ -55,8 +55,8 @@
   const menu = ref(false)
   //All the items, their images, stats, and whether they're enabled or not
   const items = [               
-    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:false},
-    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:true},
+    {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},
+    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:false},
     {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png", stats: {"Ability Haste": "+10", "Movement Speed" : "+45"}, tag: ["Boots"], enabled:true},
     {name: "Mercury's Treads", img: "/items-picture/Mercury_Treads.png", stats: {"Magic Resistance": "+20", "Movement Speed": "+45", "Tenacity": "+30%"}, tag: ["Boots"], enabled:true},
     {name: "Plated Steelcaps", img: "/items-picture/Plated_Steelcaps.png", stats: {"Armor": "+25", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},
@@ -101,7 +101,7 @@
     {name: "Immortal Shieldbow", img: "/items-picture/Immortal_Shieldbow.png", stats: {"Attack Damage": "+55", "Critical Strike Chance": "+25%"}, tag: ["Lifeline"], enabled:true},
     {name: "Imperial Mandate", img: "/items-picture/Imperial_Mandate.png", stats: {"Imperial Mandate": "+60", "Ability Haste": "+20", "Mana Regeneration": "+125%"}, tag: ["Imperial Mandate"], enabled:true},
     {name: "Infinity Edge", img: "/items-picture/Infinity_Edge.png", stats: {"Attack Damage": "+70", "Critical Strike Chance": "+25%", "Critical Strike Damage": "+40%"}, tag: ["Infinity Edge"], enabled:true},
-    {name: "Jak'Sho, The Protean", img: "/items-picture/Jak_The_Protean.png", stats: {"Health": "+350", "Armor": "+45"}, tag: ["Jak'Sho, The Protean"], enabled:true},
+    {name: "Jak'Sho, The Protean", img: "/items-picture/Jak_The_Protean.png", stats: {"Health": "+350", "Armor": "+45", "Magic Resistance": "+45"}, tag: ["Jak'Sho, The Protean"], enabled:true},
     {name: "Kaenic Rookern", img: "/items-picture/Kaenic_Rookern.png", stats: {"Health":"+400", "Health Regeneration":"+100%"}, tag: ["Kaenic Rookern"], enabled:true},
     {name: "Knight's Vow", img: "/items-picture/Knight_Vow.png", stats: {"Ability Haste":"+10", "Health":"+200", "Health Regeneration":"+100%", "Armor":"+40"}, tag: ["Knight's Vow"], enabled:true},
     {name: "Kraken Slayer", img: "/items-picture/Kraken_Slayer.png", stats: {"Attack Damage":"+45", "Attack Speed":"+40%", "Movement Speed":"+4%"}, tag: ["Kraken Slayer"], enabled:true},
@@ -167,11 +167,15 @@
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
   ]
 
+  const sayHiButVariable = () => { console.log("Hi Var"); }
+
   defineExpose({
-    sayHi
+    sayHi,
+    sayHiButVariable
   })
 
   function sayHi() { console.log("Hi"); }
+
 
   const selectedItem = ref(null)
 
@@ -188,22 +192,38 @@
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
   function theEnabler(item) {
-    console.log("The enabler called");
-    for (var i=0; i < items.length; ++i) {
-      if (item.tag != items[i].tag){
-        item.enabled = true;
+    // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
+    for (let i=0; i < items.length; ++i) {
+      for (let j = 0; j < items[i].tag.length; ++j) {
+        // console.log("tE: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+        if (item.tag == items[i].tag[j]){
+          // console.log("tE: |||| That one fits the tag " + item.tag);
+          items[i].enabled = true;
+        }
       }
     }
   }
 
+  // function theEnablerAll() {
+  //   for (let i = 0; i < items.length; ++i) {
+  //     if (!items[i].enabled) {
+  //       console.log("tEA: Calling theEnabler with item " + items[i].name);
+  //       theEnabler(items[i]);
+  //     }
+  //   }
+  // }
+
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
   function theDisabler(item) {
-    for (var i=0; i < items.length; ++i) {
-      if ( item.tag == items[i].tag){
-        console.log("Checking the conditional statement")
-        items[i].enabled = false;
-        console.log("the items that matches tags are: ", items[i]);
-      }
+    // console.log("tD: LOOKING FOR TAG(S) " + item.tag);
+    for (let i=0; i < items.length; ++i) {
+      // console.log("tD: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+        for (let j = 0; j < items[i].tag.length; ++j) {
+          if (item.tag == items[i].tag[j]){
+            // console.log("tD: |||| That one fits the tag " + item.tag);
+            items[i].enabled = false;
+          }
+        }
     }
   }
 

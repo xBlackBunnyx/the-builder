@@ -50,9 +50,14 @@
 </template>
 
 <script>
-  import { ref } from 'vue'
+  import { emit } from 'process';
+import { ref } from 'vue'
 
   export default{
+    emits: ['item-selected'],
+    setup(props, {emit}) {
+      emit('item-selected')
+    },
     data () {
       return {
           //All the items, their images, stats, and whether they're enabled or not
@@ -170,7 +175,7 @@
           ],
         menu: ref(false),
         selectedItem: ref(null),
-        // emit: defineEmits(['item-selected']),
+        // emits: ['item-selected'],
       }
     },
     created () {

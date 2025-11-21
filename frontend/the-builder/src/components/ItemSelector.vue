@@ -22,7 +22,7 @@
             :key="item.name"
             class="ma-1 pa-0"
           >
-          <v-tooltip location="top left" class="golden-tooltip" :open-delay="100">
+          <v-tooltip location="top left" class="golden-tooltip" open-delay="100">
             <template #activator="{props}">
               <v-img 
                 v-bind="props"
@@ -181,14 +181,24 @@
 
   const emit = defineEmits(['item-selected'])
 
-  const theEnablerFunction = ref((tag) => {
-    console.log("The enabler called");
+    function isItemEnabled(item) {
+    // console.log("Checking item " + item.name);
+    for (let i = 0; i < items.length; ++i) {
+      if (item.name == items[i].name) {
+        // console.log("Item found, the enabled value is " + items[i].enabled);
+        return items[i].enabled;
+      }
+    }
+  }
+  
+  //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
+  function theEnabler(tag) {
     for (item in items) {
       if (item.tag == tag){
         item.enabled = true;
       }
     }
-  });
+  }
   
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
   function theEnabler(item) {
@@ -251,8 +261,8 @@
     menu.value = false
     emit('item-selected', {
       item: itemName,
-      tag: itemTag,
-      enabled: isEnabled
+      // tag: itemTag,
+      // enabled: isEnabled
     })
   }
 

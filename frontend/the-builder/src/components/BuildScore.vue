@@ -108,6 +108,7 @@ const calculateScoreAndSave = async() => {
   //Checking that none of the items are null/undefined
   const invalidItems = props.selectedItems.filter(item => !item)
   if (invalidItems.length > 0) {
+    // console.log("cSAS: ") /////////////////////////////// CHECK AROUND HERE
     error.value = `Some items are not selected, or some items incompatible. Check all slots`
     loading.value = false
     dialog.value = true

@@ -52,6 +52,7 @@
 <script>
   // import { emit } from 'process';
   import { ref } from 'vue'
+  
 
   export default{
     data () {
@@ -173,7 +174,7 @@
         selectedItem: ref(null),
         name: "ItemSelectorTest",
         differentiator: 0,
-
+        previousItem: null,
         // emits: ['item-selected'],
       }
     },
@@ -190,6 +191,17 @@
           this.theDisabler(data.msg);
         }
       });
+
+      this.emitter.on("enable", (data) => {
+        console.log("m: Event received, enabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
+        if (data.id != this.differentiator) {
+          console.log("m: It wasn't my ID, enabling that し");
+          this.theEnabler(data.msg);
+        }
+      });
+
+      this.differentiator = Math.random(null);
+      console.log("m: differentiator is " + this.differentiator);
     },
     
     methods: {
@@ -204,28 +216,35 @@
     },
 
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
-    theEnabler(item) {
-      // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
-      for (let i=0; i < this.items.length; ++i) {
-        for (let j = 0; j < items[i].tag.length; ++j) {
-          // console.log("tE: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
-          if (item.tag == this.items[i].tag[j]){
-            // console.log("tE: |||| That one fits the tag " + item.tag);
-            this.items[i].enabled = true;
-          }
+    theEnabler(tag) {
+        // console.log("tE: LOOKING FOR TAG(S) " + tag);
+        // console.log("tE: tag in params: " + JSON.stringify(tag));
+        for (let i=0; i < this.items.length; ++i) {
+          // console.log("tE: Checking tag " + this.items[i].name + " which has a tag of " + this.items[i].tag);
+            for (let j = 0; j < this.items[i].tag.length; ++j) {
+              // console.log("tE: tag we're looking at " + JSON.stringify(this.items[i]));
+              for (let k = 0; k < tag.length; ++k) {
+                if (tag[k] == this.items[i].tag[j]){
+                  // console.log("tE: |||| That one fits the tag " + tag[k]);
+                  this.items[i].enabled = true;
+                }
+              }
+              
+            }
         }
-      }
-    },
+      },
 
       //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
-      theDisabler(item) {
-        console.log("tD: LOOKING FOR TAG(S) " + item.tag);
+      theDisabler(tag) {
+        // console.log("tD: LOOKING FOR TAG(S) " + tag);
+        // console.log("tD: tag in params: " + JSON.stringify(tag));
         for (let i=0; i < this.items.length; ++i) {
-          console.log("tD: Checking item " + this.items[i].name + " which has a tag of " + this.items[i].tag);
+          // console.log("tD: Checking tag " + this.items[i].name + " which has a tag of " + this.items[i].tag);
             for (let j = 0; j < this.items[i].tag.length; ++j) {
-              for (let k = 0; k < item.tag.length; ++k) {
-                if (item.tag[k] == this.items[i].tag[j]){
-                  console.log("tD: |||| That one fits the tag " + item.tag[k]);
+              // console.log("tD: tag we're looking at " + JSON.stringify(this.items[i]));
+              for (let k = 0; k < tag.length; ++k) {
+                if (tag[k] == this.items[i].tag[j]){
+                  // console.log("tD: |||| That one fits the tag " + tag[k]);
                   this.items[i].enabled = false;
                 }
               }
@@ -244,16 +263,21 @@
         this.emitter.emit("disable", { msg: tags, id: this.differentiator});
       },
 
+      enableTagsEvent(tags) {
+        console.log("eTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
+        this.emitter.emit("enable", { msg: tags, id: this.differentiator});
+      },
+
       
 
       //Function that select the items
       selectItem(item){
         this.selectedItem = item;
-        let itemName = item.name;
-        let itemTag = item.tag;
-        let isEnabled = item.enabled;
-        // this.theDisabler(item);
+        if (this.previousItem) {
+          this.enableTagsEvent(this.previousItem.tag);
+        }
         this.disableTagsEvent(item.tag);
+        this.previousItem = item;
         this.menu = false
         // emit('item-selected', {
         //   item: itemName,

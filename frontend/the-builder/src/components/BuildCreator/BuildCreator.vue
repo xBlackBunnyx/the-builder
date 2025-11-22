@@ -27,8 +27,12 @@
                   <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
                 </v-col>
                 <v-col>
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 0)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
                 </v-col>
                 <v-col>
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 0)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>

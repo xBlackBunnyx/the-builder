@@ -22,17 +22,13 @@
             </v-col>
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
-                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)" ref="item0" id="HEY"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 1)" ref="item1"></item-selector>
+                <v-col>
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 0)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 2)" ref="item2"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 3)" ref="item3"></item-selector>
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 4)" ref="item4"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)" ref="item5"></item-selector>
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
@@ -55,9 +51,6 @@
             </v-col>
         </v-row>
     </v-container>
-    <div >
-      <button @click="theItemEnabler(0, 'Boots')"> Enable that thing </button>
-    </div>
 </template>
 
 <script setup>
@@ -65,6 +58,7 @@
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
     // import ItemSelector from "../ItemSelector.vue";
+    import ItemSelectorTest from "../ItemSelectorTest.vue";
 
     const route = useRoute();
 
@@ -257,9 +251,7 @@
     }
 
     const updateSelectedItems = (slotData, position) => {
-      selectedItems.value[position] = slotData.item;
-      theItemEnabler(slotData, slotData.item.tag);
-      theItemDisabler(slotData, slotData.item.tag);
+      // selectedItems.value[position] = slotData.item;
     }
 
 

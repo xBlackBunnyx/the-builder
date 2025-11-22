@@ -54,10 +54,6 @@
   import { ref } from 'vue'
 
   export default{
-    emits: ['item-selected'],
-    setup(props, {emit}) {
-      emit('item-selected')
-    },
     data () {
       return {
           //All the items, their images, stats, and whether they're enabled or not
@@ -175,6 +171,9 @@
           ],
         menu: ref(false),
         selectedItem: ref(null),
+        name: "ItemSelectorTest",
+        differentiator: 0,
+
         // emits: ['item-selected'],
       }
     },
@@ -182,8 +181,18 @@
       //Here we put all the functions that we want to be executed at the loading of the page
 
     }, 
-    methods: {
 
+    mounted() {
+      this.emitter.on("disable", (data) => {
+        console.log("m: Event received, disabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
+        if (data.id != this.differentiator) {
+          console.log("m: It wasn't my ID, disabling that し");
+          this.theDisabler(data.msg);
+        }
+      });
+    },
+    
+    methods: {
       isItemEnabled(item) {
       // console.log("Checking item " + item.name);
       for (let i = 0; i < this.items.length; ++i) {
@@ -210,20 +219,32 @@
 
       //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
       theDisabler(item) {
-        // console.log("tD: LOOKING FOR TAG(S) " + item.tag);
+        console.log("tD: LOOKING FOR TAG(S) " + item.tag);
         for (let i=0; i < this.items.length; ++i) {
-          // console.log("tD: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
+          console.log("tD: Checking item " + this.items[i].name + " which has a tag of " + this.items[i].tag);
             for (let j = 0; j < this.items[i].tag.length; ++j) {
-              if (item.tag == this.items[i].tag[j]){
-                // console.log("tD: |||| That one fits the tag " + item.tag);
-                this.items[i].enabled = false;
+              for (let k = 0; k < item.tag.length; ++k) {
+                if (item.tag[k] == this.items[i].tag[j]){
+                  console.log("tD: |||| That one fits the tag " + item.tag[k]);
+                  this.items[i].enabled = false;
+                }
               }
+              
             }
         }
       },
+
       isItemSelected (item) {
+        // enable tags
         return this.selectedItem && this.selectedItem.name === item.name
       },
+
+      disableTagsEvent(tags) {
+        console.log("dTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
+        this.emitter.emit("disable", { msg: tags, id: this.differentiator});
+      },
+
+      
 
       //Function that select the items
       selectItem(item){
@@ -231,13 +252,14 @@
         let itemName = item.name;
         let itemTag = item.tag;
         let isEnabled = item.enabled;
-        this.theDisabler(item);
+        // this.theDisabler(item);
+        this.disableTagsEvent(item.tag);
         this.menu = false
-        emit('item-selected', {
-          item: itemName,
+        // emit('item-selected', {
+        //   item: itemName,
           // tag: itemTag,
           // enabled: isEnabled
-        })
+        // })
       },
 
     }

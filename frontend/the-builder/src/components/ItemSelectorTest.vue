@@ -204,7 +204,7 @@
       // console.log("m: differentiator is " + this.differentiator);
 
       this.emitter.on("disabling", (data) => {
-        console.log("The information of data is the following ", data);
+        // console.log("The information of data is the following ", data);
         if (data.name == "Cassiopeia") {
           console.log('The champion is ', data.name)
                 this.theDisabler(['Boots']);

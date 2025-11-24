@@ -22,7 +22,7 @@
             :key="item.name"
             class="ma-1 pa-0"
           >
-          <v-tooltip location="top left" class="golden-tooltip" :open-delay="100">
+          <v-tooltip location="top left" class="golden-tooltip" open-delay="100">
             <template #activator="{props}">
               <v-img 
                 v-bind="props"
@@ -101,7 +101,7 @@
     {name: "Immortal Shieldbow", img: "/items-picture/Immortal_Shieldbow.png", stats: {"Attack Damage": "+55", "Critical Strike Chance": "+25%"}, tag: ["Lifeline"], enabled:true},
     {name: "Imperial Mandate", img: "/items-picture/Imperial_Mandate.png", stats: {"Imperial Mandate": "+60", "Ability Haste": "+20", "Mana Regeneration": "+125%"}, tag: ["Imperial Mandate"], enabled:true},
     {name: "Infinity Edge", img: "/items-picture/Infinity_Edge.png", stats: {"Attack Damage": "+70", "Critical Strike Chance": "+25%", "Critical Strike Damage": "+40%"}, tag: ["Infinity Edge"], enabled:true},
-    {name: "Jak'Sho, The Protean", img: "/items-picture/Jak_The_Protean.png", stats: {"Health": "+350", "Armor": "+45"}, tag: ["Jak'Sho, The Protean"], enabled:true},
+    {name: "Jak'Sho, The Protean", img: "/items-picture/Jak_The_Protean.png", stats: {"Health": "+350", "Armor": "+45", "Magic Resistance": "+45"}, tag: ["Jak'Sho, The Protean"], enabled:true},
     {name: "Kaenic Rookern", img: "/items-picture/Kaenic_Rookern.png", stats: {"Health":"+400", "Health Regeneration":"+100%"}, tag: ["Kaenic Rookern"], enabled:true},
     {name: "Knight's Vow", img: "/items-picture/Knight_Vow.png", stats: {"Ability Haste":"+10", "Health":"+200", "Health Regeneration":"+100%", "Armor":"+40"}, tag: ["Knight's Vow"], enabled:true},
     {name: "Kraken Slayer", img: "/items-picture/Kraken_Slayer.png", stats: {"Attack Damage":"+45", "Attack Speed":"+40%", "Movement Speed":"+4%"}, tag: ["Kraken Slayer"], enabled:true},
@@ -167,10 +167,31 @@
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
   ]
 
+  const sayHiButVariable = () => { console.log("Hi Var"); }
+
+  defineExpose({
+    sayHi,
+    sayHiButVariable
+  })
+
+  function sayHi() { console.log("Hi"); }
+
+
   const selectedItem = ref(null)
 
   const emit = defineEmits(['item-selected'])
+
+    function isItemEnabled(item) {
+    // console.log("Checking item " + item.name);
+    for (let i = 0; i < items.length; ++i) {
+      if (item.name == items[i].name) {
+        // console.log("Item found, the enabled value is " + items[i].enabled);
+        return items[i].enabled;
+      }
+    }
+  }
   
+
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
   function theEnabler(item) {
     // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
@@ -185,14 +206,6 @@
     }
   }
 
-  // function theEnablerAll() {
-  //   for (let i = 0; i < items.length; ++i) {
-  //     if (!items[i].enabled) {
-  //       console.log("tEA: Calling theEnabler with item " + items[i].name);
-  //       theEnabler(items[i]);
-  //     }
-  //   }
-  // }
 
   //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
   function theDisabler(item) {
@@ -205,16 +218,6 @@
             items[i].enabled = false;
           }
         }
-    }
-  }
-
-  function isItemEnabled(item) {
-    // console.log("Checking item " + item.name);
-    for (let i = 0; i < items.length; ++i) {
-      if (item.name == items[i].name) {
-        // console.log("Item found, the enabled value is " + items[i].enabled);
-        return items[i].enabled;
-      }
     }
   }
 
@@ -232,8 +235,8 @@
     menu.value = false
     emit('item-selected', {
       item: itemName,
-      tag: itemTag,
-      enabled: isEnabled
+      // tag: itemTag,
+      // enabled: isEnabled
     })
   }
 

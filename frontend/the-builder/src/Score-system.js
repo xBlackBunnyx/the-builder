@@ -38,7 +38,7 @@ async function run(frontendData) {
   // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     let data = PlayerBuildImporter(frontendData);
-    
+    console.log("r: Player build in backend: " + JSON.stringify(data));
     let championName = data[0];
     let itemsName = data.slice(1,7);
     let runesName = data.slice(7);
@@ -59,19 +59,14 @@ async function run(frontendData) {
     let refItems = await findItem(client, refBuildItems);
     let refRunes = await findRunes(client, refBuildRunes);
 
-      console.log("POLO");
+      // console.log("POLO");
 
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
         ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
     await SavePlayerBuilds(client, finalBuildResult);
 
     //Final result that will be sent to the frontend
-    let theResult = await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
-    if (theResult > 100){
-      theResult = 100;
-    }
-
-    return theResult;
+    return await Math.round(ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)) * 100);
     
  } finally {
     // Ensures that the client will close when you finish/error
@@ -315,6 +310,7 @@ function ScoreGiver(champ, items, runes) {
 
   //runes
   let champRoles;
+  let extraSuppPointsAwardedFlag = false;
   for (let i = 0; i < runeSection.length; ++i)
   {
     let currentRuneScore = 0;
@@ -358,7 +354,6 @@ function ScoreGiver(champ, items, runes) {
     }
     runeScore += currentRuneScore;
   }
-
   //items
   for(let i = 0; i < itemSection.length; ++i){
     let currentItemScore = 0;
@@ -391,6 +386,17 @@ function ScoreGiver(champ, items, runes) {
     let itemLimitation = itemSection[i].limitations;
     if(itemLimitation == "Boots"){
       currentItemScore += 20;      
+    }
+    
+    champRoles = champ.role.split(", "); // can't believe I'm doing this at five different places either
+    // buff supp points if they hold a supp item. I shouldn't worry about this happening more than once since a character can only have one support item.
+    for (let k = 0; k < champRoles.length; ++k) {
+      if (itemLimitation == "Support" && champRoles[k] == "Support" && !extraSuppPointsAwardedFlag) {
+        currentItemScore += 15;
+        extraSuppPointsAwardedFlag = true;
+        // console.log("SG: Support item detected in Support character, awarding extra points");
+        break;
+      }
     }
 
     for (let j = 0; j < commonRoles.length; j++){
@@ -457,7 +463,9 @@ function ScoreCalculator(referenceBuild, playerBuild)
   console.log("The player Score is ", playerScore);
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
-
+  if (normalizedResult > 1) { 
+    normalizedResult = 1;// cap it, just in case
+  }
   // console.log("the normalizedResult is " + normalizedResult);
   return normalizedResult;
 }

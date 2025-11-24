@@ -22,17 +22,17 @@
             </v-col>
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
-                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)" ref="item0"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 1)" ref="item1"></item-selector>
+                <v-col>
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 0)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 2)" ref="item2"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 3)" ref="item3"></item-selector>
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 2)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 3)" />
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 4)" ref="item4"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)" ref="item5"></item-selector>
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 4)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 5)" />
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
@@ -55,16 +55,14 @@
             </v-col>
         </v-row>
     </v-container>
-    <div >
-      <button @click="theItemEnabler(0, 'Boots')"> Enable that thing </button>
-    </div>
 </template>
 
 <script setup>
-    import {ref, onMounted, watch, computed, inject} from "vue";
+    import {ref, onMounted, watch, computed, useTemplateRef, inject} from "vue";
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
-
+    // import ItemSelector from "../ItemSelector.vue";
+    import ItemSelectorTest from "../ItemSelectorTest.vue";
     const emitter = inject('emitter');
 
     const route = useRoute();
@@ -242,14 +240,22 @@
     ]
 
     const currentChampion = ref(null)
-    const selectedItems = ref(["","","","","",""])
+    // const selectedItems = ref(["","","","","",""])
     const selectedRunes = ref({
         primary: {
             keystone: null,
             rows: [null, null, null]
         },
         secondary: [null, null]
-    })
+    });
+
+    let selectedItems = {};
+
+    emitter.on("item-selected", (data) => {
+      // console.log("i-s: data is " + JSON.stringify(data));
+      selectedItems[data.id] = data.item;
+      // console.log("i-s: currently, selectedItemsAlt is " + JSON.stringify(selectedItemsAlt));
+    });
 
     const updateSelectedRunes = (runesData) => {
         selectedRunes.value = {...runesData}
@@ -257,16 +263,7 @@
 
     const updateSelectedItems = (slotData, position) => {
       selectedItems.value[position] = slotData.item;
-      console.log("The item added to the list is ", selectedItems.value[position]);
-    }
-
-    const theEnabler = (tag) => {
-        console.log("The enabler called");
-        for (item in items) {
-        if (item.tag == tag){
-            item.enabled = true;
-        }
-        }
+      console.log("uSI: items are " + selectedItems);
     }
 
     const findChampionByName = (name) => {

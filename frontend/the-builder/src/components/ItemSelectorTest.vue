@@ -172,7 +172,7 @@
           ],
         menu: ref(false),
         selectedItem: ref(null),
-        // name: "ItemSelectorTest",
+        name: "ItemSelectorTest",
         differentiator: 0,
         previousItem: null,
         // emits: ['item-selected'],
@@ -261,6 +261,7 @@
                   this.items[i].enabled = false;
                 }
               }
+              
             }
         }
       },
@@ -291,10 +292,11 @@
         this.disableTagsEvent(item.tag);
         this.previousItem = item;
         this.menu = false
+        this.emitter.emit("item-selected", { item: item.name, id: this.differentiator });
         // emit('item-selected', {
         //   item: itemName,
-          // tag: itemTag,
-          // enabled: isEnabled
+        //   tag: itemTag,
+        //   enabled: isEnabled
         // })
       },
 

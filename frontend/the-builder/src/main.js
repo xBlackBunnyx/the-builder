@@ -7,7 +7,7 @@
 // Composables
 import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
-import mitt from 'mitt'; // NEW
+import mitt from 'mitt';
 
 // Components
 import App from './App.vue'
@@ -28,8 +28,8 @@ import './assets/css/fonts.css'
 //Routes
 import router from './routes.js'
 
-const emitter = mitt(); // NEW
-const app = createApp(App)
+const emitter = mitt();
+const app = createApp(App).provide('emitter', emitter);
 
 registerPlugins(app)
 
@@ -42,6 +42,6 @@ app.component("build-score", BuildScore);
 
 app.use(router)
 app.use(vuetify)
-app.config.globalProperties.emitter = emitter // NEW
+app.config.globalProperties.emitter = emitter
 app.mount('#app')
 

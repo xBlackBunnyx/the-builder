@@ -27,12 +27,12 @@
                   <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
                 </v-col>
                 <v-col>
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 0)" />
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 2)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 3)" />
                 </v-col>
                 <v-col>
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 0)" />
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 4)" />
+                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 5)" />
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
@@ -58,11 +58,13 @@
 </template>
 
 <script setup>
-    import {ref, onMounted, watch, computed, useTemplateRef} from "vue";
+    import {ref, onMounted, watch, computed, useTemplateRef, inject} from "vue";
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
     // import ItemSelector from "../ItemSelector.vue";
     import ItemSelectorTest from "../ItemSelectorTest.vue";
+    const emitter = inject('emitter');
+
 
     const route = useRoute();
 
@@ -239,14 +241,22 @@
     ]
 
     const currentChampion = ref(null)
-    const selectedItems = ref(["","","","","",""])
+    // const selectedItems = ref(["","","","","",""])
     const selectedRunes = ref({
         primary: {
             keystone: null,
             rows: [null, null, null]
         },
         secondary: [null, null]
-    })
+    });
+
+    let selectedItems = {};
+
+    emitter.on("item-selected", (data) => {
+      // console.log("i-s: data is " + JSON.stringify(data));
+      selectedItems[data.id] = data.item;
+      // console.log("i-s: currently, selectedItemsAlt is " + JSON.stringify(selectedItemsAlt));
+    });
 
     const slots = [0,1,2,3,4,5];
 
@@ -255,34 +265,8 @@
     }
 
     const updateSelectedItems = (slotData, position) => {
-      // selectedItems.value[position] = slotData.item;
-    }
-
-
-    //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
-    //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 
-    // de slots exceptuando el suyo propio
-    //En caso de que el objeto haya sido reemplazado por otro, se comunica con todos los items selectors 
-    // para hacer que los objetos tengan las tags que contiene este objeto sean seleccionables
-    const theItemEnabler = (slot, tag) => {
-      let element = useTemplateRef('item0');
-      element.sayHiButVariable();
-      // element.theEnabler(tag);
-    }
-
-    //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
-    //Selecciona item (1º vez) -> bloquea el resto
-    // Reemplaza por otro -> permite escoger "todos" aka los disponibles en su slot por tags
-    //Te permite cambiar por otro de su mismo tipo y si cambia a un tipo distinto, se desbloquea en el resto de slots
-    // Selecciona el item (2º vez) -> vuelve a bloquearlo para todo el mundo
-    const theItemDisabler = (slot, tag) => {
-      // for (slot in slots) {
-      //   if (item.position == slot) {
-      //     continue;
-      //   } else {
-      //     item.disabled(tag)
-      //   }
-      // }
+      selectedItems.value[position] = slotData.item;
+      console.log("uSI: items are " + selectedItems);
     }
 
     const findChampionByName = (name) => {

@@ -53,7 +53,7 @@ import { calculateScore } from '../api';
 
 const props = defineProps({
   selectedChampion: String,
-  selectedItems: Array,
+  selectedItems: Object,
   selectedRunes: Object
 })
 
@@ -77,13 +77,28 @@ const resultTitle = computed(() => {
   return 'Build Results'
 })
 
+function Dict2Array(dictionary)
+{
+  let result = ['', '', '', '', '', ''];
+  let keys = Object.keys(dictionary);
+  for (let i = 0; i < keys.length; ++i) {
+    result[i] = dictionary[keys[i]];
+    console.log("D2A: copied " + dictionary[keys[i]] + " using key " + keys[i] + " to spot " + i);
+  }
+  return result;
+}
+
 const calculateScoreAndSave = async() => {
   score.value = null
   buildSaved.value = false
   error.value = null
   loading.value = true
 
-  console.log("cSAS: Checking items: " + (!props.selectedItems || props.selectedItems.length !== 6));
+  let selectedItems = Dict2Array(props.selectedItems);
+
+  console.log("cSAS: items: " + JSON.stringify(selectedItems));
+  console.log("cSAS: length of items is: " + Object.keys(selectedItems).length );
+  // console.log("cSAS: Checking items: " + (!selectedItems));
   console.log("cSAS: Runes: " + !props.selectedRunes);
   //Check that everything has a value
   if (!props.selectedChampion) {
@@ -92,7 +107,7 @@ const calculateScoreAndSave = async() => {
     dialog.value = true
     return
   }
-  if (!props.selectedItems || props.selectedItems.length !== 6) {
+  if (!selectedItems || Object.keys(selectedItems).length  !== 6) {
     error.value = "Please, select all the items"
     loading.value = false
     dialog.value = true
@@ -106,7 +121,7 @@ const calculateScoreAndSave = async() => {
   }
 
   //Checking that none of the items are null/undefined
-  const invalidItems = props.selectedItems.filter(item => !item)
+  const invalidItems = selectedItems.filter(item => !item)
   if (invalidItems.length > 0) {
     // console.log("cSAS: ") /////////////////////////////// CHECK AROUND HERE
     error.value = `Some items are not selected, or some items incompatible. Check all slots`
@@ -122,7 +137,7 @@ const calculateScoreAndSave = async() => {
   try {
     const frontendData = {
       champion: props.selectedChampion,
-      items: props.selectedItems.map(item => {
+      items: selectedItems.map(item => {
         return typeof item === 'string' ? item : item.name || item
       }),
       runes: {

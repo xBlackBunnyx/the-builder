@@ -185,23 +185,23 @@
 
     mounted() {
       this.emitter.on("disable", (data) => {
-        console.log("m: Event received, disabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
+        // console.log("m: Event received, disabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
         if (data.id != this.differentiator) {
-          console.log("m: It wasn't my ID, disabling that し");
+          // console.log("m: It wasn't my ID, disabling that し");
           this.theDisabler(data.msg);
         }
       });
 
       this.emitter.on("enable", (data) => {
-        console.log("m: Event received, enabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
+        // console.log("m: Event received, enabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
         if (data.id != this.differentiator) {
-          console.log("m: It wasn't my ID, enabling that し");
+          // console.log("m: It wasn't my ID, enabling that し");
           this.theEnabler(data.msg);
         }
       });
 
       this.differentiator = Math.random(null);
-      console.log("m: differentiator is " + this.differentiator);
+      // console.log("m: differentiator is " + this.differentiator);
     },
     
     methods: {
@@ -259,12 +259,12 @@
       },
 
       disableTagsEvent(tags) {
-        console.log("dTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
+        // console.log("dTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
         this.emitter.emit("disable", { msg: tags, id: this.differentiator});
       },
 
       enableTagsEvent(tags) {
-        console.log("eTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
+        // console.log("eTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
         this.emitter.emit("enable", { msg: tags, id: this.differentiator});
       },
 
@@ -279,10 +279,11 @@
         this.disableTagsEvent(item.tag);
         this.previousItem = item;
         this.menu = false
+        this.emitter.emit("item-selected", { item: item.name, id: this.differentiator });
         // emit('item-selected', {
         //   item: itemName,
-          // tag: itemTag,
-          // enabled: isEnabled
+        //   tag: itemTag,
+        //   enabled: isEnabled
         // })
       },
 

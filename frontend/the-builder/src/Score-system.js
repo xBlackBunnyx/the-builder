@@ -38,7 +38,7 @@ async function run(frontendData) {
   // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     let data = PlayerBuildImporter(frontendData);
-    
+    console.log("r: Player build in backend: " + JSON.stringify(data));
     let championName = data[0];
     let itemsName = data.slice(1,7);
     let runesName = data.slice(7);

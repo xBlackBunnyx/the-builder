@@ -180,13 +180,7 @@
     },
     created () {
       //Here we put all the functions that we want to be executed at the loading of the page
-            // this.emitter.on("disabling", (data) => {
-            //   console.log("This information is loaded once the page is loaded")
-            //     if (data.name == "Cassiopeia") {
-            //       console.log("The champion is indeed, the unfamous ", data.name);
-            //             theDisabler([Boots]);
-            //     }
-            //   });
+
     }, 
 
     mounted() {

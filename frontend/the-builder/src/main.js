@@ -7,6 +7,7 @@
 // Composables
 import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
+import mitt from 'mitt'
 
 // Components
 import App from './App.vue'
@@ -27,6 +28,8 @@ import './assets/css/fonts.css'
 //Routes
 import router from './routes.js'
 
+const emitter = mitt();
+
 const app = createApp(App)
 
 registerPlugins(app)
@@ -40,10 +43,9 @@ app.component("build-score", BuildScore);
 
 app.use(router)
 app.use(vuetify)
-<<<<<<< Updated upstream
-=======
+
 app.config.globalProperties.emitter = emitter // NEW
 app.provide('emitter', emitter)
->>>>>>> Stashed changes
+
 app.mount('#app')
 

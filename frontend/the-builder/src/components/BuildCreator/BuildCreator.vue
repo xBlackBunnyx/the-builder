@@ -61,9 +61,15 @@
 </template>
 
 <script setup>
+<<<<<<< Updated upstream
     import {ref, onMounted, watch, computed} from "vue";
+=======
+    import {ref, onMounted, watch, computed, inject} from "vue";
+>>>>>>> Stashed changes
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
+
+    const emitter = inject('emitter');
 
     const route = useRoute();
 
@@ -249,16 +255,18 @@
         secondary: [null, null]
     })
 
-    const slots = [0,1,2,3,4,5];
-
     const updateSelectedRunes = (runesData) => {
         selectedRunes.value = {...runesData}
     }
 
     const updateSelectedItems = (slotData, position) => {
       selectedItems.value[position] = slotData.item;
+<<<<<<< Updated upstream
       theItemEnabler(slotData, slotData.item.tag);
       theItemDisabler(slotData, slotData.item.tag);
+=======
+      console.log("The item added to the list is ", selectedItems.value[position]);
+>>>>>>> Stashed changes
     }
 
     const theEnabler = (tag) => {
@@ -270,6 +278,7 @@
         }
     }
 
+<<<<<<< Updated upstream
     //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
     //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 
     // de slots exceptuando el suyo propio
@@ -294,6 +303,8 @@
       }
     }
 
+=======
+>>>>>>> Stashed changes
     const findChampionByName = (name) => {
         if (!name) return null;
         let foundChampion = champions.find(champ =>
@@ -336,15 +347,17 @@
         }
     }
 
+    function disableItems() {
+        emitter.emit("disabling", {role:currentChampion.value.tag, name:currentChampion.value.name})
+    }
+
     watch(() => route.query, updateChampionFromRoute, {immediate: true})
+
     onMounted(() => {
         updateChampionFromRoute();
-        if (champions.tag == "melee") {
-            theItemDisabler(slot, "Ranged");
-        }
-        if (champions.name == "Cassiopeia") {
-            theItemDisabler(slot, "Boots");
-        }
+
+        disableItems();
+
     })
 
 </script>

@@ -23,16 +23,16 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 0)"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 1)"></item-selector>
+                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
+                   <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 2)"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 3)"></item-selector>
+                   <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
+                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
                 </v-col>
                 <v-col>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 4)"></item-selector>
-                    <item-selector @item-selected="(slotData) => updateSelectedItems(slotData, 5)"></item-selector>
+                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
+                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
@@ -55,12 +55,16 @@
                 ></build-score>
             </v-col>
         </v-row>
+        <div>
+                <button @click="theComparator">Debugging</button>
+        </div>
     </v-container>
 </template>
 
 <script>
     import BuildScore from '../BuildScore.vue';
     import {ref} from "vue";
+    import ItemSelectorTest from '../ItemSelectorTest.vue';
 
     export default {
         data () {
@@ -423,21 +427,16 @@
             this.selectedDailyChampion();
             this.updateCounts();
             this.theExtractorChampionName(this.selectedChampion);
-            // this.theExceptions(); //We'll add this when the item selection works
         },
+
+        mounted() {
+
+            // this.theExceptions();
+            this.theComparator();
+
+        },
+
         methods: {
-
-                //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
-    //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 
-    // de slots exceptuando el suyo propio
-    //En caso de que el objeto haya sido reemplazado por otro, se comunica con todos los items selectors 
-    // para hacer que los objetos tengan las tags que contiene este objeto sean seleccionables
-
-    //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
-    //Selecciona item (1º vez) -> bloquea el resto
-    // Reemplaza por otro -> permite escoger "todos" aka los disponibles en su slot por tags
-    //Te permite cambiar por otro de su mismo tipo y si cambia a un tipo distinto, se desbloquea en el resto de slots
-    // Selecciona el item (2º vez) -> vuelve a bloquearlo para todo el mundo
 
             getUsedChampions() {
             try {
@@ -554,7 +553,19 @@
                     firstPart + replaceChar + lastPart;
                 return newString;
             },
+
+            theComparator(){
+                let champName = this.theExtractorChampionName(this.selectedChampion);
+                for(let i=0; i < this.chamPosition.length; ++i) {
+                    for (let j = 0; j < this.chamPosition[i].name.length; ++j){
+                        if (champName == this.chamPosition[i].name){
+                            this.emitter.emit("disabling", {role: this.chamPosition[i].tag, name: this.chamPosition[i].name});
+                        }
+                    }
+                }
+            },
                 
+<<<<<<< Updated upstream
             theExceptions() {
                 if (champions.tag == "melee") {
                     theItemDisabler(slot, "Ranged");
@@ -563,6 +574,8 @@
                     theItemDisabler(slot, "Boots");
                 }
             }
+=======
+>>>>>>> Stashed changes
         }
     }
 

@@ -40,5 +40,10 @@ app.component("build-score", BuildScore);
 
 app.use(router)
 app.use(vuetify)
+<<<<<<< Updated upstream
+=======
+app.config.globalProperties.emitter = emitter // NEW
+app.provide('emitter', emitter)
+>>>>>>> Stashed changes
 app.mount('#app')
 

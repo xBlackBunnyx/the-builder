@@ -565,17 +565,6 @@
                 }
             },
                 
-<<<<<<< Updated upstream
-            theExceptions() {
-                if (champions.tag == "melee") {
-                    theItemDisabler(slot, "Ranged");
-                }
-                if (champions.name == "Cassiopeia") {
-                    theItemDisabler(slot, "Boots");
-                }
-            }
-=======
->>>>>>> Stashed changes
         }
     }
 

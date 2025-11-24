@@ -61,11 +61,7 @@
 </template>
 
 <script setup>
-<<<<<<< Updated upstream
-    import {ref, onMounted, watch, computed} from "vue";
-=======
     import {ref, onMounted, watch, computed, inject} from "vue";
->>>>>>> Stashed changes
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
 
@@ -261,12 +257,7 @@
 
     const updateSelectedItems = (slotData, position) => {
       selectedItems.value[position] = slotData.item;
-<<<<<<< Updated upstream
-      theItemEnabler(slotData, slotData.item.tag);
-      theItemDisabler(slotData, slotData.item.tag);
-=======
       console.log("The item added to the list is ", selectedItems.value[position]);
->>>>>>> Stashed changes
     }
 
     const theEnabler = (tag) => {
@@ -278,33 +269,6 @@
         }
     }
 
-<<<<<<< Updated upstream
-    //Funcion que al seleccionar un objeto se comunica se comunica con todos los item selectors
-    //para hacer que los objetos que tengan las tags que contiene este objeto no sean seleccionables en el resto 
-    // de slots exceptuando el suyo propio
-    //En caso de que el objeto haya sido reemplazado por otro, se comunica con todos los items selectors 
-    // para hacer que los objetos tengan las tags que contiene este objeto sean seleccionables
-    const theItemEnabler = (slot, tag) => {
-      slot.theEnabler(tag);
-    }
-
-    //Funcion que gestiona el reemplazo de los objetos y que depende de las dos funciones anteriores
-    //Selecciona item (1º vez) -> bloquea el resto
-    // Reemplaza por otro -> permite escoger "todos" aka los disponibles en su slot por tags
-    //Te permite cambiar por otro de su mismo tipo y si cambia a un tipo distinto, se desbloquea en el resto de slots
-    // Selecciona el item (2º vez) -> vuelve a bloquearlo para todo el mundo
-    const theItemDisabler = (slot, tag) => {
-      for (slot in slots) {
-        if (item.position == slot) {
-          continue;
-        } else {
-          item.disabled(tag)
-        }
-      }
-    }
-
-=======
->>>>>>> Stashed changes
     const findChampionByName = (name) => {
         if (!name) return null;
         let foundChampion = champions.find(champ =>

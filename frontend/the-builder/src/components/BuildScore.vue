@@ -117,6 +117,20 @@ const calculateScoreAndSave = async() => {
     return
   }
 
+  if (!props.selectedRunes.primary.keystone) {
+    error.value = 'Please, select a keystone for your primary runes';
+    loading.value = false
+    dialog.value = true
+    return
+  }
+
+  if (!props.selectedRunes.primary.rows[0] || !props.selectedRunes.primary.rows[1] || !props.selectedRunes.primary.rows[2]) {
+    error.value = 'Please, select three runes in your primary branch';
+    loading.value = false
+    dialog.value = true
+    return
+  }
+
   //Checking that none of the items are null/undefined
   const invalidItems = selectedItems.filter(item => !item)
   if (invalidItems.length > 0) {
@@ -127,6 +141,7 @@ const calculateScoreAndSave = async() => {
   }
 
   let newSecondaryRunes = ["",""];
+  // Both secondary runes must be selected
   if (!props.selectedRunes.secondary[0] || !props.selectedRunes.secondary[1]) {
     error.value = `Please select two secondary runes before sending the build`;
     loading.value = false;
@@ -151,15 +166,15 @@ const calculateScoreAndSave = async() => {
     // console.log('Sending build data: ', frontendData)
     
     //Here we call the API
-    const result = await calculateScore(frontendData)
-    if (result.success) {
-      score.value = result.score
-      buildSaved.value = true
-      dialog.value = true
-    } else {
-      error.value = result.error || `Failed to calculate score`
-      dialog.value = true
-    }
+    // const result = await calculateScore(frontendData)
+    // if (result.success) {
+    //   score.value = result.score
+    //   buildSaved.value = true
+    //   dialog.value = true
+    // } else {
+    //   error.value = result.error || `Failed to calculate score`
+    //   dialog.value = true
+    // }
   } catch (err) {
     console.error('API call failed: ', err)
     if (err.code === 'ECONNREFUSED')   {

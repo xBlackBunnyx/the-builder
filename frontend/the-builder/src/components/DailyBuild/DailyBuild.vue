@@ -416,7 +416,7 @@
                     },
                     secondary: []
                 }),
-                selectedItems: ref(["","","","","",""]),
+                selectedItems: {},
                 selectedChampion: ref(""),
                 debugMode: false, 
                 usedCount: 0,
@@ -501,7 +501,7 @@
             }
             },
 
-            updateSelectedItems(slotData, position) {
+            updateSelectedItems(slotData) {
               this.selectedItems[position] = slotData.item;
             //    console.log('Updated items array: ', this.selectedItems);
             },

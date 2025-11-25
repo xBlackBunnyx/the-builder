@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-    import {ref, onMounted, watch, computed, useTemplateRef, inject} from "vue";
+    import {ref, onMounted, watch, inject} from "vue";
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
     // import ItemSelector from "../ItemSelector.vue";
@@ -263,7 +263,7 @@
 
     const updateSelectedItems = (slotData, position) => {
       selectedItems.value[position] = slotData.item;
-      console.log("uSI: items are " + selectedItems);
+      // console.log("uSI: items are " + selectedItems);
     }
 
     const findChampionByName = (name) => {
@@ -309,7 +309,7 @@
     }
 
     function disableItems() {
-        emitter.emit("disabling", {role:currentChampion.value.tag, name:currentChampion.value.name})
+      emitter.emit("disabling", {role:currentChampion.value.tag, name:currentChampion.value.name})
     }
 
     watch(() => route.query, updateChampionFromRoute, {immediate: true})

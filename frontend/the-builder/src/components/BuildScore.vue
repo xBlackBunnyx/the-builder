@@ -127,8 +127,15 @@ const calculateScoreAndSave = async() => {
   }
 
   let newSecondaryRunes = ["",""];
+  if (!props.selectedRunes.secondary[0] || !props.selectedRunes.secondary[1]) {
+    error.value = `Please select two secondary runes before sending the build`;
+    loading.value = false;
+    dialog.value = true;
+    return;
+  }
   newSecondaryRunes[0] = props.selectedRunes.secondary[0].name;
   newSecondaryRunes[1] = props.selectedRunes.secondary[1].name;
+  
 
   try {
     const frontendData = {

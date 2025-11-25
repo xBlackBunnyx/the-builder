@@ -29,8 +29,8 @@
                 :src="item.img"
                 alt="Item"
                 class="item-image"
-                :class="{ 'item-selected' : isItemSelected(item), 'item-disabled' : !isItemEnabled(item)}"
-                @click.stop="selectItem(item)"
+                :class="{ 'item-selected' : this.isItemSelected(item), 'item-disabled' : !this.isItemEnabled(item)}"
+                @click="selectItem(item)"
               />
             </template>
             <div class="tooltip-content">
@@ -49,14 +49,18 @@
   </v-container>
 </template>
 
-<script setup>
+<script>
+  // import { emit } from 'process';
   import { ref } from 'vue'
+  
 
-  const menu = ref(false)
-  //All the items, their images, stats, and whether they're enabled or not
-  const items = [               
+  export default{
+    data () {
+      return {
+          //All the items, their images, stats, and whether they're enabled or not
+        items: [               
     {name: "Berserker's Greaves", img: "/items-picture/Berserker_Greaves.png", stats: {"Attack Speed": "+25%", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},
-    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:false},
+    {name: "Boots of Swiftness", img: "/items-picture/Boots_Swiftness.png", stats: {"Movement Speed": "+60"}, tag: ["Boots"], enabled:true},
     {name: "Ionian Boots of Lucidity", img: "/items-picture/Ionian_Boots_Lucidity.png", stats: {"Ability Haste": "+10", "Movement Speed" : "+45"}, tag: ["Boots"], enabled:true},
     {name: "Mercury's Treads", img: "/items-picture/Mercury_Treads.png", stats: {"Magic Resistance": "+20", "Movement Speed": "+45", "Tenacity": "+30%"}, tag: ["Boots"], enabled:true},
     {name: "Plated Steelcaps", img: "/items-picture/Plated_Steelcaps.png", stats: {"Armor": "+25", "Movement Speed": "+45"}, tag: ["Boots"], enabled:true},
@@ -165,79 +169,138 @@
     {name: "Yun Tal Wildarrows", img: "/items-picture/Yun_Tal_Wildarrows.png", stats: {"Attack Damage":"+55", "Attack Speed":"+35%"}, tag: ["Yun Tal Wildarrows"], enabled:true},
     {name: "Zeke's Convergence", img: "/items-picture/Zeke_Convergence.png", stats: {"Ability Haste":"+10", "Health":"+300", "Armor":"+25", "Magic Resistance":"+25"}, tag: ["Zeke's Convergence"], enabled:true},
     {name: "Zhonya's Hourglass", img: "/items-picture/Zhonya_Hourglass.png", stats: {"Ability Power":"+105", "Armor":"+50"}, tag: ["Stasis"], enabled:true},
-  ]
-
-  const sayHiButVariable = () => { console.log("Hi Var"); }
-
-  defineExpose({
-    sayHi,
-    sayHiButVariable
-  })
-
-  function sayHi() { console.log("Hi"); }
-
-
-  const selectedItem = ref(null)
-
-  const emit = defineEmits(['item-selected'])
-
-    function isItemEnabled(item) {
-    // console.log("Checking item " + item.name);
-    for (let i = 0; i < items.length; ++i) {
-      if (item.name == items[i].name) {
-        // console.log("Item found, the enabled value is " + items[i].enabled);
-        return items[i].enabled;
+          ],
+        menu: ref(false),
+        selectedItem: ref(null),
+        name: "ItemSelectorTest",
+        differentiator: 0,
+        previousItem: null,
+        // emits: ['item-selected'],
       }
-    }
-  }
-  
+    },
+    created () {
+      //Here we put all the functions that we want to be executed at the loading of the page
+
+    }, 
+
+    mounted() {
+      this.emitter.on("disable", (data) => {
+        // console.log("m: Event received, disabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
+        if (data.id != this.differentiator) {
+          // console.log("m: It wasn't my ID, disabling that し");
+          this.theDisabler(data.msg);
+        }
+      });
+
+      this.emitter.on("enable", (data) => {
+        // console.log("m: Event received, enabling "  + data.msg + ", unless it's ID " + this.differentiator + ", id is " + data.id);
+        if (data.id != this.differentiator) {
+          // console.log("m: It wasn't my ID, enabling that し");
+          this.theEnabler(data.msg);
+        }
+      });
+
+      this.differentiator = Math.random(null);
+      // console.log("m: differentiator is " + this.differentiator);
+
+      this.emitter.on("disabling", (data) => {
+        // console.log("The information of data is the following ", data);
+        if (data.name == "Cassiopeia") {
+          console.log('The champion is ', data.name)
+                this.theDisabler(['Boots']);
+        }
+        if (data.role == "melee"){
+          this.theDisabler(["Ranged"]);
+        }
+      });
+    
+      // this.theDisabler(tag);
+    },
+    
+    methods: {
+      isItemEnabled(item) {
+      // console.log("Checking item " + item.name);
+      for (let i = 0; i < this.items.length; ++i) {
+        if (item.name == this.items[i].name) {
+          // console.log("Item found, the enabled value is " + items[i].enabled);
+          return this.items[i].enabled;
+        }
+      }
+    },
 
   //Funcion para hacer que algunos objetos no sean seleccionables. Dichos objetos son aquellos que ya tienen la tag seleccionada
-  function theEnabler(item) {
-    // console.log("tE: LOOKING FOR TAG(S) " + item.tag);
-    for (let i=0; i < items.length; ++i) {
-      for (let j = 0; j < items[i].tag.length; ++j) {
-        // console.log("tE: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
-        if (item.tag == items[i].tag[j]){
-          // console.log("tE: |||| That one fits the tag " + item.tag);
-          items[i].enabled = true;
+    theEnabler(tag) {
+        // console.log("tE: LOOKING FOR TAG(S) " + tag);
+        // console.log("tE: tag in params: " + JSON.stringify(tag));
+        for (let i=0; i < this.items.length; ++i) {
+          // console.log("tE: Checking tag " + this.items[i].name + " which has a tag of " + this.items[i].tag);
+            for (let j = 0; j < this.items[i].tag.length; ++j) {
+              // console.log("tE: tag we're looking at " + JSON.stringify(this.items[i]));
+              for (let k = 0; k < tag.length; ++k) {
+                if (tag[k] == this.items[i].tag[j]){
+                  // console.log("tE: |||| That one fits the tag " + tag[k]);
+                  this.items[i].enabled = true;
+                }
+              }
+              
+            }
         }
-      }
-    }
-  }
+      },
 
-
-  //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
-  function theDisabler(item) {
-    // console.log("tD: LOOKING FOR TAG(S) " + item.tag);
-    for (let i=0; i < items.length; ++i) {
-      // console.log("tD: Checking item " + items[i].name + " which has a tag of " + items[i].tag);
-        for (let j = 0; j < items[i].tag.length; ++j) {
-          if (item.tag == items[i].tag[j]){
-            // console.log("tD: |||| That one fits the tag " + item.tag);
-            items[i].enabled = false;
-          }
+      //Hacer una funcion que haga lo contario a la de arriba aka volver a hacer los objetos seleccionables segun la tag
+      theDisabler(tag) {
+        // console.log("tD: LOOKING FOR TAG(S) " + typeof(tag));
+        // console.log("tD: tag in params: " + JSON.stringify(tag));
+        for (let i=0; i < this.items.length; ++i) {
+          // console.log("tD: Checking tag " + this.items[i].name + " which has a tag of " + this.items[i].tag);
+            for (let j = 0; j < this.items[i].tag.length; ++j) {
+              // console.log("tD: tag we're looking at " + JSON.stringify(this.items[i]));
+              for (let k = 0; k < tag.length; ++k) {
+                if (tag[k] == this.items[i].tag[j]){
+                  // console.log("tD: |||| That one fits the tag " + tag[k]);
+                  this.items[i].enabled = false;
+                }
+              }
+              
+            }
         }
+      },
+
+      isItemSelected (item) {
+        // enable tags
+        return this.selectedItem && this.selectedItem.name === item.name
+      },
+
+      disableTagsEvent(tags) {
+        // console.log("dTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
+        this.emitter.emit("disable", { msg: tags, id: this.differentiator});
+      },
+
+      enableTagsEvent(tags) {
+        // console.log("eTE: Sending event to disable tags " + tags + ", with ID " + this.differentiator);
+        this.emitter.emit("enable", { msg: tags, id: this.differentiator});
+      },
+
+      
+
+      //Function that select the items
+      selectItem(item){
+        this.selectedItem = item;
+        if (this.previousItem) {
+          this.enableTagsEvent(this.previousItem.tag);
+        }
+        this.disableTagsEvent(item.tag);
+        this.previousItem = item;
+        this.menu = false
+        this.emitter.emit("item-selected", { item: item.name, id: this.differentiator });
+        // emit('item-selected', {
+        //   item: itemName,
+        //   tag: itemTag,
+        //   enabled: isEnabled
+        // })
+      },
+
     }
-  }
-
-  function isItemSelected (item) {
-    return selectedItem.value && selectedItem.value.name === item.name
-  }
-
-  //Function that select the items
-  function selectItem(item){
-    selectedItem.value = item;
-    let itemName = item.name;
-    let itemTag = item.tag;
-    let isEnabled = item.enabled;
-    theDisabler(item);
-    menu.value = false
-    emit('item-selected', {
-      item: itemName,
-      // tag: itemTag,
-      // enabled: isEnabled
-    })
   }
 
 </script>

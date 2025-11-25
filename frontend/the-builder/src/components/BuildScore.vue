@@ -96,10 +96,6 @@ const calculateScoreAndSave = async() => {
 
   let selectedItems = Dict2Array(props.selectedItems);
 
-  console.log("cSAS: items: " + JSON.stringify(selectedItems));
-  console.log("cSAS: length of items is: " + Object.keys(selectedItems).length );
-  // console.log("cSAS: Checking items: " + (!selectedItems));
-  console.log("cSAS: Runes: " + !props.selectedRunes);
   //Check that everything has a value
   if (!props.selectedChampion) {
     error.value = 'Please, select a champion'

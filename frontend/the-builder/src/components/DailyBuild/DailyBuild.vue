@@ -23,16 +23,16 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                  <v-col>
-                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
-                   <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
+                    <item-selector/>
+                    <item-selector/>
                 </v-col>
                 <v-col>
-                   <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
-                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
+                    <item-selector/>
+                    <item-selector/>
                 </v-col>
                 <v-col>
-                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
-                    <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData)" />
+                    <item-selector/>
+                    <item-selector/>
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
@@ -55,16 +55,11 @@
                 ></build-score>
             </v-col>
         </v-row>
-        <div>
-                <button @click="theComparator">Debugging</button>
-        </div>
     </v-container>
 </template>
 
 <script>
-    import BuildScore from '../BuildScore.vue';
     import {ref} from "vue";
-    import ItemSelectorTest from '../ItemSelectorTest.vue';
 
     export default {
         data () {
@@ -433,6 +428,12 @@
 
             // this.theExceptions();
             this.theComparator();
+            this.emitter.on("item-selected", (data) => {
+              // console.log("i-s: data is " + JSON.stringify(data));
+              this.selectedItems[data.id] = data.item;
+              // console.log("i-s: currently, selectedItemsAlt is " + JSON.stringify(selectedItemsAlt));
+            });
+
 
         },
 

@@ -23,16 +23,16 @@
             <v-col>
             <v-row no-gutters class="ma-0 pa-0 ga-0">
                 <v-col>
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 0)" />
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 1)" />
+                  <item-selector/>
+                  <item-selector/>
                 </v-col>
                 <v-col>
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 2)" />
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 3)" />
+                  <item-selector/>
+                  <item-selector/>
                 </v-col>
                 <v-col>
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 4)" />
-                  <item-selector-test @item-selected="(slotData) => updateSelectedItems(slotData, 5)" />
+                  <item-selector/>
+                  <item-selector/>
                 </v-col>
                  <v-col cols="9">
                     <rune-selector @runes-selected = "updateSelectedRunes"></rune-selector>
@@ -60,9 +60,6 @@
 <script setup>
     import {ref, onMounted, watch, inject} from "vue";
     import { useRoute } from "vue-router";
-    import BuildScore from "../BuildScore.vue";
-    // import ItemSelector from "../ItemSelector.vue";
-    import ItemSelectorTest from "../ItemSelectorTest.vue";
     const emitter = inject('emitter');
 
     const route = useRoute();

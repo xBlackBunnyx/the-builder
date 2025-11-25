@@ -489,7 +489,8 @@ app.post('/api/calculate-score', async(req, res) => {
   try {
     const frontendData = req.body;
     const score = await run(frontendData);
-
+    // console.log("The frontend data is " + JSON.stringify(frontendData));
+    // console.log("The score is " + score);
     res.json({
       success:true,
       score: score,

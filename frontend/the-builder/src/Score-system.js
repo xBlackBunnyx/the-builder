@@ -3,7 +3,6 @@
 //Instalation of needed libraries
 import dotenv from 'dotenv';
 dotenv.config({path: 'src/.env'});
-import fs from 'fs';
 import express from 'express';
 import cors from 'cors';
 
@@ -30,7 +29,6 @@ const client = new MongoClient(uri, {
 async function run(frontendData) {
   try {
     //Here we have to put all the functions related to getting something from the database
-    // console.log("We are inside the run function");
   await client.connect();
   const db = client.db("Builder");
    // Send a ping to confirm a successful connection
@@ -38,7 +36,7 @@ async function run(frontendData) {
   // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     let data = PlayerBuildImporter(frontendData);
-    console.log("r: Player build in backend: " + JSON.stringify(data));
+
     let championName = data[0];
     let itemsName = data.slice(1,7);
     let runesName = data.slice(7);
@@ -58,8 +56,6 @@ async function run(frontendData) {
     let refChamp = await findChamps(client, refBuildChampion);
     let refItems = await findItem(client, refBuildItems);
     let refRunes = await findRunes(client, refBuildRunes);
-
-      // console.log("POLO");
 
     let finalBuildResult = CombinedBuildScore(StringsToBuild(data), 
         ScoreCalculator(ScoreGiver(refChamp, refItems, refRunes), ScoreGiver(champ, items, runes)));
@@ -83,7 +79,6 @@ async function GetReferenceBuild(client, code)
     let buildCode = refBuilds[i].build;
     if (buildCode.slice(0,3) === code.slice(0,3))
       {
-        // console.log("GRP-Debug: Could find the ref build");
         return buildCode;
       } else {
         // console.log("GRB-Debug: Ref build " + buildCode.slice(0,3) + " != " + code);
@@ -134,9 +129,9 @@ async function findRunes(client, namesOfRunes) {
 //Function that combines the codified build with the score
 function CombinedBuildScore(codedBuild, finalScore){
   let buildCodified = codedBuild;
-  console.log("The codified build is " + buildCodified);
+  // console.log("The codified build is " + buildCodified);
   let buildScore = finalScore * 100;
-  console.log("The build score is " + buildScore);
+  // console.log("The build score is " + buildScore);
   let completeBuild = {build: buildCodified, score: buildScore};
   return completeBuild;
 }
@@ -144,10 +139,10 @@ function CombinedBuildScore(codedBuild, finalScore){
 //Function that uploads the build into Mongo Atlas
 async function SavePlayerBuilds(client, newPlayerBuild) {
   let scoreBuild = await client.db("builder").collection("PlayerBuilds").insertOne(newPlayerBuild);
-  console.log(`New listing created with the following id: ${scoreBuild.insertedId}`);
+  // console.log(`New listing created with the following id: ${scoreBuild.insertedId}`);
 }
 
-//Function that get the refined imformation from the frontend
+//Function that get the refined information from the frontend
 function PlayerBuildImporter(frontendData){
   let frontendBuild = frontendToBackendCodeFormat(frontendData);
   // console.log("The insides of frontendBuild", frontendBuild);
@@ -155,7 +150,7 @@ function PlayerBuildImporter(frontendData){
   return result;
 }
 
-//Function that transforms what we get from the website to what we used
+//Function that transforms what we get from the website to what we use
 function frontendToBackendCodeFormat(frontendData){
   // console.log("The insides of frontendData are ", frontendData);
   return [
@@ -208,7 +203,7 @@ function BuildToStrings(build) {
         break; 
       }
     }
-    // console.log("checking the zeros and nons |", nonZeroSpot, "|");
+
     let itemIndex = Number(build.slice(nonZeroSpot, i+3));
     let itemName = itemList[itemIndex];
     // console.log("The item index is ", itemIndex, " and the item is ", itemList[itemIndex]);
@@ -244,7 +239,7 @@ let runeList = [ 'Press the Attack', 'Lethal Tempo', 'Fleet Footwork', 'Conquero
 function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE THING (data variable)
   //champion
   const champIdx = champList.findIndex(c => c === strings[0]);
-  console.log("The champion is " + champIdx);
+  // console.log("The champion is " + champIdx);
   if (champIdx === -1) {
     return "999";
   }
@@ -259,7 +254,7 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
       result += "999";
     } else {
       let padded = String(j).padStart(3, "0");
-      console.log("S2B: Found item " + buildItem + " at position " + j);
+      // console.log("S2B: Found item " + buildItem + " at position " + j);
       result += padded;
     }
   } 
@@ -273,7 +268,7 @@ function StringsToBuild(strings) { // STRINGS IS THE BUILD IN TEXT, THE WHOLE TH
       result += "999";
     } else {
       let padded = String(j).padStart(2, "0");
-      console.log("S2B: Found rune " + buildRune + " at position " + j);
+      // console.log("S2B: Found rune " + buildRune + " at position " + j);
       result += padded;
     }
   } 
@@ -314,7 +309,7 @@ function ScoreGiver(champ, items, runes) {
   for (let i = 0; i < runeSection.length; ++i)
   {
     let currentRuneScore = 0;
-    let runePath = runeSection[i].path; // this can be many paths separated by ', ' (AGAIN)
+    let runePath = runeSection[i].path; // this can be many paths separated by ', ' 
     let dividedPaths = runePath.split(", "); // return everything that is not ', ' in an array
     for (let j = 0; j < dividedPaths.length; ++j)
     {
@@ -388,13 +383,12 @@ function ScoreGiver(champ, items, runes) {
       currentItemScore += 20;      
     }
     
-    champRoles = champ.role.split(", "); // can't believe I'm doing this at five different places either
+    champRoles = champ.role.split(", "); 
     // buff supp points if they hold a supp item. I shouldn't worry about this happening more than once since a character can only have one support item.
     for (let k = 0; k < champRoles.length; ++k) {
       if (itemLimitation == "Support" && champRoles[k] == "Support" && !extraSuppPointsAwardedFlag) {
         currentItemScore += 15;
         extraSuppPointsAwardedFlag = true;
-        // console.log("SG: Support item detected in Support character, awarding extra points");
         break;
       }
     }
@@ -457,10 +451,10 @@ function ScoreCalculator(referenceBuild, playerBuild)
 
   //Calculate the reference total value
   let referenceScore = 1 + (itemWeight * referenceItemsScore) + (runeWeight * referenceRunesScore);
-  console.log("The reference score is ", referenceScore)
+
   //Calculate the player total value
   let playerScore = 1 + (itemWeight * playerItemsScore) + (runeWeight * playerRunesScore);
-  console.log("The player Score is ", playerScore);
+
   //Calculate the normalized result
   let normalizedResult = (playerScore - minimumScore) / (referenceScore - minimumScore);
   if (normalizedResult > 1) { 

@@ -58,11 +58,11 @@ const props = defineProps({
 })
 
 // Debug to check if all items are getting stored properly
-console.log('BuildResults props: ', {
-  champion: props.selectedChampion,
-  items: props.selectedItems,
-  runes: props.selectedRunes
-})
+// console.log('BuildResults props: ', {
+//   champion: props.selectedChampion,
+//   items: props.selectedItems,
+//   runes: props.selectedRunes
+// })
 
 const dialog = ref(false)
 const loading = ref(false)
@@ -77,17 +77,18 @@ const resultTitle = computed(() => {
   return 'Build Results'
 })
 
+//Function that converts the dictionary from the items to an array
 function Dict2Array(dictionary)
 {
   let result = ['', '', '', '', '', ''];
   let keys = Object.keys(dictionary);
   for (let i = 0; i < keys.length; ++i) {
     result[i] = dictionary[keys[i]];
-    console.log("D2A: copied " + dictionary[keys[i]] + " using key " + keys[i] + " to spot " + i);
   }
   return result;
 }
 
+//Here we connect to the api and call Score-system.js
 const calculateScoreAndSave = async() => {
   score.value = null
   buildSaved.value = false
@@ -119,7 +120,6 @@ const calculateScoreAndSave = async() => {
   //Checking that none of the items are null/undefined
   const invalidItems = selectedItems.filter(item => !item)
   if (invalidItems.length > 0) {
-    // console.log("cSAS: ") /////////////////////////////// CHECK AROUND HERE
     error.value = `Some items are not selected, or some items incompatible. Check all slots`
     loading.value = false
     dialog.value = true
@@ -148,7 +148,7 @@ const calculateScoreAndSave = async() => {
         secondary: newSecondaryRunes || {}
       }
     }
-    console.log('Sending build data: ', frontendData)
+    // console.log('Sending build data: ', frontendData)
     
     //Here we call the API
     const result = await calculateScore(frontendData)

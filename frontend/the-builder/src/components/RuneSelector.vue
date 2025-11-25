@@ -332,7 +332,6 @@
     secondary:[],
   });
 
-
   const emit = defineEmits(['runes-selected'])
 
   const availableSecondaryBranches = computed(() => {

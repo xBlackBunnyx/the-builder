@@ -60,6 +60,7 @@
 <script setup>
     import {ref, onMounted, watch, inject} from "vue";
     import { useRoute } from "vue-router";
+
     const emitter = inject('emitter');
 
     const route = useRoute();
@@ -237,7 +238,6 @@
     ]
 
     const currentChampion = ref(null)
-    // const selectedItems = ref(["","","","","",""])
     const selectedRunes = ref({
         primary: {
             keystone: null,
@@ -245,22 +245,14 @@
         },
         secondary: [null, null]
     });
-
     let selectedItems = {};
 
     emitter.on("item-selected", (data) => {
-      // console.log("i-s: data is " + JSON.stringify(data));
       selectedItems[data.id] = data.item;
-      // console.log("i-s: currently, selectedItemsAlt is " + JSON.stringify(selectedItemsAlt));
     });
 
     const updateSelectedRunes = (runesData) => {
         selectedRunes.value = {...runesData}
-    }
-
-    const updateSelectedItems = (slotData, position) => {
-      selectedItems.value[position] = slotData.item;
-      // console.log("uSI: items are " + selectedItems);
     }
 
     const findChampionByName = (name) => {
@@ -293,7 +285,6 @@
 
             if (foundChampion){
                 currentChampion.value = foundChampion
-                // console.log('Champion found: ', foundChampion.name)
             } else {
                 currentChampion.value = null
                 console.log('Champion not found. Available:', champions.map(c => c.name))
@@ -313,9 +304,7 @@
 
     onMounted(() => {
         updateChampionFromRoute();
-
         disableItems();
-
     })
 
 </script>

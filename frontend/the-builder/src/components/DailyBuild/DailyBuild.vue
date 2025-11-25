@@ -426,14 +426,10 @@
 
         mounted() {
 
-            // this.theExceptions();
             this.theComparator();
             this.emitter.on("item-selected", (data) => {
-              // console.log("i-s: data is " + JSON.stringify(data));
               this.selectedItems[data.id] = data.item;
-              // console.log("i-s: currently, selectedItemsAlt is " + JSON.stringify(selectedItemsAlt));
             });
-
 
         },
 
@@ -472,10 +468,8 @@
                     }
                 }
                 let usedChampions = this.getUsedChampions();
-                console.log('Previously used champions: ', usedChampions);
 
                 const availableChampions = this.champions.filter(champ => !usedChampions.includes(champ));
-                console.log('Available champions: ', availableChampions);
 
                 let selectedChamp;
 
@@ -504,7 +498,6 @@
 
             updateSelectedItems(slotData) {
               this.selectedItems[position] = slotData.item;
-            //    console.log('Updated items array: ', this.selectedItems);
             },
 
             updateSelectedRunes(runesData) {
@@ -550,8 +543,7 @@
             theCharReplacer(origString, replaceChar, index) {
                 let firstPart = origString.substr(0, index);
                 let lastPart = origString.substr(index + 1);
-                let newString =
-                    firstPart + replaceChar + lastPart;
+                let newString = firstPart + replaceChar + lastPart;
                 return newString;
             },
 

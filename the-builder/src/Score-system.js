@@ -2,7 +2,7 @@
 
 //Instalation of needed libraries
 import dotenv from 'dotenv';
-dotenv.config({path: 'src/.env'});
+dotenv.config({path: '.env'});
 import express from 'express';
 import cors from 'cors';
 
@@ -12,6 +12,7 @@ const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
+
 
 // Connection with Mongo Atlas
 import { MongoClient, ServerApiVersion } from 'mongodb';
@@ -25,6 +26,8 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+
+console.log("pung")
 
 async function run(frontendData) {
   try {
@@ -129,7 +132,7 @@ async function findRunes(client, namesOfRunes) {
 //Function that combines the codified build with the score
 function CombinedBuildScore(codedBuild, finalScore){
   let buildCodified = codedBuild;
-  console.log("The codified build is " + buildCodified);
+  // console.log("The codified build is " + buildCodified);
   let buildScore = finalScore * 100;
   // console.log("The build score is " + buildScore);
   let completeBuild = {build: buildCodified, score: buildScore};

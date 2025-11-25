@@ -263,8 +263,8 @@
     }
 
     const updateSelectedItems = (slotData, position) => {
-      selectedItems.value[position] = slotData.item;
-      console.log("uSI: items are " + selectedItems);
+      // selectedItems.value[position] = slotData.item;
+      // console.log("uSI: items are " + selectedItems);
     }
 
     const findChampionByName = (name) => {

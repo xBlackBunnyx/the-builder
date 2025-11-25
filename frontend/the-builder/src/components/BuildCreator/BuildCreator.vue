@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-    import {ref, onMounted, watch, computed, useTemplateRef, inject} from "vue";
+    import {ref, onMounted, watch, inject} from "vue";
     import { useRoute } from "vue-router";
     import BuildScore from "../BuildScore.vue";
     // import ItemSelector from "../ItemSelector.vue";
@@ -257,8 +257,6 @@
       selectedItems[data.id] = data.item;
       // console.log("i-s: currently, selectedItemsAlt is " + JSON.stringify(selectedItemsAlt));
     });
-
-    const slots = [0,1,2,3,4,5];
 
     const updateSelectedRunes = (runesData) => {
         selectedRunes.value = {...runesData}

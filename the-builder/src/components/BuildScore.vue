@@ -166,15 +166,15 @@ const calculateScoreAndSave = async() => {
     // console.log('Sending build data: ', frontendData)
     
     //Here we call the API
-    // const result = await calculateScore(frontendData)
-    // if (result.success) {
-    //   score.value = result.score
-    //   buildSaved.value = true
-    //   dialog.value = true
-    // } else {
-    //   error.value = result.error || `Failed to calculate score`
-    //   dialog.value = true
-    // }
+    const result = await calculateScore(frontendData)
+    if (result.success) {
+      score.value = result.score
+       buildSaved.value = true
+      dialog.value = true
+     } else {
+       error.value = result.error || `Failed to calculate score`
+       dialog.value = true
+     }
   } catch (err) {
     console.error('API call failed: ', err)
     if (err.code === 'ECONNREFUSED')   {

@@ -63,14 +63,38 @@
             </v-sheet>
           </v-col>
 
-          <!-- League of Legends Logo -->
+          <!-- Info Img -->
           <v-col cols="auto" class="d-flex justify-center" offset="2">
             <v-sheet>
-              <v-img
-                cover
-                :width="400"
-                src = "../../assets/LoL_Logo_Rendered_LARGE.png"
-              ></v-img>
+              <div @click="dialog = true">
+                <v-img
+                  cover
+                  :width="150"
+                  src = "../../assets/Enemy_Missing_ping.png"
+                ></v-img>
+                <v-dialog v-model="dialog" width="auto">
+                  <v-card
+                  class="txtbg"
+                  max-width="600"
+                  title="Relevant Information"
+                  >
+                  <v-card-text>
+                    <p>The Builder is a fan project created under Riot Games' Legal Jibber Jabber policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.</p>
+                    <br>
+                    <p>All the builds created by the player are going to be stored in order to use the score to train a machine learning model to predict an optimal build for the selected champion.</p>
+                    <br>
+                    <p>The Builder does not save any other user information or data.</p>
+                  </v-card-text>
+                    <template v-slot:actions>
+                      <v-btn
+                        class="ms-auto"
+                        text="Okay"
+                        @click="dialog = false"
+                      ></v-btn>
+                    </template>
+                  </v-card>
+                </v-dialog>
+              </div>
             </v-sheet>
           </v-col>
 
@@ -80,6 +104,13 @@
   </v-footer>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+
+const dialog = ref(false)
+
+</script>
+
 <style>
 .single-line{
   white-space: nowrap;
@@ -87,4 +118,21 @@
   text-overflow: ellipsis;
   width: 100%;
 }
+
+.txtbg{
+      font-size: 16px;
+      color: black;
+      font-family: "BeaufortforLOLItalic", sans-serif;
+      border-radius: 10px;
+      border: 3px solid;
+      border-color: #653a1b;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        rgba(222, 200, 128, 1) 8%,
+        rgba(222, 197, 118, 1) 35%,
+        rgba(191, 145, 59, 1) 75%,
+        rgba(142, 96, 42, 1) 94%
+      );
+      padding:  20px 32px;
+      }
 </style>

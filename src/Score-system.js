@@ -2,7 +2,7 @@
 
 //Instalation of needed libraries
 import dotenv from 'dotenv';
-dotenv.config({path: '.env'});
+dotenv.config({path: 'src/.env'});
 import express from 'express';
 import cors from 'cors';
 
@@ -26,8 +26,6 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-
-console.log("pung")
 
 async function run(frontendData) {
   try {

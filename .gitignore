@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+.editorconfig
+.browserslistrc
+
 # local env files
 .env.local
 .env.*.local

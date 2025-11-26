@@ -130,7 +130,7 @@ async function findRunes(client, namesOfRunes) {
 //Function that combines the codified build with the score
 function CombinedBuildScore(codedBuild, finalScore){
   let buildCodified = codedBuild;
-  console.log("The codified build is " + buildCodified);
+  // console.log("The codified build is " + buildCodified);
   let buildScore = finalScore * 100;
   // console.log("The build score is " + buildScore);
   let completeBuild = {build: buildCodified, score: buildScore};

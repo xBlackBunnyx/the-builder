@@ -18,11 +18,11 @@ import RuneSelector from './components/RuneSelector.vue'
 import BuildScore from './components/BuildScore.vue'
 
 // Plugins
-import { registerPlugins } from './plugins'
-import vuetify from './plugins/vuetify'
+import { registerPlugins } from './plugins/index.js'
+import vuetify from './plugins/vuetify.js'
 
 // Styles
-import 'unfonts.css'
+// import 'unfonts.css'
 import './assets/css/fonts.css'
 
 //Routes

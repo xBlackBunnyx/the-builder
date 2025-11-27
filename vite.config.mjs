@@ -10,7 +10,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "https://xblackbunnyx.github.io/the-builder",
+  // base: "https://xblackbunnyx.github.io/the-builder",
   // base:"http://localhost:4173/the-builder/",
   plugins: [
     Vue({

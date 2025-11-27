@@ -4,7 +4,7 @@ const API_BASE_URL = 'https://the-builder-wx6f.onrender.com/api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
-    timeout: 10000,
+    timeout: 3600000,
 });
 
 //Here we export the functions to the frontend

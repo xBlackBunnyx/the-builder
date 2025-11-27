@@ -10,6 +10,7 @@ const api = axios.create({
 //Here we export the functions to the frontend
 export const calculateScore = async (frontendData) => {
     try {
+        console.log("The issue is here");
         const response = await api.post('/calculate-score', frontendData);
         return response.data;
     } catch (error) {

@@ -488,6 +488,7 @@ function ArrayToString(array)
 //Creation of the routes to be accesible to the frontend
 app.post('/api/calculate-score', async(req, res) => {
   try {
+    console.log("Yep, the issue is here");
     const frontendData = req.body;
     const score = await run(frontendData);
 

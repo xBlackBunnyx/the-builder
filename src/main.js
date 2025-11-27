@@ -1,51 +1,36 @@
-/**
- * main.js
- *
- * Bootstraps Vuetify and other plugins then mounts the App`
- */
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./routes.js";
+import mitt from "mitt";
+import vuetify from "./plugins/vuetify.js";
+import { registerPlugins } from "./plugins/index.js";
 
-// Composables
-import { createApp } from 'vue'
-import { createVuetify } from 'vuetify'
-import mitt from 'mitt'
+// CSS
+import "./assets/css/fonts.css";
 
-// Components
-import App from './App.vue'
-import DailyButton from './components/DailyButtonComponent.vue'
-import SearchBar from './components/SearchBar.vue'
-import ItemSelector from './components/ItemSelector.vue'
-import RuneSelector from './components/RuneSelector.vue'
-import BuildScore from './components/BuildScore.vue'
+// Componentes globales
+import DailyButton from "./components/DailyButtonComponent.vue";
+import SearchBar from "./components/SearchBar.vue";
+import ItemSelector from "./components/ItemSelector.vue";
+import RuneSelector from "./components/RuneSelector.vue";
+import BuildScore from "./components/BuildScore.vue";
 
-// Plugins
-import { registerPlugins } from './plugins/index.js'
-import vuetify from './plugins/vuetify.js'
-
-// Styles
-// import 'unfonts.css'
-import './assets/css/fonts.css'
-
-//Routes
-import router from './routes.js'
-
+const app = createApp(App);
 const emitter = mitt();
 
-const app = createApp(App)
-
-registerPlugins(app)
-
-// Global components
 app.component("button-daily", DailyButton);
 app.component("search-bar", SearchBar);
 app.component("item-selector", ItemSelector);
 app.component("rune-selector", RuneSelector);
 app.component("build-score", BuildScore);
 
-app.use(router)
-app.use(vuetify)
+registerPlugins(app);
 
-app.config.globalProperties.emitter = emitter // NEW
-app.provide('emitter', emitter)
+app.use(router);
+app.use(vuetify);
+
+app.config.globalProperties.emitter = emitter;
+app.provide("emitter", emitter);
 
 app.mount('#app')
 

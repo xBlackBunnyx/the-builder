@@ -7,7 +7,7 @@
 // Styles
 import '@mdi/font/css/materialdesignicons.css'
 // import 'font-awesome/css/font-awesome.min.css'
-import 'vuetify/styles'
+// import 'vuetify/styles'
 
 // Composables
 import { createApp } from 'vue'

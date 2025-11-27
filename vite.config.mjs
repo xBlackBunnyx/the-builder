@@ -10,7 +10,8 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "https://xblackbunnyx.github.io/the-builder/",
+  // base: "https://xblackbunnyx.github.io/the-builder/",
+  // base:"http://localhost:4173/the-builder/",
   plugins: [
     Vue({
       template: { transformAssetUrls },
@@ -21,10 +22,14 @@ export default defineConfig({
     Fonts({
       fontsource: {
         families: [
+          // {
+          //   name: 'Roboto',
+          //   weights: [100, 300, 400, 500, 700, 900],
+          //   styles: ['normal', 'italic'],
+          // },
           {
-            name: 'Roboto',
-            weights: [100, 300, 400, 500, 700, 900],
-            styles: ['normal', 'italic'],
+            name:'BeaufortforLOL',
+            styles:['italic','normal', 'bold'],
           },
         ],
       },

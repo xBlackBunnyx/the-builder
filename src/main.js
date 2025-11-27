@@ -23,7 +23,7 @@ import vuetify from './plugins/vuetify.js'
 
 // Styles
 // import 'unfonts.css'
-import './assets/css/fonts.css'
+import "./assets/css/fonts.css"
 
 //Routes
 import router from './routes.js'

@@ -506,6 +506,7 @@ app.post('/api/calculate-score', async(req, res) => {
 async function startServer() {
   app.listen(PORT, () => {
   console.log(`Successfully served on port: ${PORT}`);
+  console.log("The URL is " + app.baseUrl);
 })
 }
 

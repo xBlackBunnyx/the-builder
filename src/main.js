@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from "./routes.js";
 import mitt from "mitt";
 import vuetify from "./plugins/vuetify.js";
-import { registerPlugins } from "./plugins/index.js";
 
 // CSS
 import "./assets/css/fonts.css";
@@ -23,8 +22,6 @@ app.component("search-bar", SearchBar);
 app.component("item-selector", ItemSelector);
 app.component("rune-selector", RuneSelector);
 app.component("build-score", BuildScore);
-
-registerPlugins(app);
 
 app.use(router);
 app.use(vuetify);

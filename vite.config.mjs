@@ -28,32 +28,33 @@ export default defineConfig({
           //   styles: ['normal', 'italic'],
           // },
           {
-            name:'BeaufortforLOL',
-            styles:['italic','normal', 'bold'],
+            name:"BeaufortforLOL",
+            styles:["italic","normal", "bold"],
           },
         ],
       },
     }),
   ],
   optimizeDeps: {
-    exclude: ['vuetify'],
+    exclude: ["vuetify"],
   },
-  define: { 'process.env': {} },
+  define: { "process.env": {} },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('src', import.meta.url)),
+      "@": fileURLToPath(new URL("src", import.meta.url)),
     },
     extensions: [
-      '.js',
-      '.json',
-      '.jsx',
-      '.mjs',
-      '.ts',
-      '.tsx',
-      '.vue',
+      ".js",
+      ".json",
+      ".jsx",
+      ".mjs",
+      ".ts",
+      ".tsx",
+      ".vue",
     ],
   },
   server: {
     port: 10000,
   },
-})
+  base: "/the-builder/",
+});

@@ -1,32 +1,12 @@
-/**
- * plugins/vuetify.js
- *
- * Framework documentation: https://vuetifyjs.com`
- */
-
-// Styles
-import '@mdi/font/css/materialdesignicons.css'
-// import 'font-awesome/css/font-awesome.min.css'
-// import 'vuetify/styles'
-
-// Composables
-import { createApp } from 'vue'
-import { createVuetify } from 'vuetify'
-import { aliases, fa } from 'vuetify/iconsets/fa4'
-
-//We can create our custom theme here
-
-// https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-// export default createVuetify({
-//   theme: {
-//     defaultTheme: 'system',
-//   },
-// })
+import "@mdi/font/css/materialdesignicons.css";
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import { aliases, fa } from "vuetify/iconsets/fa4";
 
 const customTheme = {
   dark: true,
-  colors:{
-    background: "#01243A", 
+  colors: {
+    background: "#01243A",
     surface: "#01243A",
     primary: "#02D1DD",
     "primary-darken-1":"#02D1DD",
@@ -41,16 +21,16 @@ const customTheme = {
 
 export default createVuetify({
   theme: {
-    defaultTheme: 'customTheme',
+    defaultTheme: "customTheme",
     themes:{
       customTheme,
     },
   },
   icons: {
-    defaultSet: 'fa',
+    defaultSet: "fa",
     aliases,
     sets: {
       fa,
     },
   },
-})
+});

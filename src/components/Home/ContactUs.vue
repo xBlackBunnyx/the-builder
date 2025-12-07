@@ -34,19 +34,19 @@
               <v-row class="align-center justify-center" no-gutters>
                   <v-col class="d-flex align-center"> 
                     <v-icon icon="fa-github" class="text-secondary me-2" size="small"></v-icon>
-                    <a href="https://github.com/xBlackBunnyx/the-builder"> The builder</a>
+                    <a href="https://github.com/xBlackBunnyx/the-builder" target="_blank"> The builder</a>
                   </v-col>
               </v-row>
               <v-row class="align-center justify-center" no-gutters>
                   <v-col class="d-flex align-center"> 
                     <v-icon icon="fa-linkedin" class="text-secondary me-2" size="small"></v-icon>
-                    <a href="https://www.linkedin.com/in/guillermozafrafernandez"> Juan Guillermo Zafra Fernández</a>
+                    <a href="https://www.linkedin.com/in/guillermozafrafernandez" target="_blank"> Juan Guillermo Zafra Fernández</a>
                   </v-col>
               </v-row>
               <v-row class="align-center justify-center" no-gutters>
                   <v-col class="d-flex align-center"> 
                     <v-icon icon="fa-linkedin" class="text-secondary me-2" size="small"></v-icon>
-                    <a href="https://www.linkedin.com/in/lorenamartindorta"> Lorena Martín Dorta</a>
+                    <a href="https://www.linkedin.com/in/lorenamartindorta" target="_blank"> Lorena Martín Dorta</a>
                   </v-col>
               </v-row>  
             </v-sheet>
@@ -98,6 +98,37 @@
             </v-sheet>
           </v-col>
 
+  <!-- Instructions -->
+    <v-col cols="auto" class="d-flex justify-center">
+            <v-sheet>
+              <div @click="dialog2 = true">
+                <v-img
+                  cover
+                  :width="150"
+                  src = "../../assets/Assist_Me_ping.png"
+                ></v-img>
+                <v-dialog v-model="dialog2" width="auto">
+                  <v-card
+                  class="txtbg"
+                  max-width="600"
+                  title="Instructions"
+                  >
+                  <v-card-text>
+                    {{ Instructions }}
+                  </v-card-text>
+                    <template v-slot:actions>
+                      <v-btn
+                        class="ms-auto"
+                        text="Thank you!"
+                        @click="dialog2 = false"
+                      ></v-btn>
+                    </template>
+                  </v-card>
+                </v-dialog>
+              </div>
+            </v-sheet>
+          </v-col>
+
         </v-row>
       </v-container>
     </div>
@@ -106,8 +137,12 @@
 
 <script setup>
 import { ref } from 'vue';
+import MainPage from "../../HelpText.json"
+
+const Instructions = MainPage.MainPage.instructions
 
 const dialog = ref(false)
+const dialog2 = ref(false)
 
 </script>
 

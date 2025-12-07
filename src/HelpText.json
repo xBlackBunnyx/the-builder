@@ -1,0 +1,8 @@
+{
+    "MainPage": {
+    "instructions": "Welcome to The Builder! There are two modes you can use here, the Daily Build and the Champion Builder. In Daily Build, you will challenge yourself with a random champion where you have to select the best items and runes that will fit them better. If you want to create a build for a specific champion, use the search bar and then click on the button \"Create your build\""
+},
+    "Building": {
+        "instructions":"For this champion, you have to select six items that would fit them and the primary runes with a keystone and 3 runes, and 2 runes for the secondary branch"
+    }
+}

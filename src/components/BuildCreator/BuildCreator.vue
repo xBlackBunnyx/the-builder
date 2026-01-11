@@ -53,6 +53,35 @@
                     :selected-runes="selectedRunes"
                 ></build-score>
             </v-col>
+            <v-col>
+            <v-sheet>
+              <div @click="dialog2 = true">
+                <v-img
+                  cover
+                  :width="150"
+                  src = "../../assets/Assist_Me_ping.png"
+                ></v-img>
+                <v-dialog v-model="dialog2" width="auto">
+                  <v-card
+                  class="txtbg"
+                  max-width="600"
+                  title="Instructions"
+                  >
+                  <v-card-text>
+                        <p>For this champion, you have to select six items that would fit them and the primary runes with a keystone and 3 runes, and 2 runes for the secondary branch</p>
+                  </v-card-text>
+                    <template v-slot:actions>
+                      <v-btn
+                        class="ms-auto"
+                        text="Thank you!"
+                        @click="dialog2 = false"
+                      ></v-btn>
+                    </template>
+                  </v-card>
+                </v-dialog>
+              </div>
+            </v-sheet>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -60,6 +89,7 @@
 <script setup>
     import {ref, onMounted, watch, inject} from "vue";
     import { useRoute } from "vue-router";
+    const dialog2 = ref(false)
 
     const emitter = inject('emitter');
 
@@ -330,4 +360,20 @@
     .framed{
       border: 3px solid #653a1b;
     }
+    .txtbg{
+      font-size: 16px;
+      color: black;
+      font-family: "BeaufortforLOLItalic", sans-serif;
+      border-radius: 10px;
+      border: 3px solid;
+      border-color: #653a1b;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        rgba(222, 200, 128, 1) 8%,
+        rgba(222, 197, 118, 1) 35%,
+        rgba(191, 145, 59, 1) 75%,
+        rgba(142, 96, 42, 1) 94%
+      );
+      padding:  20px 32px;
+      }
 </style>

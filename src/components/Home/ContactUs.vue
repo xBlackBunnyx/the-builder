@@ -114,7 +114,11 @@
                   title="Instructions"
                   >
                   <v-card-text>
-                    {{ Instructions }}
+                    <p>Welcome to The Builder! There are two modes you can use here, the Daily Build and the Champion Builder. </p>
+                    <br>
+                    <p>In Daily Build, you will challenge yourself with a random champion where you have to select the best items and runes that will fit them better. </p>
+                    <br>
+                    <p>If you want to create a build for a specific champion, use the search bar and then click on the button "Create your build"</p>
                   </v-card-text>
                     <template v-slot:actions>
                       <v-btn
@@ -137,16 +141,13 @@
 
 <script setup>
 import { ref } from 'vue';
-import MainPage from "../../HelpText.json"
-
-const Instructions = MainPage.MainPage.instructions
 
 const dialog = ref(false)
 const dialog2 = ref(false)
 
 </script>
 
-<style>
+<style scoped>
 .single-line{
   white-space: nowrap;
   overflow: hidden;

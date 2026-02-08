@@ -4,7 +4,7 @@
         <h3 class="single-line">  Contact us!  </h3>
     </div>
     <div>
-     <v-container class="d-flex justify-center">
+     <v-container class="d-flex justify-center" >
         <v-row
           class="flex-nowrap"
           style="max-width: 1200px; width: 100%; flex-wrap: nowrap;"
@@ -15,9 +15,10 @@
 
         <!-- Bard behind image -->
             <v-col 
-            cols="auto"
-            class="d-flex justify-center"
-            offset="2">
+            class="d-flex justify-center d-sm-none d-md-flex"
+            offset-md="2"
+            offset-sm="0"
+            >
               <v-sheet>
                   <v-img
                   cover
@@ -29,7 +30,7 @@
            </v-col>
 
            <!-- Linkedin & Github information -->
-          <v-col cols="4" class="d-flex flex-column justify-center align-center text-center">
+          <v-col  class="d-flex flex-column justify-center align-center text-center" md="4" sm="6">
             <v-sheet color="transparent" elevation="0">
               <v-row class="align-center justify-center" no-gutters>
                   <v-col class="d-flex align-center"> 
@@ -40,7 +41,7 @@
               <v-row class="align-center justify-center" no-gutters>
                   <v-col class="d-flex align-center"> 
                     <v-icon icon="fa-linkedin" class="text-secondary me-2" size="small"></v-icon>
-                    <a href="https://www.linkedin.com/in/guillermozafrafernandez" target="_blank"> Juan Guillermo Zafra Fernández</a>
+                    <a href="https://www.linkedin.com/in/guillermozafrafernandez" target="_blank"> J. Guillermo Zafra Fernández</a>
                   </v-col>
               </v-row>
               <v-row class="align-center justify-center" no-gutters>
@@ -53,7 +54,7 @@
           </v-col>
 
           <!-- Bard front image -->
-          <v-col cols="auto" class="d-flex justify-center">
+          <v-col  class="d-flex justify-center  d-sm-none d-md-flex">
             <v-sheet>
               <v-img
               cover
@@ -64,7 +65,7 @@
           </v-col>
 
           <!-- Info Img -->
-          <v-col cols="auto" class="d-flex justify-center" offset="2">
+          <v-col  class="d-flex justify-center" offset-md="2" offset-sm="0" sm="3">
             <v-sheet>
               <div @click="dialog = true">
                 <v-img
@@ -99,7 +100,7 @@
           </v-col>
 
   <!-- Instructions -->
-    <v-col cols="auto" class="d-flex justify-center">
+    <v-col  class="d-flex justify-center" sm="3">
             <v-sheet>
               <div @click="dialog2 = true">
                 <v-img

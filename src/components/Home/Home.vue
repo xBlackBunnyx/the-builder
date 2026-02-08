@@ -7,7 +7,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="6">
+                <v-col  md = "6", xs = "6">
                     <h2>Test your build abilities and create a build for your favourite champion!</h2>
                 </v-col>
                 <v-col offset="4">

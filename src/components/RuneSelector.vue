@@ -15,7 +15,7 @@
         </button>
       </v-col>
 
-      <v-col v-if="selectedPrimaryBranch?.name" cols="4" class="text-center">
+      <v-col v-if="selectedPrimaryBranch?.name" md="4" sm="12" class="text-center">
         <v-row class="justify-center">
           <v-col
             v-for="keystone in selectedPrimaryBranch.keystones"
@@ -98,7 +98,7 @@
         </button>
       </v-col>
 
-      <v-col v-if="selectedSecondaryBranch" cols="3" class="text-center">
+      <v-col v-if="selectedSecondaryBranch" md="3" sm="12" class="text-center">
         <v-row 
           v-for="(row, rowIndex) in selectedSecondaryBranch.rows"
           :key="`secondary-row-${rowIndex}`"

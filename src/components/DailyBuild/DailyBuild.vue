@@ -52,6 +52,7 @@
                     :selected-champion = "this.theExtractorChampionName(selectedChampion)"
                     :selected-items="selectedItems"
                     :selected-runes="selectedRunes"
+                    @click="dailyBuildSent"
                 ></build-score>
             </v-col>
                <v-col>
@@ -443,6 +444,7 @@
                 }),
                 selectedItems: {},
                 selectedChampion: ref(""),
+                sendingDailyBuild: ref(false),
                 debugMode: false, 
                 usedCount: 0,
                 availableCount: 0
@@ -452,6 +454,7 @@
             this.selectedDailyChampion();
             this.updateCounts();
             this.theExtractorChampionName(this.selectedChampion);
+            this.dailyBuildSent();
         },
 
         mounted() {
@@ -478,6 +481,35 @@
             const usedChampions = this.getUsedChampions();
             this.usedCount = usedChampions.length;
             this.availableCount = this.champions.length - this.usedCount;
+            },
+
+            dailyBuildSent(){
+                if (!this.debugMode){
+                    const oneDay = 24 * 60 * 60 * 1000;
+                    const today = Date.now();
+
+                    const buildSend = localStorage.getItem('builtSent');
+                    const storedTimestamp =localStorage.getItem('builtSentTimestamp');
+
+                    if (buildSend && storedTimestamp) {
+                        const storedTime = parseInt(storedTimestamp, 10);
+                        if (today - storedTime < oneDay) {
+                            this.sendingDailyBuild = buildSend;
+                            return;
+                        }
+                    }
+                }
+                console.log("TRIGGERED")
+                let activateBuild = false;
+                this.sendingDailyBuild = activateBuild;
+                try{
+                if (!this.debugMode) {
+                    localStorage.setItem('buildSent', activateBuild);
+                    localStorage.setItem('builtSentTimestamp', Date.now().toString());
+                }
+            } catch (error) {
+                console.log('error saving to localStorage: ', error);
+            }
             },
 
             selectedDailyChampion(){
@@ -630,4 +662,9 @@
     );
     padding:  20px 32px;
     }
+
+    .buttonsettings:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 </style>

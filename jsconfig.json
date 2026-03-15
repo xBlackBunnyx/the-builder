@@ -3,6 +3,7 @@
     "allowJs": true,
     "target": "es5",
     "module": "esnext",
+    "ignoreDeprecations":"6.0",
     // "baseUrl": "./",
     "moduleResolution": "bundler",
     "lib": [

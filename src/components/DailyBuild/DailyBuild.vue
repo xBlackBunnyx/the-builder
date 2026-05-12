@@ -487,12 +487,14 @@
                 if (!this.debugMode){
                     const oneDay = 24 * 60 * 60 * 1000;
                     const today = Date.now();
-
+                    console.log("TODAY IS " + today);
                     const buildSend = localStorage.getItem('builtSent');
-                    const storedTimestamp =localStorage.getItem('builtSentTimestamp');
+                    const builtSentTimestamp =localStorage.getItem('builtSentTimestamp');
+                    console.log("Stored timestamp is: " + builtSentTimestamp);
+                    console.log("BuildSend is " + buildSend);
 
-                    if (buildSend && storedTimestamp) {
-                        const storedTime = parseInt(storedTimestamp, 10);
+                    if (buildSend && builtSentTimestamp) {
+                        const storedTime = parseInt(builtSentTimestamp, 10);
                         if (today - storedTime < oneDay) {
                             this.sendingDailyBuild = buildSend;
                             return;
